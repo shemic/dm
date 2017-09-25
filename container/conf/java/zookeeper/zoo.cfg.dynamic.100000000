@@ -1,0 +1,3 @@
+server.1=data-zookeeper:2888:3888:participant
+server.2=data-zookeeper1:2888:3888:participant
+server.3=data-zookeeper2:2888:3888:participant

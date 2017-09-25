@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+
+read -p "username:" username
+read -p "password:" password
+docker login $1 -u $username -p $password

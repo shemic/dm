@@ -1,0 +1,7 @@
+{  
+  "datacenter": "east-aws",
+  "data_dir": "/root/consul/data",  
+  "log_level": "INFO",  
+  "node_name": "foobar",  
+  "server": true
+}

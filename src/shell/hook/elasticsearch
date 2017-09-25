@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+
+chmod -R 777 $2/container/share/process/
+chmod -R 777 $2/container/conf/elastic/elasticsearch/scripts/
+sysctl -w vm.max_map_count=362144

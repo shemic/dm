@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+set -e
+
+if [ -n "$1" ];then
+	docker stop $1
+	docker rm -f $1
+else
+	result=`docker ps -a|grep Exited|awk '{print $1}'`
+	if [ -n "$result" ];then
+		docker ps -a|grep Exited|awk '{print $1}'|xargs docker rm -f
+	fi
+fi

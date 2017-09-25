@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<configuration>
+    <property>
+        <name>dfs.http.address</name>
+        <value>0.0.0.0:50070</value>
+    </property>
+    <property>
+        <name>dfs.secondary.http.address</name>
+        <value>data-hadoop-slave:50090</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///root/hdfs/namenode</value>
+        <description>NameNode directory for namespace and transaction logs storage.</description>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///root/hdfs/datanode</value>
+        <description>DataNode directory</description>
+    </property>
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    </property>
+    <property>  
+         <name>dfs.block.size</name>  
+         <value>134217728</value>  
+         <!--value>67108864</value-->  
+    </property>
+</configuration>

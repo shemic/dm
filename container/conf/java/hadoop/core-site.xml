@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://data-hadoop:9000/</value>
+    </property>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>file:///root/hadoop/tmp</value>
+    </property>
+    <property>
+        <name>io.file.buffer.size</name>
+        <value>131702</value>
+    </property>
+    <property>
+        <name>ha.zookeeper.quorum</name>
+        <value>data-zookeeper,data-zookeeper1,data-zookeeper2</value>
+    </property>
+</configuration>

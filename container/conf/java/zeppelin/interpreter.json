@@ -1,0 +1,605 @@
+{
+  "interpreterSettings": {
+    "2CPB48QE1": {
+      "id": "2CPB48QE1",
+      "name": "elasticsearch",
+      "group": "elasticsearch",
+      "properties": {
+        "elasticsearch.port": "9200",
+        "elasticsearch.result.size": "10",
+        "elasticsearch.basicauth.password": "changeme",
+        "elasticsearch.cluster.name": "elasticsearch",
+        "elasticsearch.host": "192.168.1.203",
+        "elasticsearch.basicauth.username": "elastic",
+        "elasticsearch.client.type": "http"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "elasticsearch",
+          "class": "org.apache.zeppelin.elasticsearch.ElasticsearchInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "editOnDblClick": false
+          }
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    },
+    "2CMPFBUQE": {
+      "id": "2CMPFBUQE",
+      "name": "mariadb",
+      "group": "jdbc",
+      "properties": {
+        "default.password": "123456",
+        "zeppelin.jdbc.auth.type": "",
+        "common.max_count": "1000",
+        "zeppelin.jdbc.principal": "",
+        "default.user": "root",
+        "zeppelin.interpreter.localRepo": "/usr/local/zeppelin/local-repo/2CMPFBUQE",
+        "default.url": "jdbc:mariadb://192.168.15.10:3309",
+        "default.driver": "org.mariadb.jdbc.Driver",
+        "zeppelin.jdbc.keytab.location": "",
+        "zeppelin.jdbc.concurrent.use": "true",
+        "zeppelin.jdbc.concurrent.max_connection": "10",
+        "zeppelin.interpreter.output.limit": "102400"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "sql",
+          "class": "org.apache.zeppelin.jdbc.JDBCInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "sql",
+            "editOnDblClick": false
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "groupArtifactVersion": "/usr/local/zeppelin/conf/plugin/mariadb-java-client-2.0.3.jar",
+          "local": false
+        }
+      ],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    },
+    "2CPK5V7XK": {
+      "id": "2CPK5V7XK",
+      "name": "hdfs",
+      "group": "file",
+      "properties": {
+        "zeppelin.interpreter.output.limit": "102400",
+        "hdfs.user": "hdfs",
+        "hdfs.maxlength": "1000",
+        "zeppelin.interpreter.localRepo": "/usr/local/zeppelin/local-repo/2CPK5V7XK",
+        "hdfs.url": "http://data-master:50070/webhdfs/v1/"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "hdfs",
+          "class": "org.apache.zeppelin.file.HDFSFileInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "editOnDblClick": false
+          }
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    },
+    "2CPNEGFP1": {
+      "id": "2CPNEGFP1",
+      "name": "spark",
+      "group": "spark",
+      "properties": {
+        "spark.executor.memory": "",
+        "args": "",
+        "zeppelin.spark.printREPLOutput": "true",
+        "spark.cores.max": "",
+        "zeppelin.dep.additionalRemoteRepository": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;",
+        "zeppelin.spark.sql.stacktrace": "false",
+        "zeppelin.spark.importImplicit": "true",
+        "zeppelin.spark.concurrentSQL": "false",
+        "zeppelin.spark.useHiveContext": "true",
+        "zeppelin.pyspark.python": "python",
+        "zeppelin.dep.localrepo": "local-repo",
+        "zeppelin.interpreter.localRepo": "/usr/local/zeppelin/local-repo/2CPNEGFP1",
+        "zeppelin.R.knitr": "true",
+        "deploy-mode": "client",
+        "zeppelin.interpreter.output.limit": "102400",
+        "zeppelin.spark.maxResult": "1000",
+        "master": "yarn",
+        "spark.app.name": "Zeppelin",
+        "zeppelin.R.image.width": "100%",
+        "zeppelin.R.render.options": "out.format \u003d \u0027html\u0027, comment \u003d NA, echo \u003d FALSE, results \u003d \u0027asis\u0027, message \u003d F, warning \u003d F",
+        "zeppelin.R.cmd": "R"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "spark",
+          "class": "org.apache.zeppelin.spark.SparkInterpreter",
+          "defaultInterpreter": true,
+          "editor": {
+            "language": "scala"
+          }
+        },
+        {
+          "name": "sql",
+          "class": "org.apache.zeppelin.spark.SparkSqlInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "sql"
+          }
+        },
+        {
+          "name": "dep",
+          "class": "org.apache.zeppelin.spark.DepInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "scala"
+          }
+        },
+        {
+          "name": "pyspark",
+          "class": "org.apache.zeppelin.spark.PySparkInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "python"
+          }
+        },
+        {
+          "name": "r",
+          "class": "org.apache.zeppelin.spark.SparkRInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "r"
+          }
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    },
+    "2CPKCEBTP": {
+      "id": "2CPKCEBTP",
+      "name": "mysql_203",
+      "group": "jdbc",
+      "properties": {
+        "default.password": "123456",
+        "zeppelin.jdbc.auth.type": "",
+        "common.max_count": "1000",
+        "zeppelin.jdbc.principal": "",
+        "default.user": "root",
+        "zeppelin.interpreter.localRepo": "/usr/local/zeppelin/local-repo/2CPKCEBTP",
+        "default.url": "jdbc:mysql://192.168.1.203:3307/",
+        "default.driver": "com.mysql.jdbc.Driver",
+        "zeppelin.jdbc.keytab.location": "",
+        "zeppelin.jdbc.concurrent.use": "true",
+        "zeppelin.jdbc.concurrent.max_connection": "10",
+        "zeppelin.interpreter.output.limit": "102400"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "sql",
+          "class": "org.apache.zeppelin.jdbc.JDBCInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "sql",
+            "editOnDblClick": false
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "groupArtifactVersion": "/usr/local/zeppelin/conf/plugin/mysql-connector-java-5.1.42.jar",
+          "local": false
+        }
+      ],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    },
+    "2CKMXUEZD": {
+      "id": "2CKMXUEZD",
+      "name": "note",
+      "group": "md",
+      "properties": {
+        "zeppelin.interpreter.output.limit": "102400",
+        "zeppelin.interpreter.localRepo": "/usr/local/zeppelin/local-repo/2CKMXUEZD",
+        "markdown.parser.type": "pegdown"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "md",
+          "class": "org.apache.zeppelin.markdown.Markdown",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "markdown",
+            "editOnDblClick": true
+          }
+        }
+      ],
+      "dependencies": [],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    }
+  },
+  "interpreterBindings": {
+    "2CNB893DY": [
+      "2CNRKWFFT",
+      "2CM684SAT",
+      "2CKW1WBHA"
+    ],
+    "2CMCXA6CR": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNHPVG3Z": [
+      "2CKMXUEZD",
+      "2CM684SAT",
+      "2CKW1WBHA",
+      "2CNRKWFFT",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNND777E": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNNH21PW": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CP8EWZ9T": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CMWEDNXH": [
+      "2CPK5V7XK",
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CMPCKT5F": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CN6KAMKT": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CPHE5HS7": [
+      "2CKW1WBHA",
+      "2CM684SAT",
+      "2CNRKWFFT"
+    ],
+    "2CQ5BT9WR": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CMHKZKUF": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNARXTA6": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CPSJJ193": [
+      "2CPK5V7XK",
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNDCFKPV": [
+      "2CMPFBUQE",
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPKCEBTP"
+    ],
+    "2CJYR6AHD": [
+      "2CPKCEBTP",
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CMPFBUQE"
+    ],
+    "2CMSY658Q": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CMR6MDM9": [
+      "2CPKCEBTP",
+      "2CM684SAT",
+      "2CKW1WBHA",
+      "2CNRKWFFT"
+    ],
+    "2CPYRGP2E": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNHXCXSM": [
+      "2CKW1WBHA",
+      "2CM684SAT"
+    ],
+    "2CKCFSFZ4": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CK5RN575": [
+      "2CNRKWFFT",
+      "2CM684SAT",
+      "2CKW1WBHA"
+    ],
+    "2CP6EPKJ4": [
+      "2CPB48QE1",
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CN926YZU": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CP2CPVXD": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CQTVG42V": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CN49J1CY": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CN1KKRRV": [
+      "2CM684SAT",
+      "2CKW1WBHA",
+      "2CNRKWFFT"
+    ],
+    "2CJSQ9KCU": [
+      "2CM684SAT"
+    ],
+    "2CKW7XYAB": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CP8WJ7HC": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CPD39HMB": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CNQDGYPZ": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CP4PKVRN": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CP5R362U": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CPSCSU5W": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2CMEZ7J1D": [
+      "2CMPFBUQE",
+      "2CM684SAT",
+      "2CKW1WBHA",
+      "2CNRKWFFT",
+      "2CPKCEBTP"
+    ],
+    "2CRBVACYW": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ],
+    "2A94M5J1Z": [
+      "2CPNEGFP1",
+      "2CKMXUEZD",
+      "2CPK5V7XK",
+      "2CPB48QE1",
+      "2CMPFBUQE",
+      "2CPKCEBTP"
+    ]
+  },
+  "interpreterRepositories": [
+    {
+      "id": "central",
+      "type": "default",
+      "url": "http://repo1.maven.org/maven2/",
+      "releasePolicy": {
+        "enabled": true,
+        "updatePolicy": "daily",
+        "checksumPolicy": "warn"
+      },
+      "snapshotPolicy": {
+        "enabled": true,
+        "updatePolicy": "daily",
+        "checksumPolicy": "warn"
+      },
+      "mirroredRepositories": [],
+      "repositoryManager": false
+    },
+    {
+      "id": "local",
+      "type": "default",
+      "url": "file:///root/.m2/repository",
+      "releasePolicy": {
+        "enabled": true,
+        "updatePolicy": "daily",
+        "checksumPolicy": "warn"
+      },
+      "snapshotPolicy": {
+        "enabled": true,
+        "updatePolicy": "daily",
+        "checksumPolicy": "warn"
+      },
+      "mirroredRepositories": [],
+      "repositoryManager": false
+    }
+  ]
+}

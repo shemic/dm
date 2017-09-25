@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+
+path=${2}conf/java/hadoop
+slave=${path}slaves
+#后续完成

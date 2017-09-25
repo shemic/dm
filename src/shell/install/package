@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+
+apt-get install -f $1 || yum install -f $1

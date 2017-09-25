@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+set -e
+
+apt-get install -f software-properties-common && apt-get install -f python-software-properties
+curl -sSL https://get.daocloud.io/docker | sh

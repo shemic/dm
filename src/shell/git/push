@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+cd $1
+git add container/conf/ src/
+git commit -m "edit" README.md usage install container/conf/ src/
+git push -u origin master

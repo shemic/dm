@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+set -e
+check()
+{
+    yes=`which $1 | wc -l`
+    echo $yes
+}
+status=`check docker`
+if [ "$status" = 0 ]; then
+	curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
+fi
+mkdir -p /etc/docker
+tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://vwypw7yj.mirror.aliyuncs.com"]
+}
+EOF
+service docker restart
+
+chmod -R +x src/*.py
+chmod -R +x src/shell
+basepath=$(cd `dirname $0`; pwd)
+ln -sf $basepath/src/main.py /usr/bin/dm
+chmod +x /usr/bin/dm
+echo 'install success!'

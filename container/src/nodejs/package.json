@@ -1,0 +1,13 @@
+{
+  "name": "webtest",
+  "version": "1.0.0",
+  "description": "Node.js on Dever Docker",
+  "author": "rabin",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}

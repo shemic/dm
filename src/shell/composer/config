@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+
+docker images|grep none|awk '{print $3}'|xargs docker rmi -f 

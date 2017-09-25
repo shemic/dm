@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+    <property>
+	　　<name>mapreduce.map.memory.mb</name>
+	　　<value>640</value>
+		<description>每个Map任务的物理内存限制</description>
+	</property>
+	<property>
+	　　<name>mapreduce.reduce.memory.mb</name>
+	　　<value>1280</value>
+		<description>每个Reduce任务的物理内存限制</description>
+	</property>
+	<property>
+	　　<name>mapreduce.map.java.opts</name>
+	　　<value>-Xmx512M</value>
+	</property>
+	<property>
+	　　<name>mapreduce.reduce.java.opts</name>
+	　　<value>-Xmx1024M</value>
+	</property>
+</configuration>

@@ -1,0 +1,35 @@
+Usage:
+dm [-a] <action> [-n] <name> [-p] <param>
+dm <action> <action> <param>
+
+-h or --help		Help
+-a or --action		Action name
+-n or --name		The Action name in the configuration file
+-p or --param		Execution parameters are generally judged by actions
+
+<action>list:
+use 		default:docker,value:docker|php
+set 		default:shemic,value:shemic|hub|aliyun
+up			Update the DM code
+
+<dm use docker><action>list:
+show		Displays the docker container that is currently started
+showi		Displays the current docker mirror
+rm			Remove an exception or docker container that has not been started
+rmi 		Delete expired docker images
+
+<dm use docker><action>+<name>list:
+run			Run the container
+stop		Stop the container
+create		Create the container
+call		Run the container, run only once
+up			Run the container and update the docker mirror
+rm			Remove the running docker container
+save		Save or backup the running docker container
+load		Restores and re run the docker container that is saved or backed up
+Example:
+dm -a run -n web-php
+dm run web-php
+dm -a call -n tool-apidoc -p input=demo^out=output
+dm call tool apidoc input=demo^out=output
+[DM is a small docker choreography tool]
