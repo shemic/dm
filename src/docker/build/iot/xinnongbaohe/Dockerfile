@@ -15,8 +15,8 @@ RUN apk add --no-cache --update py-gevent py-psycopg2 git && \
 	pip install short_url && \
 	pip install oss2 --upgrade && \
 	#pip install qrcode && \
-	git clone http://git.shemic.com:3000/atom/demeter.git $DEMETER_LIB && \
-	git clone http://git.shemic.com:3000/atom/xinnongbaohe.git $DEMETER_HOME && \
+	git clone http://git.dever.cc:3000/python/demeter.git $DEMETER_LIB && \
+	git clone http://git.dever.cc:3000/python/xinnongbaohe.git $DEMETER_HOME && \
 	#mkdir -p /etc/supervisor/conf.d/ && \
 	chmod -R +x $DEMETER_HOME/*.py
 

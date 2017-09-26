@@ -6,7 +6,7 @@ start_demeter()
     cd $DEMETER_LIB
     git pull
     cd $DEMETER_HOME
-    git reset --hard
+    git reset --hard FETCH_HEAD
     git pull
     chmod -R +x $DEMETER_HOME/*.py
     install.py

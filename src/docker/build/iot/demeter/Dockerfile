@@ -13,7 +13,7 @@ RUN apk add --no-cache --update py-gevent py-psycopg2 git && \
 	pip install influxdb && \
 	pip install short_url && \
 	#pip install hashlib && \
-	git clone http://git.shemic.com:3000/atom/demeter.git $DEMETER_HOME && \
+	git clone http://git.dever.cc:3000/atom/demeter.git $DEMETER_HOME && \
 	chmod -R 777 $DEMETER_HOME/* && \
 	rm -rf $DEMETER_HOME/runtime/postgresql/*
 
