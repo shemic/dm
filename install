@@ -13,6 +13,7 @@ mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
   "registry-mirrors": ["https://vwypw7yj.mirror.aliyuncs.com"]
+  ,"insecure-registries" : ["docker.dever.cc"]
 }
 EOF
 service docker restart
