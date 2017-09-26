@@ -5,14 +5,14 @@
     name:php.py
     author:rabin
 """
-from dever import *
+from core import *
 
 class Php(object):
 	path = 'src/php/'
 	share = '/share/lib/php'
 	@classmethod
 	def init(self):
-		method = Dever.getMethod(Php_Action, Args.action)
+		method = Core.getMethod(Php_Action, Args.action)
 		method()
 
 class Php_Action(object):
@@ -29,8 +29,8 @@ class Php_Action(object):
 class Composer(object):
 	@staticmethod
 	def update():
-		Dever.popen('composer.update', True)
+		Core.popen('composer.update', True)
 	@staticmethod
 	def install(name):
-		Dever.popen('composer.install ' + name, True)
+		Core.popen('composer.install ' + name, True)
 		print 'finished'

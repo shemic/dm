@@ -34,7 +34,7 @@
 	dm install passport 安装官方passport
 
 """
-from dever import *
+from core import *
 class Main(object):
 	use = 'docker'
 	def __new__(cls, *args, **kwargs):
@@ -46,7 +46,7 @@ class Main(object):
 
 	@classmethod
 	def init(self):
-		Dever.path = File.path().replace('/src/', '/')
+		Core.path = File.path().replace('/src/', '/')
 		Args.init()
 		method = ('use', 'set', 'val', 'up', 'commit', 'path', 'shell')
 		if Args.action in method:
@@ -55,12 +55,12 @@ class Main(object):
 			use = Env.use()
 			if not use:
 				use = Env.use(self.use)
-			cls = Dever.getClass(use)
+			cls = Core.getClass(use)
 			cls.init()
 
 	@classmethod
 	def handle(self):
-		method = Dever.getMethod(Main_Action, Args.action)
+		method = Core.getMethod(Main_Action, Args.action)
 		method()
 
 class Main_Action(object):
@@ -91,19 +91,19 @@ class Main_Action(object):
 	@staticmethod
 	def up():
 		print 'loading...'
-		Dever.shell('git.pull ' + Dever.path)
+		Core.shell('git.pull ' + Core.path)
 		print 'dm update success!'
 
 	@staticmethod
 	def commit():
-		print Dever.shell('git.push ' + Dever.path)
+		print Core.shell('git.push ' + Core.path)
 
 	@staticmethod
 	def path():
-		print Dever.path
+		print Core.path
 
 	@staticmethod
 	def shell():
-		print Dever.shell(Args.name)
+		print Core.shell(Args.name)
 
 Main.init()

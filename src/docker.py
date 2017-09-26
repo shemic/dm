@@ -5,7 +5,7 @@
     name:docker.py
     author:rabin
 """
-from dever import *
+from core import *
 
 class Docker(object):
 	path = 'src/docker/'
@@ -18,7 +18,7 @@ class Docker(object):
 		self.storeHost = self.core['store'][self.store] + '/'
 
 		action = ('uprun', 'run', 'rm', 'rmb', 'stop', 'create', 'call', 'save', 'load', 'show', 'reset', 'logs', 'restart', 'inspect', 'test')
-		method = Dever.getMethod(Docker_Action, Args.action)
+		method = Core.getMethod(Docker_Action, Args.action)
 		if Args.name and Args.action in action:
 			self.load(method)
 		else:
@@ -94,14 +94,14 @@ class Docker(object):
 					search = re.search(r'\[(.*?)\]', result, re.M|re.I)
 					temp = search.group(1)
 					if temp:
-						result = Dever.replace('['+str(temp)+']', self.name(temp, 1), result)
-				result = Dever.replace('{num}', self.conf['base']['num'], result)
-				result = Dever.replace('{i}', self.conf['base']['i'], result)
-				result = Dever.replace('{path}', self.conf['base']['path'], result)
-				result = Dever.replace('{container}', self.conf['base']['path'] + 'container/', result)
-				result = Dever.replace('{name}', name, result)
+						result = Core.replace('['+str(temp)+']', self.name(temp, 1), result)
+				result = Core.replace('{num}', self.conf['base']['num'], result)
+				result = Core.replace('{i}', self.conf['base']['i'], result)
+				result = Core.replace('{path}', self.conf['base']['path'], result)
+				result = Core.replace('{container}', self.conf['base']['path'] + 'container/', result)
+				result = Core.replace('{name}', name, result)
 				result = self.parse(result)
-				result = Dever.replace(',', ' ' + prefix + ' ', result)
+				result = Core.replace(',', ' ' + prefix + ' ', result)
 				if item == 'hostname':
 					name = result
 
@@ -123,7 +123,7 @@ class Docker(object):
 				if 'http://' not in Args.param:
 					Args.param = 'http://shemic.com/?' + Args.param;
 				if '^' in Args.param:
-					Args.param = Dever.replace('^', '&', Args.param)
+					Args.param = Core.replace('^', '&', Args.param)
 				parse = urlparse.urlparse(Args.param)
 				param = urlparse.parse_qs(parse.query,True)
 
@@ -142,7 +142,7 @@ class Docker(object):
 					print 'please set param value:' + index
 					sys.exit()
 				else:
-					result = Dever.replace('{$'+key+'}', value, result)
+					result = Core.replace('{$'+key+'}', value, result)
 		return result
 
 	@classmethod
@@ -151,15 +151,15 @@ class Docker(object):
 			if ',' in config['rely']:
 				rely = config['rely'].split(',');
 				for i in rely:
-					Dever.popen('dever ' + action + ' ' + i, True)
+					Core.popen('Core ' + action + ' ' + i, True)
 			else:
-				Dever.popen('dever ' + action + ' ' + config['rely'], True)
+				Core.popen('Core ' + action + ' ' + config['rely'], True)
 
 	@classmethod
 	def hook(self, type, config, name):
 		key = 'hook.'+type
 		if key in config:
-			Dever.shell('hook.' + config[key] + ' ' + name + ' ' + Dever.path, bg=True)
+			Core.shell('hook.' + config[key] + ' ' + name + ' ' + Core.path, bg=True)
 
 	@classmethod
 	def slave(self, config, name, action):
@@ -175,7 +175,7 @@ class Docker(object):
 				i = i + 1
 	@classmethod
 	def tar(self, name):
-		path = Dever.path + 'data/backup/' + name + '/'
+		path = Core.path + 'data/backup/' + name + '/'
 		File.mkdir(path)
 		backup = 'backup/' + name
 		tar = path + name + '.tar'
@@ -207,10 +207,10 @@ class Docker_Action(object):
 	@classmethod
 	def login(self):
 		if Args.name and Args.name in Docker.core['store']:
-			Dever.shell('docker.login ' + Docker.core['store'][Args.name], True)
+			Core.shell('docker.login ' + Docker.core['store'][Args.name], True)
 		else:
 			for key,value in Docker.core['store'].items():
-				Dever.shell('docker.login ' + value, True)
+				Core.shell('docker.login ' + value, True)
 
 	@staticmethod
 	def package():
@@ -366,7 +366,7 @@ class Docker_Action(object):
 		state = Container.check(param['name'])
 		if state == 0:
 			Docker.hook('start', param['config'], param['name'])
-			run = ['-it', '--name='+param['name'], '--hostname='+param['name'], restart, daemon, '-v '+Dever.path+'container/share:/share -v /etc/hosts:/etc/hosts.main']
+			run = ['-it', '--name='+param['name'], '--hostname='+param['name'], restart, daemon, '-v '+Core.path+'container/share:/share -v /etc/hosts:/etc/hosts.main']
 
 			args = Container.args()
 			for key in args:
@@ -388,7 +388,7 @@ class Docker_Action(object):
 			if 'test' in param:
 				return 'docker run ' + command
 			print 'setuping ' + param['name'] + ', please wait...'
-			method = Dever.getMethod(Container, param['action'])
+			method = Core.getMethod(Container, param['action'])
 			method(command)
 			Alias.add(param['config'], param['name'], 'docker run ' + command, param['action'])
 			Docker.hook('end', param['config'], param['name'])
@@ -399,11 +399,11 @@ class Container(object):
 	@staticmethod
 	def run(command):
 		command = 'container.run ' + command
-		Dever.shell(command, True, bg=False)
+		Core.shell(command, True, bg=False)
 		return command
 	@staticmethod
 	def show(name=''):
-		print Dever.shell('container.show ' + name)
+		print Core.shell('container.show ' + name)
 	@staticmethod
 	def args():
 		return {
@@ -422,31 +422,31 @@ class Container(object):
 		}
 	@staticmethod
 	def drop():
-		Dever.shell('container.drop', bg=True)
+		Core.shell('container.drop', bg=True)
 	@staticmethod
 	def stop(name):
-		Dever.shell('container.stop ' + name)
+		Core.shell('container.stop ' + name)
 	@staticmethod
 	def logs(name):
-		Dever.shell('container.logs ' + name, True)
+		Core.shell('container.logs ' + name, True)
 	@staticmethod
 	def inspect(name):
-		Dever.shell('container.inspect ' + name, True)
+		Core.shell('container.inspect ' + name, True)
 	@staticmethod
 	def restart(name):
-		Dever.shell('container.restart ' + name)
+		Core.shell('container.restart ' + name)
 	@classmethod
 	def delete(self, name='', bg=False):
 		if name != '':
 			print 'rm ' + name + ', please wait...'
 			if self.check(name) == 1:
-				Dever.shell('container.rm ' + name, False, bg=bg)
+				Core.shell('container.rm ' + name, False, bg=bg)
 		else:
-			Dever.shell('container.rm', False)
+			Core.shell('container.rm', False)
 			
 	@staticmethod
 	def check(name):
-		result = int(Dever.popen('docker ps -a | grep '+name+' | wc -l'))
+		result = int(Core.popen('docker ps -a | grep '+name+' | wc -l'))
 		if result != 0:
 			return 1
 		else:
@@ -454,20 +454,20 @@ class Container(object):
 	@staticmethod
 	def network(config):
 		if 'network' in config:
-			result = int(Dever.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))
+			result = int(Core.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))
 			if result == 0:
-				Dever.shell('container.network ' + config['network'], True)
+				Core.shell('container.network ' + config['network'], True)
 	@staticmethod
 	def save(tar, name, backup):
 		if File.exists(tar) == True:
 			now = time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))
 			old = replace('.tar', '.' + now + '.tar', tar)
 			File.rename(tar, old)
-		Dever.popen('docker commit -p ' + name + ' ' + backup)
-		Dever.popen('docker save ' + backup + ' > ' + tar, True)
+		Core.popen('docker commit -p ' + name + ' ' + backup)
+		Core.popen('docker save ' + backup + ' > ' + tar, True)
 	@classmethod
 	def load(self, tar, name):
-		Dever.popen('docker load < ' + tar, True)
+		Core.popen('docker load < ' + tar, True)
 		self.delete(name)
 
 class Image(object):
@@ -476,27 +476,27 @@ class Image(object):
 		store = stores[0]
 		if self.check(store) == 1:
 			del stores[0]
-			Dever.shell('image.push ' + store, bg=True)
+			Core.shell('image.push ' + store, bg=True)
 			for value in stores:
 				#print store + ' ' + value
-				Dever.shell('image.push ' + store + ' ' + value, bg=True)
+				Core.shell('image.push ' + store + ' ' + value, bg=True)
 	@staticmethod
 	def show():
-		print Dever.shell('image.show')
+		print Core.shell('image.show')
 	@staticmethod
 	def drop(name=''):
-		Dever.shell('image.drop ' + name, bg=True)
+		Core.shell('image.drop ' + name, bg=True)
 	@staticmethod
 	def delete():
-		Dever.shell('image.rm', bg=True)
+		Core.shell('image.rm', bg=True)
 	@staticmethod
 	def build(path, name):
-		file = Dever.path + Docker.path + 'build/' + name + '/'
+		file = Core.path + Docker.path + 'build/' + name + '/'
 		name = path + name
-		Dever.shell('image.build ' + name + ' ' + file, True)
+		Core.shell('image.build ' + name + ' ' + file, True)
 	@staticmethod
 	def check(name):
-		result = int(Dever.popen('docker images | grep '+name+' | wc -l'))
+		result = int(Core.popen('docker images | grep '+name+' | wc -l'))
 		if result != 0:
 			return 1
 		else:
@@ -505,5 +505,5 @@ class Image(object):
 	def install(library, key):
 		pull = 'docker pull';
 		command = pull + ' ' + library + key
-		Dever.popen(command, True)
+		Core.popen(command, True)
 		print 'finished'
