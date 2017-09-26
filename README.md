@@ -1,6 +1,6 @@
 # dever-manage 小型编排工具
 <pre>
-git clone http://git.shemic.com:3000/dever/dm.git
+git clone https://github.com/shemic/dm
 cd dm
 chmod +x install
 ./install
