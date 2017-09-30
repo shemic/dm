@@ -10,6 +10,8 @@ from core import *
 class Dever(object):
 	git = 'http://git.dever.cc:3000/'
 	path = Core.path + 'container/share/lib/php/'
+	framework = 'dever/framework.git'
+	package = 'dever-package/'
 	@classmethod
 	def init(self):
 		method = Core.getMethod(Dever_Action, Args.action)
@@ -18,26 +20,16 @@ class Dever(object):
 class Dever_Action(object):
 	@staticmethod
 	def init():
-		if Args.name:
-			print 'init appname'
-		else:
-			Core.popen('git clone '+Dever.git+'dever/framework.git ' + Dever.path + 'dever', True)
-			print 'init:yes'
+		Git.update(Dever.git + Dever.framework, Dever.path + 'dever')
 
 	@staticmethod
 	def install():
-		print 'install '+Args.name+':yes'
+		Git.update(Dever.git + Dever.package + Args.name, Dever.path + 'dever_package/' + Args.name)
 
 	@classmethod
 	def update(self):
-		print 'update '+Args.name+':yes'
+		Git.update(Dever.git + Dever.package + Args.name, Dever.path + 'dever_package/' + Args.name)
 
-
-class Package(object):
 	@staticmethod
-	def update():
-		Core.popen('composer.update', True)
-	@staticmethod
-	def install(name):
-		Core.popen('composer.install ' + name, True)
-		print 'finished'
+	def create():
+		Git.update(Dever.git + Dever.framework, Dever.path + 'dever')

@@ -285,6 +285,16 @@ class File(object):
 			os.makedirs(path)
 		return path
 
+class Git(object):
+	@staticmethod
+	def update(git, path):
+		if File.exists(path) == False:
+			Core.popen('git clone ' + git + ' ' + path, True)
+			print 'init:' + path + ' finished!'
+		else:
+			Core.popen('cd ' + path + ' && git pull', bg=True)
+			print 'update:' + path + ' finished!'
+
 class Core(object):
 	path = ''
 	@classmethod

@@ -30,7 +30,7 @@
 
 	dm use dever 使用dever框架工具包
 	dm install manage 安装后台
-	dm init myapp 初始化一个项目
+	dm create myapp 初始化一个项目
 	dm install passport 安装官方passport
 
 """
