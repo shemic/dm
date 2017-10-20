@@ -6,10 +6,12 @@
     author:rabin
 """
 from core import *
+import json
 
 class Dever(object):
 	git = 'http://git.dever.cc:3000/'
-	path = Core.path + 'container/share/lib/php/'
+	lib = Core.path + 'container/share/lib/php/'
+	dev = Core.path + 'container/web/'
 	framework = 'dever/framework.git'
 	package = 'dever-package/'
 	@classmethod
@@ -20,16 +22,34 @@ class Dever(object):
 class Dever_Action(object):
 	@staticmethod
 	def init():
-		Git.update(Dever.git + Dever.framework, Dever.path + 'dever')
+		Git.update(Dever.git + Dever.framework, Dever.lib + 'dever')
 
-	@staticmethod
-	def install():
-		Git.update(Dever.git + Dever.package + Args.name, Dever.path + 'dever_package/' + Args.name)
+	@classmethod
+	def install(self):
+		self.update()
 
 	@classmethod
 	def update(self):
-		Git.update(Dever.git + Dever.package + Args.name, Dever.path + 'dever_package/' + Args.name)
+		path = Dever.lib + 'dever_package/' + Args.name
+		Git.update(Dever.git + Dever.package + Args.name, path)
+		package = path + '/package.json'
+		if File.exists(package):
+			data = File.read(package, '')
+			data = json.loads(data)
+			if 'rely' in data:
+				rely = data['rely'].split(',')
+				for v in rely:
+					Args.name = v
+					self.update()
+
 
 	@staticmethod
 	def create():
-		Git.update(Dever.git + Dever.framework, Dever.path + 'dever')
+		path = Dever.dev + Args.name
+		if not Args.name:
+			print 'name is error'
+			return
+		if File.exists(path):
+			print path + ' is exists'
+		else:
+			print path
