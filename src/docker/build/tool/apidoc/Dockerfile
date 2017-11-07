@@ -1,4 +1,4 @@
-FROM docker.shemic.com/dev/nodejs:latest
+FROM docker.dever.cc/dev/nodejs:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

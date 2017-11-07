@@ -1,4 +1,4 @@
-FROM docker.shemic.com/db/postgresql:latest
+FROM docker.dever.cc/db/postgresql:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

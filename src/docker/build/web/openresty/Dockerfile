@@ -1,4 +1,4 @@
-FROM docker.shemic.com/os/alpine/v3.4:latest
+FROM docker.dever.cc/os/alpine/v3.4:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

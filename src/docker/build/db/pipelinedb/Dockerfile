@@ -1,4 +1,4 @@
-FROM docker.shemic.com/dev/python:latest
+FROM docker.dever.cc/dev/python:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

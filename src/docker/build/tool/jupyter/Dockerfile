@@ -1,9 +1,9 @@
-FROM docker.shemic.com/dev/python:latest
+FROM docker.dever.cc/dev/python:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
 RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3 python3-dev && \
-	curl -O http://www.shemic.com/file/zeromq/zeromq-4.2.1.tar.gz && \
+	curl -O http://www.dever.cc/file/zeromq/zeromq-4.2.1.tar.gz && \
 	tar -zxvf zeromq-4.2.1.tar.gz && \
 	cd zeromq-4.2.1 && \
 	./configure --prefix=/usr/local/zeromq && \

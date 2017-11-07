@@ -1,4 +1,4 @@
-FROM docker.shemic.com/dev/java:latest
+FROM docker.dever.cc/dev/java:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

@@ -1,9 +1,9 @@
-FROM docker.shemic.com/os/alpine:latest
+FROM docker.dever.cc/os/alpine:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
 RUN apk add --no-cache --update go g++ git && \
-	git clone http://git.shemic.com:3000/dever/oauth2.git /root/oauth2 && \
+	git clone http://git.dever.cc:3000/dever/oauth2.git /root/oauth2 && \
 	chmod +x /root/oauth2/core.go && \
 	chmod +x /root/oauth2/start.sh && \
 	cd /root/oauth2/ && \
