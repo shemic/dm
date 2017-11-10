@@ -8,6 +8,8 @@ ENV DEMETER_CONF=env
 ENV PATH=$PATH:$DEMETER_HOME
 
 RUN apk add --no-cache --update py-gevent py-psycopg2 git && \
+	apk add --no-cache jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev libxml2-dev libxslt-dev libffi-dev gcc musl-dev libgcc openssl-dev curl gcc g++ python-dev && \
+	pip install pillow && \
 	pip install tornado && \
 	pip install pytest-runner && \
 	pip install paho-mqtt && \
@@ -18,7 +20,8 @@ RUN apk add --no-cache --update py-gevent py-psycopg2 git && \
 	git clone http://git.dever.cc:3000/python/demeter.git $DEMETER_LIB && \
 	git clone http://git.dever.cc:3000/python/nongxiaohe.git $DEMETER_HOME && \
 	#mkdir -p /etc/supervisor/conf.d/ && \
-	chmod -R +x $DEMETER_HOME/*.py
+	chmod -R +x $DEMETER_HOME/*.py && \
+	apk del curl gcc g++ python-dev
 
 EXPOSE 8087 8088
 
