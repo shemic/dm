@@ -30,11 +30,8 @@ class Dever_Action(object):
 
 	@classmethod
 	def update(self):
-		path = Dever.lib + 'dever_package/'
-		boot = path + 'boot.php'
-		if not File.exists(boot):
-			File.write(boot, "<?php \r\n if (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever/boot.php');")
-		path = path + Args.name
+		lib = Dever.lib + 'dever_package/'
+		path = lib + Args.name
 		Git.update(Dever.git + Dever.package + Args.name, path)
 		package = path + '/package.json'
 		if File.exists(package):
@@ -45,6 +42,9 @@ class Dever_Action(object):
 				for v in rely:
 					Args.name = v
 					self.update()
+		boot = lib + 'boot.php'
+		if not File.exists(boot):
+			File.write(boot, "<?php \r\n if (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever/boot.php');")
 
 
 	@staticmethod
