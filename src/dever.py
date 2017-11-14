@@ -52,7 +52,7 @@ class Dever_Action(object):
 	def product(self):
 		path = Dever.dev + Args.name
 		Git.update(Dever.git + Dever.product + Args.name, path)
-		Dever.package(self, path)
+		Dever.rely(self, path)
 
 	@staticmethod
 	def demo():
