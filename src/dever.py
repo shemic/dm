@@ -40,7 +40,7 @@ class Dever_Action(object):
 
 	@classmethod
 	def package(self):
-		lib = Dever.lib + Dever.package
+		lib = Dever.lib + 'dever_package/'
 		path = lib + Args.name
 		Git.update(Dever.git + Dever.package + Args.name, path)
 		Dever.rely(self, path)
