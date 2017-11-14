@@ -78,4 +78,17 @@ docker方法列表：
 4、web-php stop：停止该容器
 5、web-php rm：停止并删除该容器，等同于dever rm web php
 6、web-php show：显示该容器的状态
+
+</pre>
+<pre>
+2017-11-14更新：
+当前工具包：docker、dever、php、git
+1、使用dever来安装plant：
+dm use dever
+dm init
+dm product plant
+
+2、使用git：
+dm use git
+git pull /data/
 </pre>
