@@ -31,7 +31,7 @@ class Dever(object):
 				rely = data['rely'].split(',')
 				for v in rely:
 					Args.name = v
-					self.update()
+					self.package()
 
 class Dever_Action(object):
 	@staticmethod
