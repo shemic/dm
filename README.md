@@ -51,13 +51,14 @@ docker方法列表：
 方法列表（带有name参数）：
 1、run：运行容器
 2、stop：停止容器
-3、crate：创建容器
-4、call：运行容器，仅运行一次，用于执行一些特殊指令
-5、up：运行容器并更新docker镜像
-6、rm：删除正在运行的docker容器
-7、save：保存或备份正在运行的docker容器
-8、load：将保存或备份的docker容器恢复并重新运行
-9、show：显示当前启动的docker容器(2017-07-25)
+3、restart：重启容器
+4、crate：创建容器
+5、call：运行容器，仅运行一次，用于执行一些特殊指令
+6、up：运行容器并更新docker镜像
+7、rm：删除正在运行的docker容器
+8、save：保存或备份正在运行的docker容器
+9、load：将保存或备份的docker容器恢复并重新运行
+10、show：显示当前启动的docker容器(2017-07-25)
 
 例子：
 1、dm -a run -n web-php：根据src/docker/conf/web.conf里的php配置，来持续运行php容器
@@ -78,6 +79,8 @@ docker方法列表：
 4、web-php stop：停止该容器
 5、web-php rm：停止并删除该容器，等同于dever rm web php
 6、web-php show：显示该容器的状态
+7、web-php run：运行或者重新启动改容器
+8、web-php restart：重新启动容器
 
 </pre>
 <pre>
