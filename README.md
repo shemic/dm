@@ -6,7 +6,7 @@ chmod +x install
 ./install
 </pre>
 
-无需关注是否安装了docker，本工具会自动安装docker
+无需关注是否安装了docker，本工具会自动安装docker。(本工具直接使用阿里云提供的sh来安装docker，经过测试，ubuntu16无法安装成功，请直接用apt install docker.io安装。)
 
 基础指令：
 <pre>
@@ -60,8 +60,8 @@ docker方法列表：
 9、show：显示当前启动的docker容器(2017-07-25)
 
 例子：
-1、dever -a run -n web-php：根据src/docker/conf/web.conf里的php配置，来持续运行php容器
-2、dever -a run -n tool-apidoc -p input=demo^out=output：根据src/docker/conf/tool.conf里的apidoc配置，来运行apidoc容器，这个配置里设置了run参数，指令中加入run，则apidoc容器将作为工具使用，无需持续运行apidoc容器，仅执行一次。input=demo将替换{$input}为demo，out=output将替换{$out}为output，冒号“:”为默认值
+1、dm -a run -n web-php：根据src/docker/conf/web.conf里的php配置，来持续运行php容器
+2、dm -a run -n tool-apidoc -p input=demo^out=output：根据src/docker/conf/tool.conf里的apidoc配置，来运行apidoc容器，这个配置里设置了run参数，指令中加入run，则apidoc容器将作为工具使用，无需持续运行apidoc容器，仅执行一次。input=demo将替换{$input}为demo，out=output将替换{$out}为output，冒号“:”为默认值
 容器的配置请修改src/docker/conf/*.conf
 
 也可以使用无参数名的方式来传入参数：
@@ -84,11 +84,28 @@ docker方法列表：
 2017-11-14更新：
 当前工具包：docker、dever、php、git
 1、使用dever来安装plant：
+dever是一个php框架，适合开发api、微服务、频繁修改模板等业务
+plant是dever框架开发的一个小型社区
 dm use dever
 dm init
 dm product plant
+例子：http://www.5dev.cn/
 
-2、使用git：
+2、使用git(方便在任意目录下pull或者push)：
 dm use git
 git pull /data/
+git push /data/
+
+3、使用php(暂时不能使用)：
+dm use php
+php install redis 安装插件
+php composer laravel 安装composer里的软件包
+
+</pre>
+
+<pre>
+2017-11-15更新：
+接下来要更新的功能：
+1、增加图形管理界面(dm manage)
+2、增加多机使用dm(dm manage -> etcd -> dm1、dm2、dm3)
 </pre>
