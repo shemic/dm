@@ -93,13 +93,13 @@ dm product plant
 
 2、使用git(方便在任意目录下pull或者push)：
 dm use git
-git pull /data/
-git push /data/
+dm pull /data/
+dm push /data/
 
 3、使用php(暂时不能使用)：
 dm use php
-php install redis 安装插件
-php composer laravel 安装composer里的软件包
+dm install redis 安装插件
+dm composer laravel 安装composer里的软件包
 
 </pre>
 
