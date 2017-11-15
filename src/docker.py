@@ -67,7 +67,7 @@ class Docker(object):
 				config['image'] = self.core['images'][config['image']]
 			method(config=config, name=name, item=item, index=i, action=action)
 			if action in ('stop', 'restart', 'rm', 'rmb', 'reset', 'run', 'create'):
-				self.slave(config, item, action)
+				self.slave(method, config, item, action)
 			i = i + 1
 
 	@classmethod
@@ -162,17 +162,15 @@ class Docker(object):
 			Core.shell('hook.' + config[key] + ' ' + name + ' ' + Core.path, bg=True)
 
 	@classmethod
-	def slave(self, config, name, action):
+	def slave(self, method, config, name, action):
 		if 'slave' in config:
-			i = 1
 			num = int(config['slave'])
 			key = ['slave', 'command', 'alias', 'port', 'hook.start', 'hook.end']
 			for k in key:
 				if k in config:
 					del config[k]
-			while (i <= num):
-				self.runServerOne(config, name + '-slave', i, action)
-				i = i + 1
+			config['num'] = num
+			self.handle(method, config, name + '-slave', action)
 	@classmethod
 	def tar(self, name):
 		path = Core.path + 'data/backup/' + name + '/'

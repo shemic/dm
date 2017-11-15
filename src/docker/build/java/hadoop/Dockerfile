@@ -5,7 +5,7 @@ MAINTAINER Rabin "https://github.com/shemic"
 # set environment variable
 ENV HADOOP_HOME=/usr/local/hadoop
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
-ENV HADOOP_VERSION=2.7.3
+ENV HADOOP_VERSION=2.7.4
 ENV HADOOP_LOG_DIR=/root/hadoop/logs
 ENV YARN_CONF_DIR=$HADOOP_CONF_DIR
 ENV YARN_LOG_DIR=/root/yarn/logs
