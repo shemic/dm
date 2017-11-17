@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 set -e
 
-path=${2}conf/java/hadoop
-slave=${path}slaves
+mkdir -p $2/container/share/lib/
+chmod -R 777 $2/container/share/lib/
+#path=${2}conf/java/hadoop
+#slave=${path}slaves
 #后续完成
