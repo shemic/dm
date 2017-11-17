@@ -6,3 +6,4 @@ start_sshd()
 }
 check jdk lib
 hosts
+start_sshd
