@@ -6,20 +6,20 @@
     </property>
     <property>
 	　　<name>mapreduce.map.memory.mb</name>
-	　　<value>1024</value>
+	　　<value>640</value>
 		<description>每个Map任务的物理内存限制</description>
 	</property>
 	<property>
 	　　<name>mapreduce.reduce.memory.mb</name>
-	　　<value>2048</value>
+	　　<value>1280</value>
 		<description>每个Reduce任务的物理内存限制</description>
 	</property>
 	<property>
 	　　<name>mapreduce.map.java.opts</name>
-	　　<value>-Xmx1024M</value>
+	　　<value>-Xmx512M</value>
 	</property>
 	<property>
 	　　<name>mapreduce.reduce.java.opts</name>
-	　　<value>-Xmx2048M</value>
+	　　<value>-Xmx1024M</value>
 	</property>
 </configuration>
