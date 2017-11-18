@@ -18,10 +18,10 @@ start_hadoop()
     fi
     rm -rf /root/hdfs/*
     rm -rf /root/hadoop/tmp/*
-    $HADOOP_HOME/bin/hdfs namenode -format &
-    $HADOOP_HOME/sbin/start-dfs.sh &
-    $HADOOP_HOME/sbin/start-yarn.sh &
-    #$HADOOP_HOME/sbin/start-all.sh &
+    $HADOOP_HOME/bin/hdfs namenode -format
+    $HADOOP_HOME/sbin/start-dfs.sh
+    $HADOOP_HOME/sbin/start-yarn.sh
+    #$HADOOP_HOME/sbin/start-all.sh
 } 
 
 stop_hadoop()
