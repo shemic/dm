@@ -12,7 +12,7 @@
     </property>
     <property>
         <name>yarn.scheduler.minimum-allocation-mb</name>
-        <value>640</value>
+        <value>512</value>
         <discription>单个任务可申请最少内存，默认1024MB</discription>
     </property>
     <property>
