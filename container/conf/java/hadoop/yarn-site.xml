@@ -7,22 +7,28 @@
     </property> 
     <property>
         <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>512</value>
+        <value>1024</value>
         <discription>每个节点可用内存,单位MB</discription>
     </property>
     <property>
+        <name>yarn.nodemanager.vmem-pmem-ratio</name>
+        <value>2</value>
+        <description>针对物理内存的虚拟化比例.比如1024M的物理内存,
+            此参数配置2,则整体可提供2G内存</description>
+    </property>
+    <property>
         <name>yarn.scheduler.minimum-allocation-mb</name>
-        <value>512</value>
+        <value>640</value>
         <discription>单个任务可申请最少内存，默认1024MB</discription>
     </property>
     <property>
         <name>yarn.scheduler.maximum-allocation-mb</name>
-        <value>1024</value>
+        <value>1536</value>
         <discription>单个任务可申请最大内存，默认8192MB</discription>
     </property>
     <property>
         <name>yarn.app.mapreduce.am.resource.mb</name>
-        <value>1024</value>
+        <value>1536</value>
         <discription>AM能够申请的最大内存，默认值为1536MB</discription>
     </property>
     <property>
