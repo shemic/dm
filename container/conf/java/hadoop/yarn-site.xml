@@ -12,22 +12,22 @@
     </property>
     <property>
         <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>1536</value>
+        <value>1024</value>
         <discription>每个节点可用内存,单位MB</discription>
     </property>
     <property>
         <name>yarn.scheduler.minimum-allocation-mb</name>
-        <value>640</value>
+        <value>512</value>
         <discription>单个任务可申请最少内存，默认1024MB</discription>
     </property>
     <property>
         <name>yarn.scheduler.maximum-allocation-mb</name>
-        <value>1536</value>
+        <value>1024</value>
         <discription>单个任务可申请最大内存，默认8192MB</discription>
     </property>
     <property>
         <name>yarn.app.mapreduce.am.resource.mb</name>
-        <value>1536</value>
+        <value>1024</value>
         <discription>AM能够申请的最大内存，默认值为1536MB</discription>
     </property>
     <property>
