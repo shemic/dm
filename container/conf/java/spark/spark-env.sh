@@ -72,5 +72,5 @@ export SPARK_MASTER_OPTS="-Dspark.driver.port=7001 -Dspark.fileserver.port=7002 
 export SPARK_WORKER_OPTS="-Dspark.driver.port=7001 -Dspark.fileserver.port=7002 -Dspark.broadcast.port=7003 -Dspark.replClassServer.port=7004 -Dspark.blockManager.port=7005 -Dspark.executor.port=7006 -Dspark.ui.port=4040 -Dspark.broadcast.factory=org.apache.spark.broadcast.HttpBroadcastFactory"
 export SPARK_WORKER_PORT=8888
 export SPARK_WORKER_WEBUI_PORT=8081
-export SPARK_WORKER_MEMORY=1g
+export SPARK_WORKER_MEMORY=512m
 export SPARK_PID_DIR=/root/spark/tmp

@@ -92,4 +92,4 @@ export MASTER=yarn-client
 export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
 export YARN_CONF_DIR=$HADOOP_CONF_DIR
 #export SPARK_SUBMIT_OPTIONS="--packages com.databricks:spark-csv_2.10:1.2.0"
-export SPARK_SUBMIT_OPTIONS ="--driver-memory 512M --executor-memory 1G" 
+export SPARK_SUBMIT_OPTIONS ="--driver-memory 512M --executor-memory 512M" 
