@@ -4,6 +4,8 @@ MAINTAINER Rabin "https://github.com/shemic"
 
 # set environment variable
 ENV HADOOP_HOME=/share/lib/hadoop
+ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+ENV YARN_CONF_DIR=$HADOOP_CONF_DIR
 ENV SPARK_HOME=/share/lib/spark
 ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$SPARK_HOME/bin
 
