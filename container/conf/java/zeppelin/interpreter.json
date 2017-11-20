@@ -92,7 +92,7 @@
         "hdfs.user": "hdfs",
         "hdfs.maxlength": "1000",
         "zeppelin.interpreter.localRepo": "/usr/local/zeppelin/local-repo/2CPK5V7XK",
-        "hdfs.url": "http://data-master:50070/webhdfs/v1/"
+        "hdfs.url": "http://data-hadoop:50070/webhdfs/v1/"
       },
       "status": "READY",
       "interpreterGroup": [
