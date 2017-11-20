@@ -12,7 +12,7 @@
     </property>
     <property>
         <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>1536</value>
+        <value>1024</value>
         <discription>每个节点可用内存,单位MB,如果一直提示state: ACCEPTED,请增大此值</discription>
     </property>
     <property>
