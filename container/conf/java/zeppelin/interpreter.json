@@ -122,7 +122,7 @@
       "name": "spark",
       "group": "spark",
       "properties": {
-        "spark.executor.memory": "",
+        "spark.executor.memory": "512m",
         "args": "",
         "zeppelin.spark.printREPLOutput": "true",
         "spark.cores.max": "",
