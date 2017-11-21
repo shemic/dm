@@ -20,7 +20,7 @@ RUN apk add --no-cache --update bash curl procps ncurses openjdk8 && \
     mkdir -p /elasticsearch/logs && \
     mkdir -p /share/process/elasticsearch && \
     chown -R es:es $ES_HOME /elasticsearch /tmp && \
-    chmod -R 777 /tmp /elasticsearch /share/process/elasticsearch $ES_HOME/config/scripts/ && \
+    chmod -R 777 /tmp /elasticsearch /share/process/elasticsearch && \
     cd $ES_HOME && \
     echo y | elasticsearch-plugin install x-pack && \
     apk del curl openjdk8
