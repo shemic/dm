@@ -2,7 +2,7 @@ FROM docker.dever.cc/dev/python/v3:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
-RUN apk update && apk add --no-cache python3-dev gcc g++ automake lapack lapack-dev gfortran freetype freetype-dev libstdc++ tk-dev python3-tkinter && \
+RUN apk update && apk add --no-cache python3-dev gcc g++ automake lapack lapack-dev gfortran freetype freetype-dev libstdc++ && \
 	pip3 install numpy && \
 	pip3 install scipy && \
 	pip3 install pandas && \
