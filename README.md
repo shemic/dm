@@ -121,12 +121,13 @@ dm run data-java
 dm run data-hadoop
 dm run data-spark
 dm run data-zeppelin
-需要先等待data-java安装完成之后再安装之后的。可以到container/data/share/lib下看一下是否有jdk
+需要先等待data-java安装完成之后再安装之后的。可以到container/share/lib下看一下是否有jdk
 
 2、机器学习：
 dm run py-note（jupyter+numpy、scipy、matplotlib、pandas、scikit-learn、scrapy、gevent、pymysql、psycopg2）
 
 3、elk：
+dm run elk-java（如果之前用了data-java这里就不用再执行了）
 dm run elk-es
 dm run elk-filebeat（需要到src/docker/conf/elk里定义下抓取的日志目录）
 dm run elk-kibana
