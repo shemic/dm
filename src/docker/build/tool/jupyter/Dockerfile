@@ -1,8 +1,8 @@
-FROM docker.dever.cc/dev/python:latest
+FROM docker.dever.cc/learning:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
-RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3 python3-dev && \
+RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3 python3-dev libxml2 libxml2-dev libxslt-dev libffi-dev openssl openssl-dev && \
 	curl -O http://www.dever.cc/file/zeromq/zeromq-4.2.1.tar.gz && \
 	tar -zxvf zeromq-4.2.1.tar.gz && \
 	cd zeromq-4.2.1 && \
@@ -17,6 +17,9 @@ RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3
 	pip3 install -U ipykernel && \
 	python3 -m ipykernel install --user && \
 	mkdir /usr/local/jupyter && \
+	pip3 install jupyterlab && \
+	pip3 install incremental && \
+	pip3 install scrapy && \
 	apk del curl gcc g++ make python-dev python3-dev
 
 COPY jupyter.sh /entrypoint/jupyter.sh
