@@ -16,10 +16,24 @@ RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3
 	pip3 install pyzmq --install-option="--zmq=/usr/local/zeromq" && \
 	pip3 install -U ipykernel && \
 	python3 -m ipykernel install --user && \
-	mkdir /usr/local/jupyter && \
-	pip3 install jupyterlab && \
+	python2 -m ipykernel install --user && \
+	pip2 install jupyterlab && \
+	pip2 install jupyter_contrib_nbextensions && \
+	pip2 install jupyter_nbextensions_configurator && \
+	pip2 install jupyter_dashboards && \
+	pip2 install rise && \
+	jupyter contrib nbextension install --user && \
+	jupyter nbextensions_configurator enable --user && \
+	jupyter dashboards quick-setup --sys-prefix && \
+	jupyter-nbextension install rise --py --sys-prefix && \
+	jupyter-nbextension enable rise --py --sys-prefix && \
+
 	pip3 install incremental && \
 	pip3 install scrapy && \
-	apk del curl gcc g++ make python-dev python3-dev
+	pip3 install gevent && \
+	apk del openssl-dev && apk add postgresql-dev && pip3 install psycopg2 && \
+	pip3 install pymysql && \
+
+	apk del curl gcc g++ make
 
 COPY jupyter.sh /entrypoint/jupyter.sh
