@@ -112,3 +112,23 @@ dm composer laravel 安装composer里的软件包
 1、增加图形管理界面(dm manage)
 2、增加多机使用dm(dm manage -> etcd -> dm1、dm2、dm3)
 </pre>
+
+<pre>
+2017-11-22更新：
+增加一些比较有用的docker工具包：
+1、大数据套件：
+dm run data-java
+dm run data-hadoop
+dm run data-spark
+dm run data-zeppelin
+需要先等待data-java安装完成之后再安装之后的。可以到container/data/share/lib下看一下是否有jdk
+
+2、机器学习：
+dm run py-note（jupyter+numpy、scipy、matplotlib、pandas、scikit-learn、scrapy、gevent、pymysql、psycopg2）
+
+3、elk：
+dm run elk-es
+dm run elk-filebeat（需要到src/docker/conf/elk里定义下抓取的日志目录）
+dm run elk-kibana
+默认账号密码：elastic/changeme
+</pre>
