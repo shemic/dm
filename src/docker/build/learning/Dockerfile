@@ -8,4 +8,5 @@ RUN apk update && apk add --no-cache python3-dev gcc g++ automake lapack lapack-
 	pip3 install pandas && \
 	pip3 install matplotlib && \
 	pip3 install scikit-learn && \
+	pip3 install seaborn && \
 	apk del gcc g++ automake gfortran
