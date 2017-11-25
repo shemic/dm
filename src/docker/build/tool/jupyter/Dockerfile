@@ -28,11 +28,15 @@ RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3
 	jupyter-nbextension install rise --py --sys-prefix && \
 	jupyter-nbextension enable rise --py --sys-prefix && \
 
+	#c kernel
+	#pip2 install jupyter-c-kernel && install_c_kernel && \
+
 	pip3 install incremental && \
 	pip3 install scrapy && \
 	pip3 install gevent && \
 	apk del openssl-dev && apk add postgresql-dev && pip3 install psycopg2 && \
 	pip3 install pymysql && \
+	#apk add jpeg-dev && pip3 install pyecharts && \
 
 	apk del curl gcc g++ make
 
