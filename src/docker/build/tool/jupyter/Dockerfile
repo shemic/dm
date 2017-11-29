@@ -11,32 +11,36 @@ RUN apk update && apk add --no-cache gcc g++ curl make libzmq python-dev python3
 	cd .. && \
 	rm -rf zeromq* && \
 	pip2 install pyzmq --install-option="--zmq=/usr/local/zeromq" && \
+	pip3 install pyzmq --install-option="--zmq=/usr/local/zeromq" && \
 	#pip2 install ipython && \
 	pip2 install jupyter && \
-	pip3 install pyzmq --install-option="--zmq=/usr/local/zeromq" && \
+	pip3 install jupyter && \
 	pip3 install -U ipykernel && \
-	python3 -m ipykernel install --user && \
 	python2 -m ipykernel install --user && \
-	pip2 install jupyterlab && \
-	pip2 install jupyter_contrib_nbextensions && \
-	pip2 install jupyter_nbextensions_configurator && \
-	pip2 install jupyter_dashboards && \
-	pip2 install rise && \
+	python3 -m ipykernel install --user && \
+	pip2 uninstall -y jupyter && \
+
+	pip3 install jupyterlab && \
+	pip3 install jupyter_contrib_nbextensions && \
+	pip3 install jupyter_nbextensions_configurator && \
+	pip3 install jupyter_dashboards && \
+	pip3 install rise && \
 	jupyter contrib nbextension install --user && \
 	jupyter nbextensions_configurator enable --user && \
 	jupyter dashboards quick-setup --sys-prefix && \
 	jupyter-nbextension install rise --py --sys-prefix && \
 	jupyter-nbextension enable rise --py --sys-prefix && \
 
-	#c kernel
-	#pip2 install jupyter-c-kernel && install_c_kernel && \
-
 	pip3 install incremental && \
 	pip3 install scrapy && \
 	pip3 install gevent && \
 	apk del openssl-dev && apk add postgresql-dev && pip3 install psycopg2 && \
 	pip3 install pymysql && \
+	pip3 install prettytable && \
+
 	#apk add jpeg-dev && pip3 install pyecharts && \
+	#c kernel
+	#pip3 install jupyter-c-kernel && install_c_kernel && \
 
 	apk del curl gcc g++ make
 
