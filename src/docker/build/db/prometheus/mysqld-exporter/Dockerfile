@@ -1,3 +1,3 @@
-FROM quay.io/prometheus/prometheus:latest
+FROM prom/mysqld-exporter:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
