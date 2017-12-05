@@ -133,3 +133,12 @@ dm run elk-filebeat（需要到src/docker/conf/elk里定义下抓取的日志目
 dm run elk-kibana
 默认账号密码：elastic/changeme
 </pre>
+
+<pre>
+2017-12-05更新：
+增加个人网盘：
+dm run tool-pan
+访问：
+ip:8089 用户名密码都是superuser
+ip:8089/dweb 是离线下载
+</pre>
