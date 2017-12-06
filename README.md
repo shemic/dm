@@ -143,6 +143,6 @@ dm run elk-kibana
 增加个人网盘：
 dm run tool-pan
 访问：
-ip:9090 用户名密码都是superuser
-ip:9090/dweb 是离线下载
+ip:9030 用户名密码都是superuser
+ip:9030/dweb 是离线下载
 </pre>
