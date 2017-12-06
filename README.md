@@ -122,6 +122,10 @@ dm run data-hadoop
 dm run data-spark
 dm run data-zeppelin
 需要先等待data-java安装完成之后再安装之后的。可以到container/share/lib下看一下是否有jdk
+访问：
+ip:9991 
+ip:40099
+ip:9999
 
 2、机器学习：
 dm run py-note（jupyter+numpy、scipy、matplotlib、pandas、scikit-learn、scrapy、gevent、pymysql、psycopg2）
