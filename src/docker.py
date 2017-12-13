@@ -396,8 +396,10 @@ class Docker_Action(object):
 class Container(object):
 	@staticmethod
 	def run(command):
-		command = 'container.run ' + command
-		Core.shell(command, True, bg=False)
+		#command = 'container.run ' + command
+		#Core.shell(command, True, bg=False)
+		command = 'docker run ' + command
+		Core.popen(command, True, bg=False)
 		return command
 	@staticmethod
 	def show(name=''):
