@@ -1,8 +1,7 @@
-FROM docker.dever.cc/dev/php:latest
+FROM docker.dever.cc/dev/php/v7:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
-RUN apk add --no-cache --update libevent-dev php5-xml && \
-	pecl install channel://pecl.php.net/libevent-0.1.0 && \
-	tar -zxvf libevent-0.1.0.tgz && \
-	echo extension=libevent.so > /etc/php5/conf.d/libevent.ini
+RUN apk add --no-cache --update php7-dev libevent-dev php7-xml && \
+	pecl install event && \
+	echo extension=event.so > /etc/php7/conf.d/30-event.ini
