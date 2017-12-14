@@ -7,15 +7,13 @@
 """
 from core import *
 
-class Php(object):
-	path = 'src/php/'
-	share = '/share/lib/php'
+class Composer(object):
 	@classmethod
 	def init(self):
-		method = Core.getMethod(Php_Action, Args.action)
+		method = Core.getMethod(Composer_Action, Args.action)
 		method()
 
-class Php_Action(object):
+class Composer_Action(object):
 	@staticmethod
 	def install():
 		Composer.install(Args.name)

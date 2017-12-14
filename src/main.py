@@ -23,7 +23,7 @@
 	dm showi 显示所有镜像
 	dm rmi 删除所有未使用的镜像
 	后续实现：
-	dm use php 使用php工具包
+	dm use composer 使用composer工具包
 	dm install redis 安装redis
 	dm install laravel 安装laravel类库
 	dm remove redis 删除redis
@@ -55,7 +55,7 @@ class Main(object):
 			use = Env.use()
 			if not use:
 				use = Env.use(self.use)
-			cls = Core.getClass(use)
+			cls = Core.getClass(use, 'tool.')
 			cls.init()
 
 	@classmethod

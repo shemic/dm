@@ -300,6 +300,11 @@ class Core(object):
 	@classmethod
 	def getClass(self, name, path=''):
 		obj = self.getObject(name, path)
+		if path:
+			if not hasattr(obj, name):
+				print 'error ' + name
+				sys.exit()
+			obj = getattr(obj, name)
 		name = name.capitalize()
 		if not hasattr(obj, name):
 			print 'error ' + name
