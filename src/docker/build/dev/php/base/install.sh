@@ -14,4 +14,6 @@ phpize
 make
 make install
 echo extension=$3.so > /etc/php7/conf.d/$3.ini
+killall php-fpm
+php-fpm
 #apk del $lib
