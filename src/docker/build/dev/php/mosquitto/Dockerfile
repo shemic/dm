@@ -1,4 +1,4 @@
-FROM docker.dever.cc/dev/php:latest
+FROM docker.dever.cc/dev/php/v5:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

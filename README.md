@@ -127,24 +127,29 @@ ip:9030/dweb 是离线下载
 </pre>
 
 <pre>
-2017-12-15更新：
+2017-12-15更新（重要！）：
 删除use功能。以不同的命令替代：
 
 1、使用docker：
 dm run web-php
 
-2、使用php：
+2、安装php扩展：
 dp install libevent 安装libevent扩展
 dp install swoole 安装swoole扩展
-自带的php5.6和php7已经默认支持redis、memcached扩展，无需安装
+dp install redis
+dp install memcached
+dp install mongo
+dp show 查看当前可以安装的扩展
+自带的php5.6和php7已经删除redis、mongo等扩展，请在需要时自行安装。
 后续我会按照http://pecl.php.net/packages.php增加一些常用的扩展。
 你也可以现在自行实现扩展的安装：
-phpInstall swoole-2.0.10 libevent-dev,libaio-dev,libmnl-dev swoole
+phpInstall swoole-2.0.10 swoole libevent-dev,libaio-dev,libmnl-dev
 说明：
 phpInstall 为固定指令
 swoole-2.0.10 为在pecl.php.net中的扩展名和版本号
-libevent-dev,libaio-dev,libmnl-dev 为依赖，多个用逗号隔开
 swoole 为生成的so名称
+libevent-dev,libaio-dev,libmnl-dev 为依赖，多个用逗号隔开
+
 
 
 3、使用composer：
