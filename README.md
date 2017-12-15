@@ -1,4 +1,6 @@
-# dever-manage 小型编排工具
+# docker-manage 小型编排工具
+
+install：
 <pre>
 git clone https://github.com/shemic/dm
 cd dm
@@ -6,18 +8,17 @@ chmod +x install
 ./install
 </pre>
 
-无需关注是否安装了docker，本工具会自动安装docker。(本工具直接使用阿里云提供的sh来安装docker，经过测试，ubuntu16无法安装成功，请直接用apt install docker.io安装。)
+安装时会自动安装docker。如果失败，请自行安装最新版本的docker即可。
 
 基础指令：
 <pre>
 更新代码：dm up
-使用docker工具包(默认已经使用该工具包)：dm use docker
 使用哪个仓库为主(默认aliyun)：dm set private|aliyun|hub
 删除某一个软件：dm rm web-php
 </pre>
 
 <pre>
-当前使用的工具包为docker时，可以使用以下命令开启web：
+可以使用以下命令开启web：
 启动全部：dm run web
 启动某一个软件：dm run web-mysql
 删除全部：dm rm web
@@ -83,28 +84,6 @@ docker方法列表：
 8、web-php restart：重新启动容器
 
 </pre>
-<pre>
-2017-11-14更新：
-当前工具包：docker、dever、php、git
-1、使用dever来安装plant：
-dever是一个php框架，适合开发api、微服务、频繁修改模板等业务
-plant是dever框架开发的一个小型社区
-dm use dever
-dm init
-dm product plant
-例子：http://www.5dev.cn/
-
-2、使用git(方便在任意目录下pull或者push)：
-dm use git
-dm pull /data/
-dm push /data/
-
-3、使用php(暂时不能使用)：
-dm use php
-dm install redis 安装插件
-dm composer laravel 安装composer里的软件包
-
-</pre>
 
 <pre>
 2017-11-15更新：
@@ -145,4 +124,41 @@ dm run tool-pan
 访问：
 ip:9030 用户名密码都是superuser
 ip:9030/dweb 是离线下载
+</pre>
+
+<pre>
+2017-12-15更新：
+删除use功能。以不同的命令替代：
+
+1、使用docker：
+dm run web-php
+
+2、使用php：
+dp install libevent 安装libevent扩展
+dp install swoole 安装swoole扩展
+自带的php5.6和php7已经默认支持redis、memcached扩展，无需安装
+后续我会按照http://pecl.php.net/packages.php增加一些常用的扩展。
+你也可以现在自行实现扩展的安装：
+phpInstall swoole-2.0.10 libevent-dev,libaio-dev,libmnl-dev swoole
+说明：
+phpInstall 为固定指令
+swoole-2.0.10 为在pecl.php.net中的扩展名和版本号
+libevent-dev,libaio-dev,libmnl-dev 为依赖，多个用逗号隔开
+swoole 为生成的so名称
+
+
+3、使用composer：
+dpc install laravel
+
+4、使用dever：
+安装plant：
+dever是一个php框架，适合开发api、微服务、频繁修改模板、专题等业务，目前是内部测试版本。
+plant是dever框架开发的一个小型社区
+dever init
+dever product plant
+例子：http://www.5dev.cn/
+
+5、使用git(方便在任意目录下pull或者push)：
+dgit pull /data/
+dgit push /data/
 </pre>

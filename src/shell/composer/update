@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-composer global update
+phpcomposer global update

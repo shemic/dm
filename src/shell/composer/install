@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-composer global require $1
+phpcomposer global require $1

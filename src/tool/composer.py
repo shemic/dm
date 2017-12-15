@@ -27,8 +27,8 @@ class Composer_Action(object):
 class Composer(object):
 	@staticmethod
 	def update():
-		Core.popen('composer.update', True)
+		Core.shell('composer.update', True)
 	@staticmethod
 	def install(name):
-		Core.popen('composer.install ' + name, True)
+		Core.shell('composer.install ' + name, True)
 		print 'finished'
