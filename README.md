@@ -167,3 +167,11 @@ dever product plant
 dgit pull /data/
 dgit push /data/
 </pre>
+
+<pre>
+2017-12-18更新：
+别名功能优化升级，当多个容器使用同一个别名时，可以使用该别名同时操作这多个容器。
+如同时启动了php5、php7时，输入php -v， 可以同时看到这两个php的版本。
+使用dp install redis安装扩展时，可以同时安装php5、php7的redis扩展。
+该功能将为以后dm-manage多机部署提供支持。
+</pre>
