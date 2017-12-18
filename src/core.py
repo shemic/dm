@@ -181,30 +181,48 @@ class Config(object):
 class Alias(object):
 	@classmethod
 	def delete(self, config, name):
-		return
 		result = self.get(config, name)
 		for key in result:
 			action = self.action(name, key)
-			Core.popen('rm -rf ' + action[1], bg=True)
-			Core.popen('rm -rf ' + action[2], bg=True)
+			if action[0] != 'sh' and File.exists(action[1]):
+				content = File.get(action[1])
+				string = 'docker exec -it ' + name + ' ' + action[0] + ' $@'
+				if string in content:
+					content = content.replace(string, '')
+					File.write(action[1], content.strip())
+					if 'docker' not in content:
+						Core.popen('rm -rf ' + action[1], bg=True)
+						Core.popen('rm -rf ' + action[2], bg=True)
+			#Core.popen('rm -rf ' + action[1], bg=True)
+			#Core.popen('rm -rf ' + action[2], bg=True)
 	@classmethod
 	def add(self, config, name, content, type):
 		result = self.get(config, name)
 		for key in result:
 			action = self.action(name, key)
-			content = '#!/usr/bin/env sh \nset -e\n'
+			old = ''
+			if File.exists(action[1]):
+				old = File.get(action[1])
+			env = '#!/usr/bin/env sh \nset -e\n'
 			if type != 'call':
 				if action[0] == 'sh':
-					content = content + self.define(name) + \
+					content = env + self.define(name) + \
 						'else\n' + \
 						'docker exec -it ' + name + ' ' + action[0] + ' $@\n' + \
 						'fi'
+				if old:
+					content = 'docker exec -it ' + name + ' ' + action[0] + ' $@'
+					if content not in old:
+						content = old + '\n' + content
+					else:
+						content = ''
 				else:
-					content = content + 'docker exec -it ' + name + ' ' + action[0] + ' $@'
+					content = env + 'docker exec -it ' + name + ' ' + action[0] + ' $@'
 			else:
-				content = content + ' $@'
-			File.write(action[1], content)
-			Core.popen('ln -sf ' + action[1] + ' ' + action[2])
+				content = env + ' $@'
+			if content:
+				File.write(action[1], content)
+				Core.popen('ln -sf ' + action[1] + ' ' + action[2])
 
 	@staticmethod
 	def define(name):
@@ -253,6 +271,13 @@ class File(object):
 	@staticmethod
 	def read(path, name):
 		handle = open(path + name, 'r')
+		content = handle.read()
+		handle.close()
+		return content
+
+	@staticmethod
+	def get(file):
+		handle = open(file, 'r')
 		content = handle.read()
 		handle.close()
 		return content
