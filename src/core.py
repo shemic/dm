@@ -210,7 +210,7 @@ class Alias(object):
 						'else\n' + \
 						'docker exec -it ' + name + ' ' + action[0] + ' $@\n' + \
 						'fi'
-				if old:
+				elif old:
 					content = 'docker exec -it ' + name + ' ' + action[0] + ' $@'
 					if content not in old:
 						content = old + '\n' + content
