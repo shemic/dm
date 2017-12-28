@@ -1,3 +1,3 @@
-FROM ubuntu:16.04
+FROM wernight/phantomjs
 
 MAINTAINER Rabin "https://github.com/shemic"

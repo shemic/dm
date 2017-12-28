@@ -1,3 +1,3 @@
-FROM ubuntu:16.04
+FROM mongoclient/mongoclient:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
