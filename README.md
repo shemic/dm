@@ -108,6 +108,13 @@ ip:9999
 
 2、机器学习：
 dm run py-note（jupyter+numpy、scipy、matplotlib、pandas、scikit-learn、scrapy、gevent、pymysql、psycopg2）
+2018-01-17更新：增加opencv、dlib库，不过不能使用imshow等前台展示图片的方法。
+使用：
+dm run py-note
+py-note logs 查看token
+访问你的浏览器：ip:10001、ip:10002
+dmlearn install * 可以安装你需要的库，如：
+dmlearn install seaborn
 
 3、elk：
 dm run elk-java（如果之前用了data-java这里就不用再执行了）

@@ -1,4 +1,4 @@
-FROM docker.dever.cc/dev/python/v3:latest
+FROM docker.dever.cc/learning/numpy:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

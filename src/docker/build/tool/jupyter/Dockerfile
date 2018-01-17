@@ -1,4 +1,4 @@
-FROM docker.dever.cc/learning:latest
+FROM docker.dever.cc/learning/dlib:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
