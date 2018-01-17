@@ -86,13 +86,6 @@ docker方法列表：
 </pre>
 
 <pre>
-2017-11-15更新：
-接下来要更新的功能：
-1、增加图形管理界面(dm manage)
-2、增加多机使用dm(dm manage -> etcd -> dm1、dm2、dm3)
-</pre>
-
-<pre>
 2017-11-22更新：
 增加一些比较有用的docker工具包：
 1、大数据套件：
@@ -181,4 +174,31 @@ dgit push /data/
 如同时启动了php5、php7时，输入php -v， 可以同时看到这两个php的版本。
 使用dp install redis安装扩展时，可以同时安装php5、php7的redis扩展。
 该功能将为以后dm-manage多机部署提供支持。
+</pre>
+
+
+
+<pre>
+2018年计划：
+分工明确：
+1、dm tool：工具包。上述更新都是增加了工具包。
+2、dm task：任务器
+3、dm manage：后台管理
+4、dm cicd：持续集成
+5、dm api：对外接口
+6、dm shell：命令行工具，可以统一的直接对容器里的软件发布命令，如dp install libevent，将升级成：
+dm shell
+> php install libevent
+> pip install tornado
+> exit
+
+7、dm ss：vpn工具
+
+具体计划：
+1、增加图形管理界面(dm manage)
+2、增加多机使用dm(dm manage -> etcd -> dm1、dm2、dm3)
+3、增加任务调度功能(celery、airflow)
+4、增加持续集成等功能(从git上自动拉取代码并更新容器：CircleCI)
+5、增加测试工具包
+6、增加自动翻墙(自动代理，能够通过dm直接访问google查资料)
 </pre>
