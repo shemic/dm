@@ -7,19 +7,19 @@ start_buy()
     git reset --hard FETCH_HEAD
     git pull
     chmod -R +x $DEMETER_HOME/*.py
-    install.py
-    process_start admin.py
-    process_start cron.py
+    python install.py
+    process_start python admin.py
+    process_start python cron.py
 }
 
 stop_buy()
 {
-	process_stop admin.py
-    process_stop cron.py
+	process_stop python admin.py
+    process_stop python cron.py
 }
 
 monit_buy()
 {
-    process_monit admin.py
-    process_monit cron.py
+    process_monit python admin.py
+    process_monit python cron.py
 }
