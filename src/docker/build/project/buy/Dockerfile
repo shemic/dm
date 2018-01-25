@@ -1,4 +1,4 @@
-FROM docker.dever.cc/dev/python:latest
+FROM docker.dever.cc/spider/xvfb:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 

@@ -6,3 +6,5 @@ RUN apk update && apk add --no-cache python3-dev gcc g++ automake libxml2 libxml
 	pip3 install incremental && \
 	pip3 install scrapy && \
 	apk del gcc g++ automake python3-dev
+
+WORKDIR /src
