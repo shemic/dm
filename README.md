@@ -102,6 +102,12 @@ ip:9999
 2、机器学习：
 dm run py-note（jupyter+numpy、scipy、matplotlib、pandas、scikit-learn、scrapy、gevent、pymysql、psycopg2）
 2018-01-17更新：增加opencv、dlib库，不过不能使用imshow等前台展示图片的方法。
+2018-01-31更新：增加tensorflow、pytorch库，但是没有集成在包里，因为装完比较大，建议自行安装，jupyter里打开命令行，执行以下命令：
+cd /shell/install
+./tensorflow.sh
+./pytorch.sh
+
+
 使用：
 dm run py-note
 py-note logs 查看token
@@ -112,7 +118,7 @@ dmlearn install seaborn
 3、elk：
 dm run elk-java（如果之前用了data-java这里就不用再执行了）
 dm run elk-es
-dm run elk-filebeat（需要到src/docker/conf/elk里定义下抓取的日志目录）
+dm run elk-filebeat（需要到container/conf/elk里定义下抓取的日志目录）
 dm run elk-kibana
 默认账号密码：elastic/changeme
 </pre>
@@ -200,5 +206,5 @@ dm shell
 3、增加任务调度功能(celery、airflow)
 4、增加持续集成等功能(从git上自动拉取代码并更新容器：CircleCI)
 5、增加测试工具包
-6、增加自动翻墙(自动代理，能够通过dm直接访问google查资料)
+6、增加自动代理(能够通过dm直接访问google查资料)
 </pre>
