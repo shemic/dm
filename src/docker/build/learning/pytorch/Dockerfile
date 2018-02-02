@@ -6,6 +6,6 @@ RUN apk add --no-cache --virtual=.build-deps build-base python3-dev yaml-dev py3
     mkdir -p /tmp/pytorch && \
     git clone --recursive https://github.com/pytorch/pytorch /tmp/pytorch && \
     cd /tmp/pytorch && \
-    python setup.py install && \
+    python3 setup.py install && \
     apk del .build-deps && \
     rm -rf /tmp/* /root/.cache
