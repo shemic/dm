@@ -418,6 +418,7 @@ class Container(object):
 			,'host' : '--add-host'
 			,'root' : '--privileged='
 			,'memory' : '--memory='
+			,'shm' : '--shm-size='
 			,'expose' : '--expose',
 		}
 	@staticmethod
