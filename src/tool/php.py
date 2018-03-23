@@ -16,7 +16,7 @@ class Php(object):
 class Php_Action(object):
 	package = {
 		# 名称-版本号,so名,依赖包,configure参数
-		'libevent' : ['event-2.3.0', 'event', 'libevent-dev', '']
+		'libevent' : ['event-2.3.0', 'event', 'curl-dev,libevent-dev', '']
 		,'swoole' : ['swoole-2.0.10', 'swoole', 'libevent-dev,libaio-dev,libmnl-dev', '']
 		,'mongo' : ['mongodb-1.3.4', 'mongodb', '', '']
 		,'redis' : ['redis-3.1.5RC2', 'redis', '', '']
