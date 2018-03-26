@@ -7,7 +7,12 @@ check()
 }
 status=`check docker`
 if [ "$status" = 0 ]; then
-	curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
+	apt-get update
+	apt-get -y install apt-transport-https ca-certificates curl software-properties-common
+	curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+	add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+	apt-get -y update
+	apt-get -y install docker-ce
 fi
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
@@ -28,4 +33,5 @@ ln -sf $basepath/src/dpc.py /usr/bin/dpc && chmod +x /usr/bin/dpc
 ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever
 ln -sf $basepath/src/dgit.py /usr/bin/dgit && chmod +x /usr/bin/dgit
 
+docker version
 echo 'install success!'
