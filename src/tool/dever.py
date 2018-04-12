@@ -42,7 +42,12 @@ class Dever_Action(object):
 	def package(self):
 		lib = Dever.lib + 'dever_package/'
 		path = lib + Args.name
-		Git.update(Dever.git + Dever.package + Args.name, path)
+		git = Args.param
+		if not git:
+			git = Env.val('package')
+		if not git:
+			git = Dever.git
+		Git.update(git + Dever.package + Args.name, path)
 		Dever.rely(self, path)
 		boot = lib + 'boot.php'
 		if not File.exists(boot):

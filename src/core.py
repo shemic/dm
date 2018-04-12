@@ -104,7 +104,8 @@ class Env(object):
 
 	@classmethod
 	def val(self, name='', value=None):
-		name = self.dm_val + name.capitalize()
+		#name = self.dm_val + name.capitalize()
+		name = self.dm_val + name
 		if value:
 			return self.write(name, value)
 		return self.read(name)
