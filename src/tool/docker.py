@@ -294,6 +294,7 @@ class Docker_Action(object):
 		Container.load(tar, param['name'])
 		Docker.storeHost = ''
 		param['config']['image'] = backup
+		param['action'] = 'run'
 		self.run(**param)
 
 	@classmethod
