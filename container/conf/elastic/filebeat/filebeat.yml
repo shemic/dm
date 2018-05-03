@@ -11,16 +11,26 @@
 
 filebeat.prospectors:
 
-# Each - is a prospector. Most options can be set at the prospector level, so
-# you can use different prospectors for various configurations.
-# Below are the prospector specific configurations.
-
-- input_type: log
+- input_type: nginx_log
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     - "/root/nginx/*.log"
+
+- input_type: docker_log
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
     - "/root/docker/*/*.log"
+
+# Each - is a prospector. Most options can be set at the prospector level, so
+# you can use different prospectors for various configurations.
+# Below are the prospector specific configurations.
+
+- input_type: dever_log
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
     - "/root/php7/*.log"
     #- c:\programdata\elasticsearch\logs\*
 
