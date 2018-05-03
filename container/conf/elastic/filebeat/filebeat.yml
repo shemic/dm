@@ -20,8 +20,8 @@ filebeat.prospectors:
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     - "/root/nginx/*.log"
-    - "/root/docker/*/*.log"
-    - "/root/php7/*.log"
+    #- "/root/docker/*/*.log"
+    #- "/root/php7/*.log"
     #- c:\programdata\elasticsearch\logs\*
   encoding: utf-8
 
