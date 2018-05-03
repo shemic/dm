@@ -89,3 +89,4 @@ http.port: 9200
 
 ### xpack in alpine
 xpack.ml.enabled: false
+xpack.security.enabled: false

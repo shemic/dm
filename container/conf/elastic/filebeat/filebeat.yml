@@ -19,7 +19,9 @@ filebeat.prospectors:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - /root/filebeat/*.log
+    - "/root/nginx/*.log"
+    - "/root/docker/*/*.log"
+    - "/root/php7/*.log"
     #- c:\programdata\elasticsearch\logs\*
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
