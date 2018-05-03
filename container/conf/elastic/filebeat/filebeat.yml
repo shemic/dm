@@ -11,28 +11,19 @@
 
 filebeat.prospectors:
 
-- input_type: nginx_log
-
-  # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - "/root/nginx/*.log"
-
-- input_type: docker_log
-
-  # Paths that should be crawled and fetched. Glob based paths.
-  paths:
-    - "/root/docker/*/*.log"
-
 # Each - is a prospector. Most options can be set at the prospector level, so
 # you can use different prospectors for various configurations.
 # Below are the prospector specific configurations.
 
-- input_type: dever_log
+- input_type: log
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    - "/root/php7/*.log"
+    - "/root/nginx/*.log"
+    #- "/root/docker/*/*.log"
+    #- "/root/php7/*.log"
     #- c:\programdata\elasticsearch\logs\*
+  encoding: utf-8
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
@@ -98,6 +89,8 @@ output.elasticsearch:
   #protocol: "https"
   username: "elastic"
   password: "changeme"
+  index: "nginx-%{+yyyy.MM.dd}"
+  #pipeline: "nginx-pipeline"
 
 #----------------------------- Logstash output --------------------------------
 #output.logstash:
