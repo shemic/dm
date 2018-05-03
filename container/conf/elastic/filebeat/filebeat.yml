@@ -20,8 +20,8 @@ filebeat.prospectors:
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
     - "/root/nginx/*.log"
-    #- "/root/docker/*/*.log"
-    #- "/root/php7/*.log"
+    - "/root/docker/*/*.log"
+    - "/root/php7/*.log"
     #- c:\programdata\elasticsearch\logs\*
   encoding: utf-8
 
@@ -89,7 +89,8 @@ output.elasticsearch:
   #protocol: "https"
   username: "elastic"
   password: "changeme"
-  index: "nginx-%{+yyyy.MM.dd}"
+  #index: "nginx-%{+yyyy.MM.dd}"
+  #curl -XPUT 'http://elk-ek:9200/_ingest/pipeline/nginx-pipeline' -d@/work/pipeline.json
   #pipeline: "nginx-pipeline"
 
 #----------------------------- Logstash output --------------------------------
