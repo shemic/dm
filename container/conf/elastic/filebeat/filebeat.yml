@@ -42,6 +42,7 @@ filebeat.prospectors:
   #fields:
   #  level: debug
   #  review: 1
+  close_older: 24h
 
   ### Multiline options
 

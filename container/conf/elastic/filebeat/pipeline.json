@@ -1,11 +1,10 @@
 {
-  "description" : "test-pipeline",
+  "description" : "applet-pipeline",
   "processors" : [
     {
       "grok" :{
         "field" : "message",
-        "patterns" :["%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}"
-        ]
+        "patterns" :["%{GREEDYDATA:createtime} %{GREEDYDATA:typename} %{GREEDYDATA:process}: &project=%{GREEDYDATA:project}&appid=%{GREEDYDATA:appid}&uuid=%{GREEDYDATA:uuid}&method=%{GREEDYDATA:method}&error=%{GREEDYDATA:error}&pagepath=%{GREEDYDATA:pagepath}&cdate=%{GREEDYDATA:cdate}&fontSizeSetting=%{GREEDYDATA:fontSizeSetting}&platform=%{GREEDYDATA:platform}&system=%{GREEDYDATA:system}&version=%{GREEDYDATA:version}&language=%{GREEDYDATA:language}&screenHeight=%{GREEDYDATA:screenHeight}&screenWidth=%{GREEDYDATA:screenWidth}&pixelRatio=%{GREEDYDATA:pixelRatio}&model=%{GREEDYDATA:model}&brand=%{GREEDYDATA:brand}&country=%{GREEDYDATA:country}&province=%{GREEDYDATA:province}&city=%{GREEDYDATA:city}&sex=%{GREEDYDATA:sex}&name=%{GREEDYDATA:name}&uid=%{INT:uid}"]
       }
     }
 
