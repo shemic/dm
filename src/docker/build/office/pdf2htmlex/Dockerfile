@@ -1,5 +1,7 @@
 FROM docker.dever.cc/dev/python:latest
 
+#docker pull bwits/pdf2htmlex-alpine
+
 MAINTAINER Rabin "https://github.com/shemic"
 
 ENV REFRESHED_AT 20151105
