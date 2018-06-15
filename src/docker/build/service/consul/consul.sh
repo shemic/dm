@@ -3,7 +3,11 @@ set -e
 
 start_consul()
 {
-	process_start consul agent -server -bootstrap-expect 1 -data-dir /root/consul/data -config-dir /root/consul/config -client 0.0.0.0
+	if [ "$1" == "server" ]; then
+		process_start consul agent -server -bootstrap-expect 1 -data-dir /root/consul/data -config-dir /root/consul/config -client 0.0.0.0
+	else
+		process_start consul agent -client -config-dir /root/consul/config -join 0.0.0.0
+	fi
 	#consul members
 }
 
@@ -14,5 +18,5 @@ stop_consul()
 
 monit_consul()
 {
-	process_monit consul
+	true
 }

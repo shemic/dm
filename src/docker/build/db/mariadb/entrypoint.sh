@@ -87,5 +87,5 @@ if [ "$1" = 'mysqld' ]; then
 	#chown -R mysql:mysql "$DATADIR"
 fi
 
-mysqld --user=root --datadir="$DATADIR"
+mysqld --user=root --datadir="$DATADIR" --init-file="/etc/mysql/my.conf"
 #exec "$@"

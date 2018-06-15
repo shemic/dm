@@ -1,3 +1,5 @@
 [mysqld]
 skip-host-cache
 skip-name-resolve
+slow_query_log = ON
+long_query_time = 3

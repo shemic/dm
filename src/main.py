@@ -14,7 +14,7 @@ class Main(object):
 	def init(self, use = 'docker'):
 		Core.path = File.path().replace('/src/', '/')
 		Args.init()
-		method = ('use', 'set', 'val', 'up', 'commit', 'path', 'shell')
+		method = ('use', 'set', 'val', 'up', 'commit', 'path', 'shell', 'master', 'ip')
 		if Args.action in method:
 			self.handle()
 		else:
@@ -73,5 +73,17 @@ class Main_Action(object):
 	@staticmethod
 	def shell():
 		print Core.shell(Args.name)
+
+	@staticmethod
+	def master():
+		print Core.path + 'src/shell/dm'
+
+	@staticmethod
+	def ip():
+		if not Args.name:
+			ifname = 'eth0'
+		else:
+			ifname = Args.name
+		print Core.ip(ifname)
 
 #Main.init()

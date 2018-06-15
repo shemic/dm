@@ -5,15 +5,11 @@ check()
     yes=`which $1 | wc -l`
     echo $yes
 }
+
+# docker
 status=`check docker`
 if [ "$status" = 0 ]; then
 	curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
-	apt-get update
-	apt-get -y install apt-transport-https ca-certificates curl software-properties-common
-	curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
-	add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-	apt-get -y update
-	apt-get -y install docker-ce
 fi
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
@@ -23,6 +19,9 @@ tee /etc/docker/daemon.json <<-'EOF'
 }
 EOF
 service docker restart
+
+# python 
+pip install python-daemon
 
 chmod -R +x src/*.py
 chmod -R +x src/shell

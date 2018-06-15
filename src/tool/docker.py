@@ -33,7 +33,10 @@ class Docker(object):
 		if Args.index in self.conf['config']:
 			self.handle(method, self.conf['config'][Args.index], Args.index, Args.action)
 		else:
-			for item in self.conf['server']:
+			server = self.conf['server']
+			if 'default' in self.conf['base']:
+				server = self.conf['base']['default'].split(',')
+			for item in server:
 				if self.check(Args.index, item) == True:
 					self.handle(method, self.conf['config'][item], item, Args.action)
 	@classmethod
@@ -365,7 +368,7 @@ class Docker_Action(object):
 		state = Container.check(param['name'])
 		if state == 0:
 			Docker.hook('start', param['config'], param['name'])
-			run = ['-it', '--name='+param['name'], '--hostname='+param['name'], restart, daemon, '-v '+Core.path+'container/share:/share -v /etc/hosts:/etc/hosts.main']
+			run = ['-it', '--name='+param['name'], '--hostname='+param['name'], restart, daemon, '-v '+Core.path+'container/share:/share -v /etc/hosts:/etc/hosts.main', '--env HOSTIP="'+Core.ip()+'"']
 
 			args = Container.args()
 			for key in args:
