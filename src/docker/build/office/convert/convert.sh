@@ -1,18 +1,28 @@
 #!/usr/bin/env sh
 set -e
 
-start_nginx()
+start_convert()
 {
-	#exec nginx
-	process_start nginx
+    cd $DEMETER_HOME
+    git reset --hard FETCH_HEAD
+    git pull
+    chmod -R +x $DEMETER_HOME/*.py
+    install.py
+    process_start admin.py
+    process_start front.py
+    process_start cron.py
 }
 
-stop_nginx()
+stop_convert()
 {
-    nginx -s stop
+    process_stop admin.py
+    process_stop front.py
+    process_stop cron.py
 }
 
-monit_nginx()
+monit_convert()
 {
-	process_monit nginx
+	process_monit admin.py
+    process_monit front.py
+    process_monit cron.py
 }

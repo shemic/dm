@@ -43,6 +43,8 @@ class Docker(object):
 	def config(self):
 		if not self.conf:
 			self.conf = Config.read(self.path)
+			if 'network' not in self.conf['base']:
+				self.conf['base']['network'] = 'dm'
 
 	@classmethod
 	def check(self, name, item):
@@ -56,8 +58,9 @@ class Docker(object):
 			return False
 
 	@classmethod
-	def handle(self, method, config, item, action='run'):
-		self.rely(config, action)
+	def handle(self, method, config, item, action='run', slave=False):
+		if slave == False:
+			self.rely(config, action)
 		if 'num' not in config:
 			config['num'] = 1
 		num = int(config['num'])
@@ -72,6 +75,8 @@ class Docker(object):
 			if action in ('stop', 'restart', 'rm', 'rmb', 'reset', 'run', 'create'):
 				self.slave(method, config, item, action)
 			i = i + 1
+		if slave == False:
+			self.next(config, action)
 
 	@classmethod
 	def name(self, name, i):
@@ -103,6 +108,9 @@ class Docker(object):
 				result = Core.replace('{path}', self.conf['base']['path'], result)
 				result = Core.replace('{container}', self.conf['base']['path'] + 'container/', result)
 				result = Core.replace('{name}', name, result)
+				if 'parent' in self.conf['base']:
+					result = Core.replace('{parent}', self.conf['base']['parent'], result)
+
 				result = self.parse(result)
 				result = Core.replace(',', ' ' + prefix + ' ', result)
 				if item == 'hostname':
@@ -159,6 +167,16 @@ class Docker(object):
 				Core.popen('Core ' + action + ' ' + config['rely'], True)
 
 	@classmethod
+	def next(self, config, action):
+		if 'next' in config:
+			if ',' in config['next']:
+				data = config['next'].split(',');
+				for i in data:
+					Core.popen('Core ' + action + ' ' + i, True)
+			else:
+				Core.popen('Core ' + action + ' ' + config['next'], True)
+
+	@classmethod
 	def hook(self, type, config, name):
 		key = 'hook.'+type
 		if key in config:
@@ -173,7 +191,10 @@ class Docker(object):
 				if k in config:
 					del config[k]
 			config['num'] = num
-			self.handle(method, config, name + '-slave', action)
+			if 'slave_command' in config:
+				config['command'] = config['slave_command']
+			self.conf['base']['parent'] = Args.name + '-' + name
+			self.handle(method, config, name + '-slave', action, True)
 	@classmethod
 	def tar(self, name):
 		path = Core.path + 'data/backup/' + name + '/'
@@ -397,6 +418,22 @@ class Docker_Action(object):
 		else:
 			self.restart(**param)
 
+	@classmethod
+	def init(self, **param):
+		# 启动daemon-master
+		command = 'dm run daemon-master'
+		Core.popen(command, True, bg=False)
+
+		'''
+		ip = Args.name
+		if not ip:
+			ip = Core.ip()
+		token = Cluster.init(ip)
+
+		if token:
+		'''
+		print 'init cluster:yes'
+
 class Container(object):
 	@staticmethod
 	def run(command):
@@ -512,3 +549,12 @@ class Image(object):
 		command = pull + ' ' + library + key
 		Core.popen(command, True)
 		print 'finished'
+
+class Cluster(object):
+	@staticmethod
+	def init(ip):
+		#result = Core.shell('swarm.init ' + ip)
+		return 1
+	@staticmethod
+	def join(token, ip):
+		Core.shell('swarm.join ' + token + ' ' + ip, bg=True)

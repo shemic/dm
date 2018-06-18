@@ -6,7 +6,7 @@ MAINTAINER Rabin "https://github.com/shemic"
 ENV CONSUL_VERSION=0.9.2
 
 # install
-RUN apk add --no-cache --update curl unzip && \
+RUN apk add --no-cache --update curl unzip bind-tools && \
 	curl -O https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip && \
 	unzip consul_${CONSUL_VERSION}_linux_amd64.zip && \
 	mv consul /usr/bin/ && \

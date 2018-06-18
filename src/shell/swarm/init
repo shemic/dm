@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+
+docker swarm init --advertise-addr $1
