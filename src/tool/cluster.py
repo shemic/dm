@@ -22,6 +22,8 @@ class Cluster(Docker):
 	def handle(self, method, config, item, action='run', slave=False):
 		if slave == False:
 			self.rely(config, action)
+		if 'cluster' in config:
+			config['num'] = config['cluster']
 		if 'num' not in config:
 			config['num'] = 1
 		num = int(config['num'])
@@ -58,6 +60,13 @@ class Cluster_Action(Docker_Action):
 	@staticmethod
 	def node():
 		Swarm.node()
+
+	@staticmethod
+	def num():
+		name = Args.name
+		num = Args.param
+		print 'setting ' + name + ', please wait...'
+		Swarm.scale(name, num)
 
 	@staticmethod
 	def restart(**param):
@@ -338,3 +347,7 @@ class Swarm(object):
 	@staticmethod
 	def join(token, ip):
 		Core.shell('swarm.join ' + token + ' ' + ip, bg=True)
+
+	@staticmethod
+	def scale(name, num):
+		Core.shell('swarm.scale ' + name + '=' + num, bg=True)

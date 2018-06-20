@@ -215,13 +215,13 @@ dm shell
 1、增加default功能，直接使用dever run web时，只运行里面default定义的进程
 2、增加lvs、consul等组件
 3、增加集群（简易版本）：
-ds init：开启集群，之后将得到集群主机ip
+ds init：开启集群，之后将得到集群主机ip，如果内网ip较多，请直接输入ds init ip
 ds join ip：加入到集群中
 之后的操作和dm一样
 ds run web：启动web服务组集群
 ds run web-nginx：启动nginx集群
 ds rm web-nginx：删除nginx集群
-ds update web-nginx：更新nginx集群（此命令比较复杂，最好参考docker service update）
+ds num web-nginx 10:将nginx集群的数量增加到10
 
 之后将把consul和daemon加入进去，并实现可视化
 </pre>
