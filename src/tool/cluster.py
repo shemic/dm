@@ -205,7 +205,9 @@ class Cluster_Action(Docker_Action):
 		if ckey:
 			Env.cluster(ckey)
 		ckey = Env.cluster()
-		Env.cluster('yes')
+		if not ckey:
+			ckey = 'dm_cluster'
+			Env.cluster(ckey)
 		return (ip, ckey)
 
 	@classmethod
