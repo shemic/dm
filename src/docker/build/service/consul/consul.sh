@@ -3,6 +3,7 @@ set -e
 
 start_consul()
 {
+	ip=`ifconfig eth0|grep "inet addr:"|awk -F":" '{print $2}'|awk '{print $1}'`
 	if [ "$1" == "server" ]; then
 		process_start consul agent -server -bootstrap-expect 1 -data-dir /root/consul/data -config-dir /root/consul/config -client 0.0.0.0
 	elif [ "$1" == "client" ]; then

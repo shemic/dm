@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+
+docker service ls|awk '{print $1}'|xargs docker service rm 

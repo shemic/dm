@@ -44,7 +44,7 @@ class Dever_Action(object):
 		path = lib + Args.name
 		git = Args.param
 		if not git:
-			git = Env.val('package')
+			git = Env.dever()
 		if not git:
 			git = Dever.git
 		Git.update(git + Dever.package + Args.name, path)

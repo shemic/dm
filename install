@@ -20,14 +20,15 @@ tee /etc/docker/daemon.json <<-'EOF'
 EOF
 service docker restart
 
-# python 
-pip install python-daemon
+# python-daemon
+# pip install python-daemon
 
 chmod -R +x src/*.py
 chmod -R +x src/shell
 chmod -R 777 container/share/
 basepath=$(cd `dirname $0`; pwd)
 ln -sf $basepath/src/dm.py /usr/bin/dm && chmod +x /usr/bin/dm
+ln -sf $basepath/src/ds.py /usr/bin/ds && chmod +x /usr/bin/ds
 ln -sf $basepath/src/dp.py /usr/bin/dp && chmod +x /usr/bin/dp
 ln -sf $basepath/src/dpc.py /usr/bin/dpc && chmod +x /usr/bin/dpc
 ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever

@@ -62,6 +62,8 @@ class Args(object):
 class Env(object):
 	dm_use = 'base.use'
 	dm_store = 'base.store'
+	dm_cluster = 'base.cluster'
+	dm_dever = 'base.dever'
 	dm_val = 'val.'
 	data = {}
 
@@ -97,10 +99,22 @@ class Env(object):
 		return self.read(self.dm_use)
 
 	@classmethod
+	def dever(self, value=None):
+		if value:
+			return self.write(self.dm_dever, value)
+		return self.read(self.dm_dever)
+
+	@classmethod
 	def store(self, value=None):
 		if value:
 			return self.write(self.dm_store, value)
 		return self.read(self.dm_store)
+
+	@classmethod
+	def cluster(self, value=None):
+		if value:
+			return self.write(self.dm_cluster, value)
+		return self.read(self.dm_cluster)
 
 	@classmethod
 	def val(self, name='', value=None):
@@ -197,7 +211,7 @@ class Alias(object):
 			#Core.popen('rm -rf ' + action[1], bg=True)
 			#Core.popen('rm -rf ' + action[2], bg=True)
 	@classmethod
-	def add(self, config, name, content, type):
+	def add(self, config, name, content, type, cluster=False):
 		result = self.get(config, name)
 		for key in result:
 			action = self.action(name, key)
@@ -206,19 +220,23 @@ class Alias(object):
 				old = File.get(action[1])
 			env = '#!/usr/bin/env sh \nset -e\n'
 			if type != 'call':
+				dexec = 'docker exec -it ' + name + ' ' + action[0] + ' $@'
+				if cluster:
+					dexec = 'name=`ds name ' + name + '`\n'
+					dexec = dexec + 'docker exec -it $name ' + action[0] + ' $@'
 				if action[0] == 'sh':
-					content = env + self.define(name) + \
+					content = env + self.define(name, cluster) + \
 						'else\n' + \
-						'docker exec -it ' + name + ' ' + action[0] + ' $@\n' + \
+						dexec + '\n' + \
 						'fi'
 				elif old:
-					content = 'docker exec -it ' + name + ' ' + action[0] + ' $@'
+					content = dexec
 					if content not in old:
 						content = old + '\n' + content
 					else:
 						content = ''
 				else:
-					content = env + 'docker exec -it ' + name + ' ' + action[0] + ' $@'
+					content = env + dexec
 			else:
 				content = env + ' $@'
 			if content:
@@ -226,12 +244,15 @@ class Alias(object):
 				Core.popen('ln -sf ' + action[1] + ' ' + action[2])
 
 	@staticmethod
-	def define(name):
+	def define(name, cluster=False):
 		conf = ['logs', 'inspect', 'restart', 'stop', 'rm', 'rmb', 'run', 'uprun', 'show']
 		result = ''
 		for key in conf:
 			control = 'elif'
-			shell = 'dm ' + key + ' ' + name + '\n'
+			command = 'dm'
+			if cluster:
+				command = 'ds'
+			shell = command + ' ' + key + ' ' + name + '\n'
 			if key == 'logs':
 				control = 'if'
 			result = result + control + ' [ "$1" = "'+key+'" ];then\n' + shell
@@ -321,8 +342,27 @@ class Git(object):
 			Core.popen('cd ' + path + ' && git pull', bg=True)
 			print 'update:' + path + ' finished!'
 
+class Service(object):
+	@staticmethod
+	def set(git, path):
+		if File.exists(path) == False:
+			Core.popen('git clone ' + git + ' ' + path, True)
+			print 'init:' + path + ' finished!'
+		else:
+			Core.popen('cd ' + path + ' && git pull', bg=True)
+			print 'update:' + path + ' finished!'
+
 class Core(object):
 	path = ''
+	@classmethod
+	def curl(self, url = '', param={}, method = 'get'):
+		import requests
+		if method == 'get':
+			req = requests.get(url, params=param)
+		else:
+			req = requests.post(url, params=param)
+		result = req.text
+		return result
 	@classmethod
 	def getClass(self, name, path=''):
 		obj = self.getObject(name, path)

@@ -11,14 +11,17 @@ class Docker(object):
 	path = 'src/docker/'
 	default = 'shemic'
 	@classmethod
-	def init(self):
+	def init(self, action=False, method=False):
 		self.conf = {}
 		self.core = Config.core(self.path)
 		self.store = Env.store()
 		self.storeHost = self.core['store'][self.store] + '/'
+		if method == False:
+			method = Docker_Action
 
-		action = ('uprun', 'run', 'rm', 'rmb', 'stop', 'create', 'call', 'save', 'load', 'show', 'reset', 'logs', 'restart', 'inspect', 'test')
-		method = Core.getMethod(Docker_Action, Args.action)
+		if action == False:
+			action = ('uprun', 'run', 'rm', 'rmb', 'stop', 'create', 'call', 'save', 'load', 'show', 'reset', 'logs', 'restart', 'inspect', 'test')
+		method = Core.getMethod(method, Args.action)
 		if Args.name and Args.action in action:
 			self.load(method)
 		else:
@@ -27,7 +30,7 @@ class Docker(object):
 	@classmethod
 	def load(self, method):
 		self.config()
-		Container.network(self.conf['base'])
+		self.network()
 		self.rely(self.conf['base'], Args.action)
 		one = False
 		if Args.index in self.conf['config']:
@@ -45,6 +48,10 @@ class Docker(object):
 			self.conf = Config.read(self.path)
 			if 'network' not in self.conf['base']:
 				self.conf['base']['network'] = 'dm'
+
+	@classmethod
+	def network(self):
+		Container.network(self, self.conf['base'])
 
 	@classmethod
 	def check(self, name, item):
@@ -72,7 +79,7 @@ class Docker(object):
 			if self.store == 'private' and config['image'] in self.core['images']:
 				config['image'] = self.core['images'][config['image']]
 			method(config=config, name=name, item=item, index=i, action=action)
-			if action in ('stop', 'restart', 'rm', 'rmb', 'reset', 'run', 'create'):
+			if action in ('stop', 'restart', 'rm', 'rmb', 'reset', 'run', 'uprun', 'create'):
 				self.slave(method, config, item, action)
 			i = i + 1
 		if slave == False:
@@ -418,22 +425,6 @@ class Docker_Action(object):
 		else:
 			self.restart(**param)
 
-	@classmethod
-	def init(self, **param):
-		# 启动daemon-master
-		command = 'dm run daemon-master'
-		Core.popen(command, True, bg=False)
-
-		'''
-		ip = Args.name
-		if not ip:
-			ip = Core.ip()
-		token = Cluster.init(ip)
-
-		if token:
-		'''
-		print 'init cluster:yes'
-
 class Container(object):
 	@staticmethod
 	def run(command):
@@ -494,16 +485,18 @@ class Container(object):
 		else:
 			return 0
 	@staticmethod
-	def network(config):
+	def network(self, config):
 		if 'network' in config:
+			name = 'bridge'
+			driver = '--driver=' + name
 			result = int(Core.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))
 			if result == 0:
-				Core.shell('container.network ' + config['network'], True)
+				Core.shell('docker.network ' + driver + ' ' + config['network'], True)
 	@staticmethod
 	def save(tar, name, backup):
 		if File.exists(tar) == True:
 			now = time.strftime('%Y%m%d%H%M%S',time.localtime(time.time()))
-			old = replace('.tar', '.' + now + '.tar', tar)
+			old = tar.replace('.tar', '.' + now + '.tar')
 			File.rename(tar, old)
 		Core.popen('docker commit -p ' + name + ' ' + backup)
 		Core.popen('docker save ' + backup + ' > ' + tar, True)
@@ -549,12 +542,3 @@ class Image(object):
 		command = pull + ' ' + library + key
 		Core.popen(command, True)
 		print 'finished'
-
-class Cluster(object):
-	@staticmethod
-	def init(ip):
-		#result = Core.shell('swarm.init ' + ip)
-		return 1
-	@staticmethod
-	def join(token, ip):
-		Core.shell('swarm.join ' + token + ' ' + ip, bg=True)

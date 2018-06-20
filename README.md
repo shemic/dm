@@ -211,12 +211,17 @@ dm shell
 
 
 <pre>
-2018-6-14更新：
+2018-6-20更新：
 1、增加default功能，直接使用dever run web时，只运行里面default定义的进程
-2、增加lvs
+2、增加lvs、consul等组件
 3、增加集群（简易版本）：
-dm master：开启主机
-dm slave num=5&master=192.168.0.10&port=1000：开启5个从机，主机地址为192.168.0.10，端口为1000
+ds init：开启集群，之后将得到集群主机ip
+ds join ip：加入到集群中
+之后的操作和dm一样
+ds run web：启动web服务组集群
+ds run web-nginx：启动nginx集群
+ds rm web-nginx：删除nginx集群
+ds update web-nginx：更新nginx集群（此命令比较复杂，最好参考docker service update）
 
-开启后，从机自动收集信息并同步到主机上
+之后将把consul和daemon加入进去，并实现可视化
 </pre>

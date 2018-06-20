@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-set -e
-docker network create --driver=overlay $1
