@@ -34,6 +34,7 @@ class Cluster(Docker):
 			config['image'] = self.core['images'][config['image']]
 		method(config=config, name=name, item=item, index=num, action=action)
 		if action in ('update', 'restart', 'rm', 'rmb', 'reset', 'run', 'uprun'):
+			time.sleep(2)
 			self.slave(method, config, item, action)
 		if slave == False:
 			self.next(config, action)

@@ -8,8 +8,10 @@ start_consul()
 		process_start consul agent -server -bootstrap-expect 1 -data-dir /root/consul/data -config-dir /root/consul/config -client 0.0.0.0
 	elif [ "$1" == "client" ]; then
 		process_start consul agent -client -config-dir /root/consul/config -join 0.0.0.0
+	elif [ `echo $@|grep node|wc -l` -eq 1 ];then
+		process_start consul agent $@ -bind=$ip
     else
-        process_start consul agent $@
+        process_start consul agent $@ -bind=$ip -node=$ip
 	fi
 	#consul members
 }
