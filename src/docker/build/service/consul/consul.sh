@@ -18,10 +18,10 @@ start_consul()
 
 stop_consul()
 {
-	true
+	process_stop consul
 }
 
 monit_consul()
 {
-	true
+	process_monit consul
 }

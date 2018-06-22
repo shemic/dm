@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 set -e
 
-docker restart --time=5 $1
+docker swarm leave

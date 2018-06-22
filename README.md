@@ -225,3 +225,11 @@ ds num web-nginx 10:将nginx集群的数量增加到10
 
 之后将把consul和daemon加入进去，并实现可视化
 </pre>
+
+<pre>
+2018-6-22更新：
+1、优化底层容器的启动脚本，增加启动进程的记录，方便监控进程的状态，如果进程死掉，可以自动重启。
+2、增加overlay网络的跨主机支持，增加docker run可以直接使用swarm网络，方便docker单机与集群的联通。添加overflow网络时，建议加上overlay_前缀
+3、开始增加daemon进程，现在暂时只有consul，来做服务发现及kv存储。
+
+</pre>

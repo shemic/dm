@@ -9,7 +9,7 @@ start_nginx()
 
 stop_nginx()
 {
-    nginx -s stop
+	process_stop nginx
 }
 
 monit_nginx()

@@ -195,7 +195,7 @@ class Config(object):
 
 class Alias(object):
 	@classmethod
-	def delete(self, config, name):
+	def delete(self, config, name, cluster=False):
 		result = self.get(config, name)
 		for key in result:
 			action = self.action(name, key)

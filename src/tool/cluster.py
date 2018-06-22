@@ -40,6 +40,12 @@ class Cluster(Docker):
 			self.next(config, action)
 
 class Cluster_Action(Docker_Action):
+
+	@staticmethod
+	def leave():
+		result = Swarm.leave()
+		print result
+
 	@staticmethod
 	def drop():
 		Swarm.drop()
@@ -215,8 +221,6 @@ class Cluster_Action(Docker_Action):
 	def init(self, **param):
 		(ip, ckey) = self.setting()
 		token = Swarm.init(ip)
-		print token
-		return
 		
 		if token and '--token' in token:
 			command = 'ds run daemon-master'
@@ -225,6 +229,8 @@ class Cluster_Action(Docker_Action):
 			token = token.split('docker swarm join --token ')
 			token = token[1].split("\r\n")
 			token = token[0].replace(' ', ':')
+			data = token.split(':')
+			ip = data[1]
 
 			command = 'consul kv put ' + ckey + ' ' + token
 			Core.popen(command, True, bg=True)
@@ -252,14 +258,14 @@ class Cluster_Action(Docker_Action):
 			command = 'dm run daemon-client'
 			Core.popen(command, True, bg=False)
 
-			command = 'consul join ' + config[1]
-			Core.popen(command, True, bg=False)
-
 			print 'join cluster:yes'
 			'''
 
 class Swarm(object):
-
+	@staticmethod
+	def leave():
+		result = Core.shell('docker.leave')
+		return result
 	@staticmethod
 	def name(name):
 		result = Core.shell('docker.name ' + name)
@@ -326,8 +332,10 @@ class Swarm(object):
 	def network(self, config):
 		if 'network' in config:
 			name = 'overlay'
-			driver = '--driver=' + name
-			config['network'] = name + '_' + config['network']
+			# swarm 的 overlay网络，如果想用普通的docker run也能使用，必须加上attachable
+			driver = '--driver=' + name + ' --attachable '
+			if 'overlay' not in config['network']:
+				config['network'] = name + '_' + config['network']
 			self.conf['base']['network'] = config['network']
 
 			result = int(Core.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))

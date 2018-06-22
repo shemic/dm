@@ -73,7 +73,7 @@ start()
         start="start_$@"
         state=`define $start`
         if [ $state = 1 ];then
-            echo $start
+            echo $start > /process
             status=`$start`
             echo $status
             netstat -apn
@@ -115,7 +115,7 @@ trap "stop $1" HUP INT QUIT ABRT KILL ALRM TERM EXIT
 while true
 do
     monit $@
-    sleep 10
+    sleep 5
 done
 #exec sh
 exit 0

@@ -234,6 +234,19 @@ class Docker_Action(object):
 			Image.push(package[key])
 
 	@classmethod
+	def pull(self):
+		package = self.package()
+		if Args.name != '':
+			if Args.name in package:
+				Image.pull(package[Args.name])
+			else:
+				print 'error ' + Args.name
+			sys.exit()
+
+		for key in package:
+			Image.pull(package[key])
+
+	@classmethod
 	def login(self):
 		if Args.name and Args.name in Docker.core['store']:
 			Core.shell('docker.login ' + Docker.core['store'][Args.name], True)
@@ -487,7 +500,10 @@ class Container(object):
 	@staticmethod
 	def network(self, config):
 		if 'network' in config:
-			name = 'bridge'
+			if 'overlay' in config['network']:
+				name = 'overlay --attachable '
+			else:
+				name = 'bridge'
 			driver = '--driver=' + name
 			result = int(Core.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))
 			if result == 0:
@@ -515,6 +531,12 @@ class Image(object):
 			for value in stores:
 				#print store + ' ' + value
 				Core.shell('image.push ' + store + ' ' + value, bg=True)
+	@classmethod
+	def pull(self, stores):
+		store = stores[0]
+		if self.check(store) == 1:
+			del stores[0]
+			print Core.shell('image.pull ' + store, True)
 	@staticmethod
 	def show():
 		print Core.shell('image.show')

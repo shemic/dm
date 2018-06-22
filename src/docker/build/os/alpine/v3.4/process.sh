@@ -38,12 +38,19 @@ process_restart()
 {
     process_stop $1
     sleep 5
-    process_start $1
+    p=`process_command`
+    echo `$p`
 }
 process_monit()
 {
     status=`process_status $1`
     if [ "$status" == 1 ]; then
-        process_start $@
+        p=`process_command`
+        echo `$p`
     fi
+}
+process_command()
+{
+    p=$(cat /process)
+    echo $p
 }
