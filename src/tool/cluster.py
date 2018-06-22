@@ -223,8 +223,8 @@ class Cluster_Action(Docker_Action):
 		token = Swarm.init(ip)
 		
 		if token and '--token' in token:
-			command = 'ds run daemon-master'
-			Core.popen(command, True, bg=False)
+			Core.popen('dm pull consul')
+			Core.popen('ds run daemon-master')
 
 			token = token.split('docker swarm join --token ')
 			token = token[1].split("\r\n")
@@ -232,8 +232,7 @@ class Cluster_Action(Docker_Action):
 			data = token.split(':')
 			ip = data[1]
 
-			command = 'consul kv put ' + ckey + ' ' + token
-			Core.popen(command, True, bg=True)
+			Core.popen('consul kv put ' + ckey + ' ' + token)
 		print 'init cluster('+ip+'):yes'
 
 	@classmethod
@@ -252,11 +251,10 @@ class Cluster_Action(Docker_Action):
 			print config
 
 			'''
-
+			Core.popen('dm pull consul')
 			Swarm.join(config[0])
 
-			command = 'dm run daemon-client'
-			Core.popen(command, True, bg=False)
+			Core.popen('dm run daemon-client')
 
 			print 'join cluster:yes'
 			'''

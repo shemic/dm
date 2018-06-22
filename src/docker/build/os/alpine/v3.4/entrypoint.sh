@@ -16,6 +16,17 @@ hosts()
         fi
     fi
 }
+get_ip()
+{
+    check=`ifconfig|grep eth1`
+    if [ "$check" != "" ]; then
+        ip=`ifconfig eth1|grep "inet addr:"|awk -F":" '{print $2}'|awk '{print $1}'`
+    else
+        ip=`ifconfig eth0|grep "inet addr:"|awk -F":" '{print $2}'|awk '{print $1}'`
+    fi
+
+    echo $ip
+}
 process()
 {
     echo "$1 Startup Completed" > /share/process/$1
