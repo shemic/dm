@@ -17,6 +17,4 @@ RUN apk add --no-cache --update git gcc curl gcc g++ python-dev py-pip imagemagi
 
 EXPOSE 8087 8088
 
-#COPY convert.sh /entrypoint/convert.sh
-
-#CMD ["convert"]
+COPY convert.sh /entrypoint/convert.sh

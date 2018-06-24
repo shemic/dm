@@ -464,7 +464,8 @@ class Container(object):
 			,'root' : '--privileged='
 			,'memory' : '--memory='
 			,'shm' : '--shm-size='
-			,'expose' : '--expose',
+			,'expose' : '--expose'
+			,'super' : '--privileged='
 		}
 	@staticmethod
 	def drop():
