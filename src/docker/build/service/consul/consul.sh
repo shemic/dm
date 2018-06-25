@@ -9,8 +9,14 @@ start_consul()
 	elif [ "$1" == "client" ]; then
 		process_start consul agent -client -config-dir /root/consul/config -join 0.0.0.0
 	elif [ `echo $@|grep node|wc -l` -eq 1 ];then
+		if [ `echo $@|grep join|wc -l` != 1 ];then
+			echo "$ip consul_master" >> /etc/hosts
+		fi
 		process_start consul agent $@ -bind=$ip
     else
+    	if [ `echo $@|grep join|wc -l` != 1 ];then
+			echo "$ip consul_master" >> /etc/hosts
+		fi
         process_start consul agent $@ -bind=$ip -node=$ip
 	fi
 	#consul members

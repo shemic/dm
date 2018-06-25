@@ -242,6 +242,7 @@ class Cluster_Action(Docker_Action):
 		import base64
 		url = 'http://' + ip + ':8500/v1/kv/' + ckey
 		value = Core.curl(url)
+		print value
 		value = json.loads(value)
 		if not value:
 			print 'join cluster:'+url+' error'

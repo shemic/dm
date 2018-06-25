@@ -534,10 +534,7 @@ class Image(object):
 				Core.shell('image.push ' + store + ' ' + value, bg=True)
 	@classmethod
 	def pull(self, stores):
-		store = stores[0]
-		if self.check(store) == 1:
-			del stores[0]
-			print Core.shell('image.pull ' + store, True)
+		print Core.shell('image.pull ' + stores[0], True)
 	@staticmethod
 	def show():
 		print Core.shell('image.show')
