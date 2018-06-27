@@ -508,6 +508,8 @@ class Container(object):
 			driver = '--driver=' + name
 			result = int(Core.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))
 			if result == 0:
+				if 'subnet' in config:
+					driver = driver + ' --subnet=' + config['subnet']
 				Core.shell('docker.network ' + driver + ' ' + config['network'], True)
 	@staticmethod
 	def save(tar, name, backup):

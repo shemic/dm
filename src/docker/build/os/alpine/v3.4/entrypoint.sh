@@ -18,9 +18,15 @@ hosts()
 }
 get_ip()
 {
-    check=`ifconfig|grep eth1`
+    ip=`ifconfig|grep "inet addr:$1"|awk -F":" '{print $2}'|awk '{print $1}'`
+
+    echo $ip
+}
+get_ip_eth()
+{
+    check=`ifconfig|grep $1`
     if [ "$check" != "" ]; then
-        ip=`ifconfig eth1|grep "inet addr:"|awk -F":" '{print $2}'|awk '{print $1}'`
+        ip=`ifconfig $1|grep "inet addr:"|awk -F":" '{print $2}'|awk '{print $1}'`
     else
         ip=`ifconfig eth0|grep "inet addr:"|awk -F":" '{print $2}'|awk '{print $1}'`
     fi
