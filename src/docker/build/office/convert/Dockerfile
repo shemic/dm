@@ -6,8 +6,9 @@ ENV DEMETER_HOME=/usr/local/convert
 ENV DEMETER_CONF=env
 ENV PATH=$PATH:$DEMETER_HOME
 
-RUN apk add --no-cache --update git gcc curl gcc g++ python-dev py-gevent py-pip imagemagick imagemagick-dev && \
+RUN apk add --no-cache --update git gcc curl gcc g++ python-dev py-pip imagemagick imagemagick-dev && \
 	pip install --upgrade pip && \
+	pip install gevent==1.2 && \
 	pip install redis && \
 	pip install wand && \
 	pip install -U git+http://git.dever.cc:3000/python/demeter.git && \
