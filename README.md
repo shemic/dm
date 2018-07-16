@@ -233,3 +233,16 @@ ds num web-nginx 10:将nginx集群的数量增加到10
 3、开始增加daemon进程，现在暂时只有consul，来做服务发现及kv存储。
 
 </pre>
+
+<pre>
+2018-7-16更新：
+更新dever相关指令
+1、dever init 初始化，更新核心类库
+2、dever package manage 更新manage官方组件
+3、dever put http://git.5dev.cn:3000/php_package/ 定义自定义组件的仓库组路径
+4、dever get collect 获取自定义组件，如果未定义路径，则直接更新官方组件
+5、dever pull 在当前目录下更新所有依赖组件
+6、dever create 在当前目录下创建一个dever项目
+7、dever all 更新当前所有组件
+
+</pre>
