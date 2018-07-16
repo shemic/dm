@@ -16,28 +16,107 @@ class Dever(object):
 	demo = 'dever/demo.git'
 	package = 'dever-package/'
 	product = 'dever-product/'
+	package_list = []
 	@classmethod
 	def init(self):
 		method = Core.getMethod(Dever_Action, Args.action)
 		method()
 
-	@staticmethod
-	def rely(self, path):
-		package = path + '/package.json'
+	@classmethod
+	def rely(self, action, path):
+		package = path + 'package.json'
 		if File.exists(package):
 			data = File.read(package, '')
 			data = json.loads(data)
 			if 'rely' in data:
 				rely = data['rely'].split(',')
 				for v in rely:
-					Args.name = v
-					self.package()
+					package = action.package(v)
+					self.package_list.append({'path':package, 'name':v})
+
+	@classmethod
+	def create(self, path):
+		name = os.path.basename(path);
+		Dever_Create.boot(path + '/', name)
+		print "create finished!"
+
+class Dever_Create(object):
 
 	@staticmethod
-	def boot(lib):
-		boot = lib + 'boot.php'
-		if not File.exists(boot):
-			File.write(boot, "<?php \r\n if (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever/boot.php');")
+	def package_boot(lib):
+		file = lib + 'boot.php'
+		if not File.exists(file):
+			File.write(file, "<?php \r\nif (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever/boot.php');")
+
+	@classmethod
+	def boot(self, path, name):
+		file = path + 'boot.php'
+		if not File.exists(file):
+			File.write(file, "<?php \r\ndefine('DEVER_PROJECT', '"+name+"');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\nif (defined('DEVER_PACKAGE')) {\r\n	include('dever_package/'.DEVER_PACKAGE.'/index.php');\r\n} else {\r\n	include('dever/boot.php');\r\n}")
+
+		self.dm(path)
+		self.gitignore(path)
+		self.data(path)
+		self.config(path, name)
+
+	@classmethod
+	def index(self, path, name, package):
+		path = path + name + '/'
+		if File.exists(package + 'index.php') and not File.exists(path):
+			File.mkdir(path)
+			file = path + 'index.php'
+			if not File.exists(file):
+				File.write(file, "<?php \r\ndefine('DEVER_PACKAGE', '"+name+"');\r\ndefine('DEVER_APP_SETUP', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../boot.php');")
+		if File.exists(package + 'daemon'):
+			path = path + 'daemon/'
+			if not File.exists(path):
+				Core.popen('cp -R ' + package + 'daemon/ ' + path)
+
+	@staticmethod
+	def gitignore(path):
+		file = path + '.gitignore'
+		if not File.exists(file):
+			File.write(file, ".DS_Store\r\n*.pyc\r\ndata/upload/*\r\ndata/database/*\r\ndata/project/*\r\ndata/logs/*\r\n\r\ndata/signature/*\r\ndata/avatar/*")
+
+	@staticmethod
+	def dm(path, check = False):
+		file = path + 'dm'
+		state = File.exists(file)
+		if check:
+			return state
+		if not state:
+			File.write(file, "dm created")
+
+	@staticmethod
+	def data(path):
+		path = path + 'data/'
+		if not File.exists(path):
+			File.mkdir(path)
+			Core.popen('chmod -R 777 ' + path)
+			file = path + 'readme'
+			if not File.exists(file):
+				File.write(file, "dever create")
+
+	@staticmethod
+	def config(path, name):
+		path = path + 'config/'
+		if not File.exists(path):
+			File.mkdir(path)
+			file = path + 'base.php'
+			if not File.exists(file):
+				File.write(file, "<?php\r\n$config['base'] = array\r\n(\r\n'name' => '"+name+"',\r\n'version' => '1.0.0 Beta'\r\n);\r\nreturn $config;")
+
+			file = path + 'route.php'
+			if not File.exists(file):
+				File.write(file, "<?php\r\nreturn array\r\n(\r\n'home' => 'home',\r\n);")
+
+			path = path + 'env/localhost/'
+			if not File.mkdirs(path):
+				File.mkdir(path)
+				file = path + 'default.php'
+				if not File.exists(file):
+					File.write(file, "<?php\r\n$config['database'] = array\r\n(\r\n'default' => array\r\n(\r\n'type' => 'pdo',\r\n'host' => array\r\n(\r\n'read' => 'web-mysql:3306',\r\n'update' => 'web-mysql:3306',\r\n),\r\n'database' => '"+name+"',\r\n'username' => 'root',\r\n'password' => '123456',\r\n'charset' => 'utf8',\r\n),\r\n);\r\nreturn $config;")
+
 
 class Dever_Action(object):
 	@staticmethod
@@ -45,8 +124,10 @@ class Dever_Action(object):
 		Git.update(Dever.git + Dever.framework, Dever.lib + 'dever')
 
 	@classmethod
-	def package(self):
-		self.update(Dever.git + Dever.package + Args.name)
+	def package(self, name = False):
+		if not name:
+			name = Args.name
+		return self.update(Dever.git + Dever.package + name, name)
 
 	@classmethod
 	def put(self):
@@ -59,15 +140,21 @@ class Dever_Action(object):
 			git = Env.dever()
 		if not git or 'http' not in git:
 			git = Dever.git + Dever.package
-		self.update(git + Args.name)
+		return self.update(git + Args.name, Args.name)
 
 	@classmethod
-	def update(self, store):
+	def update(self, store, name = False):
+		if not name:
+			name = Args.name
 		lib = Dever.lib + 'dever_package/'
-		path = lib + Args.name
+		path = lib + name + '/'
 		Git.update(store, path)
 		Dever.rely(self, path)
-		Dever.boot(lib)
+		Dever_Create.package_boot(lib)
+		project = File.cur() + '/'
+		if Dever_Create.dm(project, True):
+			Dever_Create.index(project, name, path)
+		return path
 
 	@classmethod
 	def all(self):
@@ -76,13 +163,13 @@ class Dever_Action(object):
 		if files:
 			for i in files:
 				if '.' not in i:
-					Args.name = i
-					self.update(False)
+					self.update(False, i)
 
 	@classmethod
 	def pull(self):
 		path = File.cur()
-		Dever.rely(self, path)
+		Dever.rely(self, path + '/')
+		return path
 
 	@classmethod
 	def product(self):
@@ -94,13 +181,10 @@ class Dever_Action(object):
 	def demo():
 		Git.update(Dever.git + Dever.demo, Dever.dev + 'demo')
 
-	@staticmethod
-	def create():
-		path = Dever.dev + Args.name
-		if not Args.name:
-			print 'name is error'
-			return
-		if File.exists(path):
-			print path + ' is exists'
-		else:
-			print path
+	@classmethod
+	def create(self):
+		path = self.pull()
+		print "creating..."
+		for v in Dever.package_list:
+			Dever_Create.index(path + '/', v['name'], v['path'])
+		Dever.create(path);

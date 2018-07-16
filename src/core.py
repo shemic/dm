@@ -285,6 +285,8 @@ class Alias(object):
 class File(object):
 	@staticmethod
 	def write(file, content):
+		if type(content) == list:
+			content = "\r\n".join(content)
 		handle = open(file, 'w')
 		handle.write(content)
 		handle.close()
