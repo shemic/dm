@@ -346,17 +346,40 @@ class Git(object):
 	@staticmethod
 	def update(git, path):
 		if git and File.exists(path) == False:
-			Core.popen('git clone ' + git + ' ' + path, True)
+			Core.popen('git clone ' + git + ' ' + path)
 			print 'init:' + path + ' finished!'
 		else:
-			Core.popen('cd ' + path + ' && git pull', bg=True)
+			file = path + '/' + '.git/'
+			if not File.exists(file):
+				tmp = '/tmp/'
+				File.mkdir(tmp)
+				tmp = tmp + path
+				Core.popen('git clone ' + git + ' ' + tmp + ' && cp -R ' + tmp + '/.git/ ' + file + ' && rm -rf ' + tmp)
+
+			Core.popen('cd ' + path + ' && git pull')
 			print 'update:' + path + ' finished!'
+
+	@classmethod
+	def set(self, git, path):
+		Core.popen('cd ' + path + ' && git pull && git remote set-url origin ' + git, bg=True)
+
+	@classmethod
+	def add(self, git, path):
+		Core.popen('cd ' + path + ' && git pull && git remote add origin ' + git, bg=True)
+
+	@classmethod
+	def push(self, path, branch, msg):
+		if not msg:
+			msg = 'edit'
+		if not branch:
+			branch = 'master'
+		Core.popen('cd ' + path + ' && git pull && git commit -m "'+msg+'" * && git push -u origin ' + branch, True)
 
 class Service(object):
 	@staticmethod
 	def set(git, path):
 		if File.exists(path) == False:
-			Core.popen('git clone ' + git + ' ' + path, True)
+			Core.popen('git clone ' + git + ' ' + path, bg=True)
 			print 'init:' + path + ' finished!'
 		else:
 			Core.popen('cd ' + path + ' && git pull', bg=True)

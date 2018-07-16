@@ -25,6 +25,10 @@ class Dever(object):
 	@classmethod
 	def rely(self, action, path):
 		package = path + 'package.json'
+		if Args.param:
+			Dever_Create.package(path, Args.param)
+			Args.param = ''
+
 		if File.exists(package):
 			data = File.read(package, '')
 			data = json.loads(data)
@@ -36,9 +40,23 @@ class Dever(object):
 
 	@classmethod
 	def create(self, path):
-		name = os.path.basename(path);
+		name = os.path.basename(path)
 		Dever_Create.boot(path + '/', name)
 		print "create finished!"
+
+	@staticmethod
+	def cur(up = True):
+		name = Args.name
+		path = File.cur()
+		if name:
+			git = ''
+			if '/' in name:
+				git = name
+				name = os.path.basename(git).replace('.git', '')
+			path = path + '/' + name
+			if git and up:
+				Dever_Create.git(git, path)
+		return path
 
 class Dever_Create(object):
 
@@ -76,7 +94,7 @@ class Dever_Create(object):
 	def gitignore(path):
 		file = path + '.gitignore'
 		if not File.exists(file):
-			File.write(file, ".DS_Store\r\n*.pyc\r\ndata/upload/*\r\ndata/database/*\r\ndata/project/*\r\ndata/logs/*\r\n\r\ndata/signature/*\r\ndata/avatar/*")
+			File.write(file, "dm\r\n.DS_Store\r\n*.pyc\r\ndata/upload/*\r\ndata/database/*\r\ndata/project/*\r\ndata/logs/*\r\n\r\ndata/signature/*\r\ndata/avatar/*")
 
 	@staticmethod
 	def dm(path, check = False):
@@ -86,6 +104,20 @@ class Dever_Create(object):
 			return state
 		if not state:
 			File.write(file, "dm created")
+
+	@staticmethod
+	def package(path, rely):
+		file = path + 'package.json'
+		if not File.exists(file):
+			File.write(file, '{\r\n"rely": "'+rely+'"\r\n}')
+
+	@staticmethod
+	def git(addr, path):
+		file = path + '/' + '.git/'
+		if not File.exists(file):
+			Git.update(addr, path)
+		else:
+			Git.set(addr, path)
 
 	@staticmethod
 	def data(path):
@@ -151,7 +183,7 @@ class Dever_Action(object):
 		Git.update(store, path)
 		Dever.rely(self, path)
 		Dever_Create.package_boot(lib)
-		project = File.cur() + '/'
+		project = Dever.cur(False) + '/'
 		if Dever_Create.dm(project, True):
 			Dever_Create.index(project, name, path)
 		return path
@@ -167,9 +199,20 @@ class Dever_Action(object):
 
 	@classmethod
 	def pull(self):
-		path = File.cur()
+		path = Dever.cur()
 		Dever.rely(self, path + '/')
+		Git.update('', path + '/')
 		return path
+
+	@classmethod
+	def push(self):
+		path = File.cur()
+		Git.push(path + '/', Args.name, Args.param)
+
+	@classmethod
+	def dev(self):
+		path = File.cur()
+		Git.push(path + '/', Args.name, Args.param)
 
 	@classmethod
 	def product(self):
@@ -187,4 +230,4 @@ class Dever_Action(object):
 		print "creating..."
 		for v in Dever.package_list:
 			Dever_Create.index(path + '/', v['name'], v['path'])
-		Dever.create(path);
+		Dever.create(path)
