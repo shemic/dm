@@ -33,6 +33,12 @@ class Dever(object):
 					Args.name = v
 					self.package()
 
+	@staticmethod
+	def boot(lib):
+		boot = lib + 'boot.php'
+		if not File.exists(boot):
+			File.write(boot, "<?php \r\n if (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever/boot.php');")
+
 class Dever_Action(object):
 	@staticmethod
 	def init():
@@ -40,18 +46,43 @@ class Dever_Action(object):
 
 	@classmethod
 	def package(self):
-		lib = Dever.lib + 'dever_package/'
-		path = lib + Args.name
+		self.update(Dever.git + Dever.package + Args.name)
+
+	@classmethod
+	def put(self):
+		Env.dever(Args.name)
+
+	@classmethod
+	def get(self):
 		git = Args.param
 		if not git:
 			git = Env.dever()
-		if not git:
-			git = Dever.git
-		Git.update(git + Dever.package + Args.name, path)
+		if not git or 'http' not in git:
+			git = Dever.git + Dever.package
+		self.update(git + Args.name)
+
+	@classmethod
+	def update(self, store):
+		lib = Dever.lib + 'dever_package/'
+		path = lib + Args.name
+		Git.update(store, path)
 		Dever.rely(self, path)
-		boot = lib + 'boot.php'
-		if not File.exists(boot):
-			File.write(boot, "<?php \r\n if (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever/boot.php');")
+		Dever.boot(lib)
+
+	@classmethod
+	def all(self):
+		path = Dever.lib + 'dever_package/'
+		files = File.getFiles(path)
+		if files:
+			for i in files:
+				if '.' not in i:
+					Args.name = i
+					self.update(False)
+
+	@classmethod
+	def pull(self):
+		path = File.cur()
+		Dever.rely(self, path)
 
 	@classmethod
 	def product(self):

@@ -305,8 +305,16 @@ class File(object):
 		return content
 
 	@staticmethod
+	def getFiles(path):
+		return os.listdir(path)
+
+	@staticmethod
 	def path():
 		return os.path.split(os.path.realpath(__file__))[0] + '/'
+
+	@staticmethod
+	def cur():
+		return os.getcwd()
 
 	@staticmethod
 	def exists(name):
@@ -335,7 +343,7 @@ class File(object):
 class Git(object):
 	@staticmethod
 	def update(git, path):
-		if File.exists(path) == False:
+		if git and File.exists(path) == False:
 			Core.popen('git clone ' + git + ' ' + path, True)
 			print 'init:' + path + ' finished!'
 		else:
