@@ -59,6 +59,15 @@ class Dever(object):
 				Dever_Create.git(git, path)
 		return path
 
+	@staticmethod
+	def custom():
+		git = Args.param
+		if not git:
+			git = Env.dever()
+		if not git or 'http' not in git:
+			git = Dever.git + Dever.package
+		return git
+
 class Dever_Create(object):
 
 	@staticmethod
@@ -163,16 +172,12 @@ class Dever_Action(object):
 		return self.update(Dever.git + Dever.package + name, name)
 
 	@classmethod
-	def put(self):
+	def store(self):
 		Env.dever(Args.name)
 
 	@classmethod
 	def get(self):
-		git = Args.param
-		if not git:
-			git = Env.dever()
-		if not git or 'http' not in git:
-			git = Dever.git + Dever.package
+		git = Dever.custom()
 		return self.update(git + Args.name, Args.name)
 
 	@classmethod
@@ -209,6 +214,25 @@ class Dever_Action(object):
 	def push(self):
 		path = File.cur()
 		Git.push(path + '/', Args.name, Args.param)
+
+	@classmethod
+	def convert(self):
+		name = Args.name
+		cur = File.cur() + '/'
+		path = cur + name + '/'
+		git = Dever.custom()
+		if git == 'package':
+			git = Dever.git + Dever.package
+		tmp = File.tmp() + name + '/'
+		Git.update(git + name, File.tmp() + name)
+
+		package = Dever.lib + 'dever_package/' + name + '/'
+		if not File.exists(package):
+			Core.popen('cp -R ' + tmp + ' ' + package + ' && rm -rf ' + tmp + ' && cp -R ' + path + '* ' + package + ' && rm -rf ' + path + '')
+		else:
+			Core.popen('cp -R ' + tmp + '* ' + package + ' && rm -rf ' + tmp + ' && cp -R ' + path + '* ' + package + ' && cp -R ' + path + '.git/ ' + package + '.git/ && rm -rf ' + path + '')
+
+		Dever_Create.index(cur, name, package)
 
 	@classmethod
 	def push_package(self):
