@@ -10,6 +10,7 @@ import json
 
 class Dever(object):
 	git = 'http://git.dever.cc:3000/'
+	ssh = 'ssh://git@git.dever.cc:10022/'
 	lib = Core.path + 'container/share/lib/php/'
 	dev = Core.path + 'container/web/'
 	framework = 'dever/framework.git'
@@ -208,6 +209,11 @@ class Dever_Action(object):
 	def push(self):
 		path = File.cur()
 		Git.push(path + '/', Args.name, Args.param)
+
+	@classmethod
+	def push_package(self):
+		path = Dever.lib + 'dever_package/' + Args.name
+		Git.push(path + '/', False, Args.param)
 
 	@classmethod
 	def dev(self):
