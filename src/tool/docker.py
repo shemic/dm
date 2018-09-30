@@ -37,7 +37,9 @@ class Docker(object):
 			self.handle(method, self.conf['config'][Args.index], Args.index, Args.action)
 		else:
 			server = self.conf['server']
-			if 'default' in self.conf['base']:
+			if 'alias' in self.conf['config'] and Args.index in self.conf['config']['alias']:
+				server = self.conf['config']['alias'][Args.index].split(',')
+			elif 'default' in self.conf['base']:
 				server = self.conf['base']['default'].split(',')
 			for item in server:
 				if self.check(Args.index, item) == True:

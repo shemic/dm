@@ -34,5 +34,7 @@ ln -sf $basepath/src/dpc.py /usr/bin/dpc && chmod +x /usr/bin/dpc
 ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever
 ln -sf $basepath/src/dgit.py /usr/bin/dgit && chmod +x /usr/bin/dgit
 
+python $basepath/src/daemon.py &
+
 docker version
 echo 'install success!'

@@ -10,15 +10,15 @@ curl -O http://pecl.php.net/get/$1.tgz
 tar -xzvf $1.tgz
 rm -rf $1.tgz
 cd $1
-phpize
+phpize5
 if [ -n "$4" ];then
 	config=$4
-	./configure --with-php-config=/usr/bin/php-config ${config//,/" "}
+	./configure --with-php-config=/usr/bin/php-config5 ${config//,/" "}
 else
-	./configure --with-php-config=/usr/bin/php-config
+	./configure --with-php-config=/usr/bin/php-config5
 fi
 make
 make install
 echo extension=$2.so > /etc/php5/conf.d/$2.ini
-killall -9 php-fpm && php-fpm &
+killall -9 php-fpm5 && php-fpm5 &
 #apk del $lib

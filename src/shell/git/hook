@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+set -e
+#unset $(git rev-parse --local-env-vars)
+unset GIT_DIR
+dir="{path}"
+logfile="{path}.git/hooks_log"
+cd $dir
+git pull origin master
+currTime="{path}: git pull at "$(date "+%Y-%m-%d %H:%M:%S")
+echo $currTime >> $logfile

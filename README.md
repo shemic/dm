@@ -246,3 +246,12 @@ ds num web-nginx 10:将nginx集群的数量增加到10
 7、dever all 更新当前所有组件
 
 </pre>
+
+
+<pre>
+2018-9-10更新：
+1、增加文件同步工具包：rsync、btsync、lsyncd、nfs等，可以根据需要来使用。
+2、增加overlay网络的跨主机支持，增加docker run可以直接使用swarm网络，方便docker单机与集群的联通。添加overflow网络时，建议加上overlay_前缀
+3、daemon进程中增加文件同步机制，会将share/lib中的文件同步到从机，daemon中的git容器会自动更新代码到share/lib/php/web中
+
+</pre>

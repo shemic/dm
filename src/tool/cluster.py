@@ -218,47 +218,74 @@ class Cluster_Action(Docker_Action):
 		return (ip, ckey)
 
 	@classmethod
+	def put(self, key = '', value = '', ip = '', p = True):
+		if not ip:
+			ip = Core.ip()
+		ip = Core.ip()
+		if not key:
+			key = Args.name
+		if not value:
+			value = Args.param
+		url = 'http://' + ip + ':8500/v1/kv/' + key
+		Core.popen('curl -X PUT -d "'+value+'" ' + url, bg=True)
+		if p == True:
+			print True
+		return True
+
+	@classmethod
+	def get(self, key = '', ip = '', p = True):
+		if not ip:
+			ip = Core.ip()
+		if not key:
+			key = Args.name
+		import json
+		import base64
+		url = 'http://' + ip + ':8500/v1/kv/' + key
+		value = Core.curl(url)
+		if not value:
+			print False
+			return False
+		value = json.loads(value)
+		value = base64.b64decode(value[0]['Value'])
+		if p == True:
+			print value
+		return value
+
+	@classmethod
 	def init(self, **param):
 		(ip, ckey) = self.setting()
 		token = Swarm.init(ip)
-		
+		print 'init cluster ...'
 		if token and '--token' in token:
 			Core.popen('dm pull consul')
 			Core.popen('ds run daemon-master')
 
 			token = token.split('docker swarm join --token ')
-			token = token[1].split("\r\n")
+			token = token[1].split("\n")
 			token = token[0].replace(' ', ':')
 			data = token.split(':')
 			ip = data[1]
 
-			Core.popen('consul kv put ' + ckey + ' ' + token)
-		print 'init cluster('+ip+'):yes'
+			self.put(ckey, token, p = False)
+			#Core.popen('consul kv put ' + ckey + ' ' + token)
+		print 'init cluster success! please remember the ip address:'+ip+''
 
 	@classmethod
 	def join(self, **param):
 		(ip, ckey) = self.setting()
-		import json
-		import base64
-		url = 'http://' + ip + ':8500/v1/kv/' + ckey
-		value = Core.curl(url)
-		print value
-		value = json.loads(value)
-		if not value:
-			print 'join cluster:'+url+' error'
-		else:
-			value = base64.b64decode(value[0]['Value'])
-			config = value.split(':')
-			print config
+		value = self.get(ckey, ip, False)
+		config = value.split(':')
+		print config
 
-			'''
-			Core.popen('dm pull consul')
-			Swarm.join(config[0])
+		'''
+		Core.popen('dm pull consul')
+		Swarm.join(config[0])
 
-			Core.popen('dm run daemon-client')
+		Core.popen('dm run daemon-client')
 
-			print 'join cluster:yes'
-			'''
+		print 'join cluster:yes'
+		'''
+			
 
 class Swarm(object):
 	@staticmethod
