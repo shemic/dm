@@ -6,7 +6,7 @@ ENV DEMETER_HOME=/usr/local/convert
 ENV DEMETER_CONF=env
 ENV PATH=$PATH:$DEMETER_HOME
 
-RUN apk add --no-cache --update git curl gcc g++ python-dev py-pip openssl-dev libffi-dev imagemagick imagemagick-dev && \
+RUN apk add --no-cache --update git curl nginx gcc g++ python-dev py-pip make cmake openssl-dev libffi-dev imagemagick imagemagick-dev && \
 	pip install --upgrade pip && \
 	pip install gevent==1.2 && \
 	pip install redis && \
@@ -17,9 +17,9 @@ RUN apk add --no-cache --update git curl gcc g++ python-dev py-pip openssl-dev l
 	tar -zxvf poppler-data-0.4.9.tar.gz && \
 	cd poppler-data-0.4.9 && \
 	make install datadir=/usr/share && \
-	#chmod -R +x $DEMETER_HOME/*.py && \
-	apk del curl gcc g++ python-dev
+	apk del curl make cmake gcc g++ python-dev
 
-EXPOSE 8087 8088
+EXPOSE 8087 8088 80 443
 
 COPY convert.sh /entrypoint/convert.sh
+COPY convert.conf /etc/nginx/conf.d/convert.conf

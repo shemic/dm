@@ -274,8 +274,8 @@ class Cluster_Action(Docker_Action):
 	def join(self, **param):
 		(ip, ckey) = self.setting()
 		value = self.get(ckey, ip, False)
-		config = value.split(':')
-		print config
+		#config = value.split(':')
+		print value
 
 		'''
 		Core.popen('dm pull consul')
