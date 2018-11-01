@@ -3,12 +3,12 @@ set -e
 
 start_convert()
 {
-    mysqladmin -hoffice_mysql -uroot -p create office_convert
+    mysqladmin -hoffice-mysql -uroot -p123456 create office_convert
+    pip install -U git+http://git.dever.cc:3000/python/demeter.git
     cd $DEMETER_HOME
-    git reset --hard FETCH_HEAD
     git pull
     chmod -R +x $DEMETER_HOME/*.py
-    install.py
+    python install.py
     process_start nginx
     process_start admin.py
     process_start front.py
