@@ -13,4 +13,7 @@ VOLUME ["/share"]
 COPY entrypoint.sh /entrypoint.sh
 COPY process.sh /entrypoint/process.sh
 
+RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint/process.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
