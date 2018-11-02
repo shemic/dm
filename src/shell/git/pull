@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
 set -e
 cd $1
+git config --global user.email "dm@dever.cc"
+git config --global user.name "dever"
+git stash
 git pull
+git stash pop
