@@ -20,9 +20,6 @@ tee /etc/docker/daemon.json <<-'EOF'
 EOF
 service docker restart
 
-# python-daemon
-# pip install python-daemon
-
 chmod -R +x src/*.py
 chmod -R +x src/shell
 chmod -R 777 container/share/
@@ -34,7 +31,22 @@ ln -sf $basepath/src/dpc.py /usr/bin/dpc && chmod +x /usr/bin/dpc
 ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever
 ln -sf $basepath/src/dgit.py /usr/bin/dgit && chmod +x /usr/bin/dgit
 
-python $basepath/src/daemon.py &
+# python-pip
+pipstatus=`check pip`
+if [ "$pipstatus" = 0 ]; then
+	wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm -rf get-pip.py
+fi
+# python-daemon
+#pip install python-daemon
+pip install redis
+
+yumstatus=`check yum`
+if [ "$yumstatus" = 0 ]; then
+	apt install python-gevent
+else
+	yum install python-gevent
+fi
+#python $basepath/src/daemon.py &
 
 docker version
 echo 'install success!'
