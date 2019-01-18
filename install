@@ -36,9 +36,9 @@ pipstatus=`check pip`
 if [ "$pipstatus" = 0 ]; then
 	wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm -rf get-pip.py
 fi
-# python-daemon
+# python-daemon 用不到了
 #pip install python-daemon
-pip install redis
+#pip install redis
 
 yumstatus=`check yum`
 if [ "$yumstatus" = 0 ]; then
