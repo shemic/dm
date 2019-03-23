@@ -6,7 +6,7 @@ MAINTAINER Rabin "https://github.com/shemic"
 
 ENV REFRESHED_AT 20151105
 
-RUN apk --update add alpine-sdk xz poppler-dev pango-dev m4 libtool perl autoconf automake coreutils python-dev zlib-dev freetype-dev glib-dev cmake libxml2-dev && \
+RUN apk --update add alpine-sdk xz poppler-dev pango-dev libtool perl autoconf automake coreutils python-dev zlib-dev freetype-dev glib-dev cmake build-base autoconf libxml2-dev && \
     cd / && \
     git clone https://github.com/BWITS/fontforge.git && \
     cd fontforge && \
@@ -16,10 +16,10 @@ RUN apk --update add alpine-sdk xz poppler-dev pango-dev m4 libtool perl autocon
     make install && \
     cd / && \
     git clone git://github.com/coolwanglu/pdf2htmlEX.git && \
-    cd pdf2htmlEX && \
+    cd pdf2htmlEX && ./configure && make && make install && \
     export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig && \
     cmake . && make && sudo make install && \
-    apk del alpine-sdk xz poppler-dev pango-dev m4 libtool perl autoconf automake coreutils python-dev zlib-dev freetype-dev glib-dev cmake && \
+    apk del alpine-sdk xz poppler-dev pango-dev libtool perl autoconf autoconf automake coreutils python-dev zlib-dev freetype-dev glib-dev cmake build-base && \
     apk add libpng python freetype glib libintl libxml2 libltdl cairo poppler pango && \
     rm -rf /var/lib/apt/lists/* && \
     rm /var/cache/apk/* && \
