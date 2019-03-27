@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# dm_process为key，value为具体指令 如：dm call office-convert_call id=1
+# dm_process为key，value为具体指令 如：call office-convert_call id=1
 import time
 import os
 #import pprint
@@ -21,7 +21,7 @@ def pop(key):
         return popen('redis -a '+password+' lpop ' + key)
 
 def command(process):
-        return process
+        return 'dm ' + process
 
 def popen(command, bg=False):
         string = command
@@ -47,10 +47,25 @@ def process():
                         gevent.sleep(timeSleep)
                         i = 0
 
+# 定时备份
+def backup():
+        r = redis()
+        c = 'dm_process'
+        i = 0
+        while 1:
+                value = r.lpop(c)
+                if value:
+                        g = command(value)
+                        popen(g)
+                i = i+1
+                if i >= 10:
+                        gevent.sleep(timeSleep)
+                        i = 0
+
 def handle():
 	gevent.joinall([
 		gevent.spawn(process),
-		#gevent.spawn(backup),
+		gevent.spawn(backup),
 	])
 
 handle()
