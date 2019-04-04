@@ -10,7 +10,6 @@ RUN apk add --no-cache --update curl php7-fpm php7-pear php7-mysqli php7-session
 
 COPY php.sh /entrypoint/php.sh
 COPY install.sh /install.sh
-RUN ./install.sh swoole-4.3.0 swoole libevent-dev,libaio-dev,libmnl-dev
 
 VOLUME ["/www", "/etc/php7"]
 

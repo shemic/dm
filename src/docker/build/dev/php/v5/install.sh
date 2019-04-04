@@ -20,5 +20,5 @@ fi
 make
 make install
 echo extension=$2.so > /etc/php5/conf.d/$2.ini
-killall -9 php-fpm5 && php-fpm5 &
+#killall -9 php-fpm5 && php-fpm5 &
 #apk del $lib
