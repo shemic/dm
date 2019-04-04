@@ -18,7 +18,7 @@ class Php_Action(object):
 		#http://pecl.php.net
 		# 名称-版本号,so名,依赖包,configure参数
 		'libevent' : ['event-2.3.0', 'event', 'curl-dev,libevent-dev', '']
-		,'swoole' : ['swoole-2.0.10', 'swoole', 'libevent-dev,libaio-dev,libmnl-dev', '']
+		,'swoole' : ['swoole-4.3.0', 'swoole', 'libevent-dev,libaio-dev,libmnl-dev', '']
 		,'mongo' : ['mongodb-1.3.4', 'mongodb', '', '']
 		,'redis' : ['redis-3.1.5RC2', 'redis', '', '']
 		,'memcached' : ['memcached-3.0.4', 'memcached', 'curl-dev,libmemcached-dev,cyrus-sasl-dev', '']
