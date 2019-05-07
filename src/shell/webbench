@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+set -e
+
+for((i=1;i<=1000;i++));  
+do   
+webbench -c 100 -t 10 "http://mapi.jstyle.cn/wonderful/main/?journal.getList&system=2&test={$RANDOM}"
+done
