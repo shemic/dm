@@ -46,6 +46,7 @@ if [ "$yumstatus" = 0 ]; then
 else
 	yum install python-gevent
 fi
+#dm run server-redis
 #python $basepath/src/daemon.py &
 
 docker version

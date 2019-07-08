@@ -20,5 +20,5 @@ fi
 make
 make install
 echo extension=$2.so > /etc/php7/conf.d/10_$2.ini
-killall -9 php-fpm7 && php-fpm7
+#killall -9 php-fpm7 && php-fpm7
 #apk del $lib
