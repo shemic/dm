@@ -40,12 +40,12 @@ fi
 #pip install python-daemon
 #pip install redis
 
-yumstatus=`check yum`
-if [ "$yumstatus" = 0 ]; then
-	apt install python-gevent
-else
-	yum install python-gevent
-fi
+#yumstatus=`check yum`
+#if [ "$yumstatus" = 0 ]; then
+	#apt install python-gevent
+#else
+	#yum install python-gevent
+#fi
 #dm run server-redis
 #python $basepath/src/daemon.py &
 
