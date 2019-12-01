@@ -481,6 +481,7 @@ class Core(object):
 
 	@staticmethod
 	def ip(ifname = 'eth0'):
+		return ''
 		import socket, fcntl, struct  
 		s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  
 		inet = fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', ifname[:15]))  
