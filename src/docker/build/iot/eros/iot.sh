@@ -5,7 +5,7 @@ start_iot()
     cd $IOT_HOME
     git reset --hard FETCH_HEAD
     git pull
-    install.py
+    python3 install.py
     process_start python3 admin.py
     process_start python3 front.py
     process_start python3 modbus.py -m tcp_start
