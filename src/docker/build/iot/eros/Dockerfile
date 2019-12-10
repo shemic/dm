@@ -5,7 +5,7 @@ MAINTAINER Rabin "https://github.com/shemic"
 ENV IOT_FARM=1
 ENV IOT_NAME=eros
 ENV IOT_HOME=/usr/local/$IOT_NAME
-ENV IOT_CONF=env
+ENV DEMETER_CONF=env
 ENV PATH=$PATH:$IOT_HOME
 
 ENV NG_DOMAIN="ngrok.dever.cc"

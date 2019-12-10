@@ -2,9 +2,9 @@ FROM docker.dever.cc/dev/python/v3:latest
 
 MAINTAINER Rabin "https://github.com/shemic"
 
-ENV IOT_NAME=eros
+ENV IOT_NAME=zeus
 ENV IOT_HOME=/usr/local/$IOT_NAME
-ENV IOT_CONF=env
+ENV DEMETER_CONF=env
 ENV PATH=$PATH:$IOT_HOME
 
 RUN apk add --no-cache --update py-psycopg2 git gcc g++ && \
