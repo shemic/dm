@@ -2,7 +2,7 @@
 set -e
 process_status()
 {
-    pids=`ps aux|grep '$1'|grep -v entrypoint|grep -v grep|awk '{print $1}'`
+    pids=`ps aux|grep '$*'|grep -v entrypoint|grep -v grep|awk '{print $*}'`
     if [ "$pids" ]; then
         echo $pids
     else
@@ -11,39 +11,39 @@ process_status()
 }
 process_start()
 {
-    status=`process_status $1`
+    status=`process_status $*`
     if [ "$status" == 1 ]; then
-        echo "$1 starting"
+        echo "$* starting"
         $@ >/dev/null &
-        echo "$1 started"
+        echo "$* started"
     else
-        echo "$1 started"
+        echo "$* started"
     fi
 }
 process_stop()
 {
-    status=`process_status $1`
+    status=`process_status $*`
     if [ "$status" == 1 ]; then
-        echo "$1 stoped"
+        echo "$* stoped"
     else
-        echo "stoping $1"
+        echo "stoping $*"
         for pid in $status
         do
             kill -TERM ${pid} >/dev/null 2>&1
         done
-        echo "$1 stoped"
+        echo "$* stoped"
     fi
 }
 process_restart()
 {
-    process_stop $1
+    process_stop $*
     sleep 5
     p=`process_command`
     echo `$p`
 }
 process_monit()
 {
-    status=`process_status $1`
+    status=`process_status $*`
     if [ "$status" == 1 ]; then
         p=`process_command`
         echo `$p`
