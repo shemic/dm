@@ -2,7 +2,8 @@
 set -e
 process_status()
 {
-    pids=`ps aux|grep '$*'|grep -v entrypoint|grep -v grep|awk '{print $1}'`
+    var=$*
+    pids=`ps aux|grep "$var"|grep -v entrypoint|grep -v grep|awk '{print $1}'`
     if [ "$pids" ]; then
         echo $pids
     else
