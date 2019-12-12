@@ -13,8 +13,6 @@ ENV NG_NAME=ngrok
 ENV NG_HOME=/usr/local/$NG_NAME
 ENV PATH=$PATH:$NG_HOME/bin
 
-ADD build.sh /
-
 RUN apk add --no-cache --update py-psycopg2 git gcc g++ go git make openssl && \
 	pip3 install --upgrade pip && \
 	pip3 install tornado && \
@@ -29,9 +27,13 @@ RUN apk add --no-cache --update py-psycopg2 git gcc g++ go git make openssl && \
 	git clone http://git.dever.cc:3000/xinnongbaohe/$IOT_NAME.git $IOT_HOME && \
 	rm -R $IOT_HOME/runtime/postgresql && \
 	chmod -R +x $IOT_HOME/*.py && \
-	git clone https://github.com/inconshreveable/ngrok.git --depth=1 $NG_HOME && \
-	sh /build.sh && \
-	apk del gcc g++ git make
+	git clone https://github.com/inconshreveable/ngrok.git --depth=1 $NG_HOME
+	#apk del gcc g++ git make
+
+COPY ngrokroot.crt /usr/local/ngrok/assets/client/tls/ngrokroot.crt
+
+RUN cd $NG_HOME && \
+	GOOS=linux GOARCH=amd64 make release-client
 
 EXPOSE 8090 8091
 

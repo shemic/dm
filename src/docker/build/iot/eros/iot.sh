@@ -21,6 +21,7 @@ start_iot()
     process_start python3 cron.py -m mqtt_sub
     #process_start cron.py -m mqtt_pub
     process_start ngrok -subdomain="f$IOT_FARM" -config="ngrok.cfg" 8091
+    process_start ngrok -subdomain="a$IOT_FARM" -config="ngrok.cfg" 8090
 }
 
 stop_iot()
@@ -56,4 +57,5 @@ monit_iot()
     process_monit python3 cron.py -m timing
     process_monit python3 cron.py -m mqtt_sub
     process_monit ngrok -subdomain="f$IOT_FARM" -config="ngrok.cfg" 8091
+    process_monit ngrok -subdomain="a$IOT_FARM" -config="ngrok.cfg" 8090
 }
