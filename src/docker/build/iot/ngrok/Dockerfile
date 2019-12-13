@@ -2,7 +2,7 @@ FROM golang:1.7.1-alpine
 
 MAINTAINER Rabin "https://github.com/shemic"
 
-ENV NG_DOMAIN="ngrok.dever.cc"
+ENV NG_DOMAIN="local.xinnongbaohe.com"
 ENV NG_NAME=ngrok
 ENV NG_HOME=/usr/local/$NG_NAME
 ENV PATH=$PATH:$NG_HOME/bin
