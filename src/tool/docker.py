@@ -215,9 +215,10 @@ class Docker(object):
 class Docker_Action(object):
 	@staticmethod
 	def build():
+		path = Args.name
 		if Args.name and Args.name in Docker.core['images']:
-			Args.name = Docker.core['images'][Args.name]
-		Image.build(Docker.storeHost, Args.name)
+			path = Docker.core['images'][Args.name]
+		Image.build(Docker.storeHost, path, Args.name)
 		Container.delete()
 		Image.delete()
 		print 'docker build '+Args.name+':yes'
@@ -227,12 +228,14 @@ class Docker_Action(object):
 		package = self.package()
 		if Args.name != '':
 			if Args.name in package:
+				#print package[Args.name]
 				Image.push(package[Args.name])
 			else:
 				print 'error ' + Args.name
 			sys.exit()
 
 		for key in package:
+			#print(package[key])
 			Image.push(package[key])
 
 	@classmethod
@@ -268,13 +271,15 @@ class Docker_Action(object):
 				index = Docker.storeHost + key
 			result[key] = []
 			result[key].append(index)
-			for k,v in stores.items():
-				if k == 'private': 
-					host = v + '/' + value
-				else:
-					host = v + '/' + key
-				if host != index:
-					result[key].append(host)
+			
+			if Docker.store != 'pi':
+				for k,v in stores.items():
+					if k == 'private': 
+						host = v + '/' + value
+					else:
+						host = v + '/' + key
+					if host != index:
+						result[key].append(host)
 		if Args.name and Args.name in result:
 			value = Args.name + ' [' + ",".join(result[Args.name ]) + ']'
 			print value
@@ -549,9 +554,12 @@ class Image(object):
 	def delete():
 		Core.shell('image.rm', bg=True)
 	@staticmethod
-	def build(path, name):
-		file = Core.path + Docker.path + 'build/' + name + '/'
-		name = path + name
+	def build(root, path, name):
+		file = Core.path + Docker.path + 'build/' + path + '/'
+		if Docker.store == 'private':
+			name = root + path
+		else:
+			name = root + name
 		Core.shell('image.build ' + name + ' ' + file, True)
 	@staticmethod
 	def check(name):
