@@ -33,7 +33,8 @@ RUN apk add --no-cache --update py-psycopg2 git gcc g++ go git make openssl && \
 COPY ngrokroot.crt /usr/local/ngrok/assets/client/tls/ngrokroot.crt
 
 RUN cd $NG_HOME && \
-	GOOS=linux GOARCH=amd64 make release-client
+	#GOOS=linux GOARCH=amd64 make release-client
+	GOOS=linux GOARCH=arm make release-client
 
 EXPOSE 8090 8091
 
