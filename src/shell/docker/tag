@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -e
+
+docker tag $1 $2

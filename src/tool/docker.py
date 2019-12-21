@@ -561,6 +561,9 @@ class Image(object):
 		else:
 			name = root + name
 		Core.shell('image.build ' + name + ' ' + file, True)
+		if Docker.store != 'private':
+			private = Docker.core['store']['private'] + '/' + path
+			Core.shell('docker.tag ' + name + ' ' + private, True)
 	@staticmethod
 	def check(name):
 		result = int(Core.popen('docker images | grep '+name+' | wc -l'))
