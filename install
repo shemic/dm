@@ -32,10 +32,10 @@ ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever
 ln -sf $basepath/src/dgit.py /usr/bin/dgit && chmod +x /usr/bin/dgit
 
 # python-pip
-pipstatus=`check pip`
-if [ "$pipstatus" = 0 ]; then
-	wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm -rf get-pip.py
-fi
+#pipstatus=`check pip`
+#if [ "$pipstatus" = 0 ]; then
+	#wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm -rf get-pip.py
+#fi
 # python-daemon 用不到了
 #pip install python-daemon
 #pip install redis
