@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+set -e
+while true
+do
+	pids=`ps aux|grep "/usr/bin/ssh -f -NR"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
+	if [ "$pids" ]; then
+	    sleep 60
+	else
+	    /data/dm/src/shell/autossh/expect $1 root $2 $3
+	    echo "ssh started"
+	fi
+done

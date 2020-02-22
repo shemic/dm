@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+set -e
+/data/dm/src/shell/autossh/daemon $1 $2 $3 >/dev/null &
