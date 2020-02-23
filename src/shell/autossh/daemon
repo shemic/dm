@@ -4,7 +4,7 @@ while true
 do
 	pids=`ps aux|grep "/usr/bin/ssh -f -NR"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
 	if [ "$pids" ]; then
-		sleep 86400
+		sleep 80000
 		kill -9 $pids
 	else
 		epids=`ps aux|grep "/data/dm/src/shell/autossh/expect"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
