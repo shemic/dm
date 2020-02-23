@@ -4,9 +4,16 @@ while true
 do
 	pids=`ps aux|grep "/usr/bin/ssh -f -NR"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
 	if [ "$pids" ]; then
-	    sleep 60
+		sleep 86400
+		kill -9 $pids
 	else
-	    /data/dm/src/shell/autossh/expect $1 root $2 $3
-	    echo "ssh started"
+		epids=`ps aux|grep "/data/dm/src/shell/autossh/expect"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
+		if [ "$epids" ]; then
+			kill -9 $epids
+		fi
+
+		/data/dm/src/shell/autossh/expect $1 root $2 $3
+		echo "ssh started"
+		sleep 60
 	fi
 done
