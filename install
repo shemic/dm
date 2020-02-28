@@ -6,10 +6,16 @@ check()
     echo $yes
 }
 
+chmod -R +x src/*.py
+chmod -R +x src/shell
+chmod -R 777 container/share/
+basepath=$(cd `dirname $0`; pwd)
+
 # docker
 status=`check docker`
 if [ "$status" = 0 ]; then
-	curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+	#curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+	$basepath/src/shell/docker/setup --mirror Aliyun
 fi
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
@@ -20,10 +26,6 @@ tee /etc/docker/daemon.json <<-'EOF'
 EOF
 service docker restart
 
-chmod -R +x src/*.py
-chmod -R +x src/shell
-chmod -R 777 container/share/
-basepath=$(cd `dirname $0`; pwd)
 ln -sf $basepath/src/dm.py /usr/bin/dm && chmod +x /usr/bin/dm
 ln -sf $basepath/src/ds.py /usr/bin/ds && chmod +x /usr/bin/ds
 ln -sf $basepath/src/dp.py /usr/bin/dp && chmod +x /usr/bin/dp
