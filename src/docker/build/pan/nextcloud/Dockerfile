@@ -1,3 +1,3 @@
-FROM nextcloud:18-fpm-alpine
+FROM nextcloud
 
 MAINTAINER Rabin "https://github.com/shemic"
