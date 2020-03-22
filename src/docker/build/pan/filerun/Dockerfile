@@ -1,7 +1,8 @@
-FROM jaegerdocker/pan
+#FROM jaegerdocker/pan
+FROM afian/filerun
 
 MAINTAINER Rabin "https://github.com/shemic"
 
 #https://hub.docker.com/r/jaegerdocker/pan superuser 
 
-RUN chown -R mysql /var/lib/mysql && chgrp -R mysql /var/lib/mysql
+COPY cn.php /var/www/html/system/data/translation/cn.php
