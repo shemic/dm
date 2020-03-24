@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -e
+apt install golang
+git clone https://github.com/inconshreveable/ngrok.git --depth=1 ngrok
+cp -R ngrokroot.crt ngrok/assets/client/tls/ngrokroot.crt
+GOOS=linux GOARCH=arm make release-client
