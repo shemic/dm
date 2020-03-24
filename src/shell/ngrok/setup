@@ -7,4 +7,4 @@ cd ngrok
 GOOS=linux GOARCH=arm make release-client
 cp bin/ngrok /usr/bin/ngrok
 cd ..
-#ngrok -subdomain="pan" -config="ngrok.cfg" 8030
+#ngrok -subdomain="pan" -config="ngrok.cfg" 8030 > /dev/null &
