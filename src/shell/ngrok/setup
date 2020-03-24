@@ -7,4 +7,8 @@ cd ngrok
 GOOS=linux GOARCH=arm make release-client
 cp bin/ngrok /usr/bin/ngrok
 cd ..
-#ngrok -subdomain="pan" -config="ngrok.cfg" 8030 > /dev/null &
+apt install screen
+#screen -S ngrok_pan
+#ngrok -subdomain="pan" -config="ngrok.cfg" 8030
+#ngrok -subdomain="www" -config="ngrok.cfg" 80
+#ctrl+A+D
