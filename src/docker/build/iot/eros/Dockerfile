@@ -8,7 +8,7 @@ ENV IOT_HOME=/usr/local/$IOT_NAME
 ENV DEMETER_CONF=env
 ENV PATH=$PATH:$IOT_HOME
 
-ENV NG_DOMAIN="ngrok.dever.cc"
+ENV NG_DOMAIN="local.dever.cc"
 ENV NG_NAME=ngrok
 ENV NG_HOME=/usr/local/$NG_NAME
 ENV PATH=$PATH:$NG_HOME/bin
