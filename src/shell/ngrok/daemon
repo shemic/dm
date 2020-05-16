@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+set -e
+name="ngrok_$1"
+while true
+do
+	pids=`ps aux|grep "$name"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
+	if [ "$pids" ]; then
+		sleep 600
+		kill -9 $pids
+	else
+		/data/dm/src/shell/ngrok/expect $name $2
+		echo "ngrok started"
+		sleep 600
+	fi
+done

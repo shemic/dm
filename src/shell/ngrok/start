@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+set -e
+/data/dm/src/shell/ngrok/daemon $1 $2 >/dev/null &
