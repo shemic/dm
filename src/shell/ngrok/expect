@@ -7,8 +7,8 @@ cmd=$"ngrok -subdomain='$name' -config='ngrok.cfg' $port"
 screen -x -S $name -p 0 -X stuff "$cmd"
 screen -x -S $name -p 0 -X stuff $'\n'
 
-/usr/bin/expect <<EOF #嵌套expect
-send "\01" #模拟输入 ctrl-a
-send "d" #模拟输入d  ctrl-a+d是挂起screen
+/usr/bin/expect <<EOF
+send "\01"
+send "d"
 expect eof
 EOF
