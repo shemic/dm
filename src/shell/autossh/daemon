@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 set -e
+path=$4
 while true
 do
 	pids=`ps aux|grep "/usr/bin/ssh -f -NR"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
@@ -7,7 +8,7 @@ do
 		sleep 80000
 		kill -9 $pids
 	else
-		epids=`ps aux|grep "/data/dm/src/shell/autossh/expect"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
+		epids=`ps aux|grep "${path}expect"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
 		if [ "$epids" ]; then
 			kill -9 $epids
 		fi

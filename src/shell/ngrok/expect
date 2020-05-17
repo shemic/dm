@@ -1,9 +1,16 @@
-#!/bin/sh
-set name [lrange $argv 0 0]
-set port [lrange $argv 1 1]
+#!/usr/bin/env bash
+name=$1
+domain=$2
+port=$3
+path=$4
+pids=`ps aux|grep "SCREEN -dmS $name"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $2}'`
+if [ "$pids" ]; then
+    kill -9 $pids
+    screen -wipe
+fi
 
 screen -dmS $name
-cmd=$"ngrok -subdomain='$name' -config='ngrok.cfg' $port"
+cmd=$"ngrok -subdomain=$domain -config=${path}ngrok.cfg $port"
 screen -x -S $name -p 0 -X stuff "$cmd"
 screen -x -S $name -p 0 -X stuff $'\n'
 

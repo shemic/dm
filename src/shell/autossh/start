@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 set -e
-/data/dm/src/shell/autossh/daemon $1 $2 $3 >/dev/null &
+path="/data/dm/src/shell/autossh/"
+${path}daemon $1 $2 $3 $path >/dev/null &

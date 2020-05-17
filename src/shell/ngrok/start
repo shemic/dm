@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 set -e
-/data/dm/src/shell/ngrok/daemon $1 $2 >/dev/null &
+path="/data/dm/src/shell/ngrok/"
+${path}daemon $1 $2 $path >/dev/null &
