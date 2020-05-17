@@ -6,7 +6,7 @@ port=$2
 path=$3
 while true
 do
-    pids=`ps aux|grep "ngrok -subdomain=$1 -config=${$path}ngrok.cfg $port"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
+    pids=`ps aux|grep "ngrok -subdomain=$1 -config=${path}ngrok.cfg $port"|grep -v entrypoint|grep -v grep|grep -v process|awk '{print $1}'`
     if [ "$pids" ]; then
         sleep 60
     else
