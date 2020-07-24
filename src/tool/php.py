@@ -23,6 +23,7 @@ class Php_Action(object):
 		,'redis' : ['redis-3.1.5RC2', 'redis', '', '']
 		,'memcached' : ['memcached-3.0.4', 'memcached', 'curl-dev,libmemcached-dev,cyrus-sasl-dev', '']
 		,'php5_memcached' : ['memcached-2.2.0', 'memcached', 'php5-mysqli,curl-dev,libmemcached-dev,cyrus-sasl-dev', '']
+		,'php5_imagick' : ['imagick-3.4.4', 'imagick', '', '']
 	}
 
 	@classmethod
