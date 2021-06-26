@@ -24,7 +24,8 @@ class Php_Action(object):
 		,'redis' : ['redis-5.3.2', 'redis', '', '']
 		,'memcached' : ['memcached-3.0.4', 'memcached', 'curl-dev,libmemcached-dev,cyrus-sasl-dev', '']
 		,'php5_memcached' : ['memcached-2.2.0', 'memcached', 'php5-mysqli,curl-dev,libmemcached-dev,cyrus-sasl-dev', '']
-		,'imagick' : ['imagick-3.4.4', 'imagick', 'ImageMagick-dev', 'libtool,imagemagick,imagemagick-dev', '']
+		#,'imagick' : ['imagick-3.4.4', 'imagick', 'ImageMagick-dev', 'libtool,imagemagick,imagemagick-dev', '']
+		,'imagick' : ['imagick-3.4.4', 'imagick', '', 'libtool,imagemagick,imagemagick-dev', '']
 	}
 
 	@classmethod
