@@ -36,7 +36,7 @@ class Args(object):
 			self.param = sys.argv[3]
 		self.options()
 		if self.action == '':
-			print 'action error'
+			print('action error')
 			sys.exit()
 		
 	@classmethod
@@ -56,7 +56,7 @@ class Args(object):
 			self.usage()
 	@classmethod
 	def usage(self):
-		print File.read(Core.path, 'usage')
+		print(File.read(Core.path, 'usage'))
 		sys.exit()
 
 class Env(object):
@@ -140,7 +140,7 @@ class Config(object):
 					result[item] = self.readOption(config, item)
 				return result
 		else:
-			print runtime + ' is not exists'
+			print(runtime + ' is not exists')
 			sys.exit()
 
 	@classmethod
@@ -154,7 +154,7 @@ class Config(object):
 				result[item] = self.readOption(config, item)
 			return result
 		else:
-			print core + ' is not exists'
+			print(core + ' is not exists')
 			sys.exit()
 
 	@classmethod
@@ -182,7 +182,7 @@ class Config(object):
 			result['base']['path'] = Core.replace('{base}', Core.path, result['base']['path'])
 			return result
 		else:
-			print filename + ' is not exists'
+			print(filename + ' is not exists')
 			sys.exit()
 
 	@staticmethod
@@ -354,7 +354,7 @@ class Git(object):
 	def update(git, path):
 		if git and File.exists(path) == False:
 			Core.popen('git clone ' + git + ' ' + path)
-			print 'init:' + path + ' finished!'
+			print('init:' + path + ' finished!')
 		else:
 			file = path + '/' + '.git/'
 			if not File.exists(file):
@@ -362,7 +362,7 @@ class Git(object):
 				Core.popen('git clone ' + git + ' ' + tmp + ' && cp -R ' + tmp + '/.git/ ' + file + ' && rm -rf ' + tmp)
 
 			Core.popen('cd ' + path + ' && git pull')
-			print 'update:' + path + ' finished!'
+			print('update:' + path + ' finished!')
 
 	@classmethod
 	def set(self, git, path):
@@ -385,10 +385,10 @@ class Service(object):
 	def set(git, path):
 		if File.exists(path) == False:
 			Core.popen('git clone ' + git + ' ' + path, bg=True)
-			print 'init:' + path + ' finished!'
+			print('init:' + path + ' finished!')
 		else:
 			Core.popen('cd ' + path + ' && git pull', bg=True)
-			print 'update:' + path + ' finished!'
+			print('update:' + path + ' finished!')
 
 class Core(object):
 	path = ''
@@ -406,12 +406,12 @@ class Core(object):
 		obj = self.getObject(name, path)
 		if path:
 			if not hasattr(obj, name):
-				print 'error ' + name
+				print('error ' + name)
 				sys.exit()
 			obj = getattr(obj, name)
 		name = name.capitalize()
 		if not hasattr(obj, name):
-			print 'error ' + name
+			print('error ' + name)
 			sys.exit()
 		return getattr(obj, name)
 
@@ -422,7 +422,7 @@ class Core(object):
 	@staticmethod
 	def getMethod(obj, name):
 		if not hasattr(obj, name):
-			print 'error ' + name
+			print('error ' + name)
 			sys.exit()
 		return getattr(obj, name)
 
@@ -443,16 +443,16 @@ class Core(object):
 		else:
 			popen  = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
 			output = ''
-			print string
+			print(string)
 			while True:
 				output = popen.stdout.readline()
-				print output
+				print(output)
 				if popen.poll() is not None:
 					break
 			return output
 	@classmethod
 	def install(self, soft):
-		print 'install ' + soft + '...'
+		print('install ' + soft + '...')
 		if soft == 'docker':
 			self.shell('install.docker', True)
 		else:
