@@ -2,7 +2,7 @@
 
 install：
 <pre>
-git clone https://github.com/shemic/dm
+git clone http://git.dever.cc/python/dm.git
 cd dm
 chmod +x install
 ./install
