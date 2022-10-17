@@ -17,7 +17,7 @@ class Composer_Action(object):
 	@staticmethod
 	def install():
 		Composer.install(Args.name)
-		print 'install '+Args.name+':yes'
+		print('install '+Args.name+':yes')
 
 	@classmethod
 	def update(self):
@@ -31,4 +31,4 @@ class Composer(object):
 	@staticmethod
 	def install(name):
 		Core.shell('composer.install ' + name, True)
-		print 'finished'
+		print('finished')

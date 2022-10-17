@@ -44,25 +44,25 @@ class Cluster_Action(Docker_Action):
 	@staticmethod
 	def leave():
 		result = Swarm.leave()
-		print result
+		print(result)
 
 	@staticmethod
 	def drop():
 		Swarm.drop()
-		print 'drop cluster:yes'
+		print('drop cluster:yes')
 
 	@staticmethod
 	def name():
 		arg = Args.name
 		name = Swarm.name(arg)
 		name = name.split("\n")
-		print name[0]
+		print(name[0])
 
 	@staticmethod
 	def names():
 		arg = Args.name
 		name = Swarm.name(arg)
-		print name
+		print(name)
 
 	@staticmethod
 	def node():
@@ -72,12 +72,12 @@ class Cluster_Action(Docker_Action):
 	def num():
 		name = Args.name
 		num = Args.param
-		print 'setting ' + name + ', please wait...'
+		print('setting ' + name + ', please wait...')
 		Swarm.scale(name, num)
 
 	@staticmethod
 	def restart(**param):
-		print 'reloading ' + param['name'] + ', please wait...'
+		print('reloading ' + param['name'] + ', please wait...')
 		name = Swarm.name(param['name'])
 		name = name.split("\n")
 		for i in name:
@@ -105,7 +105,7 @@ class Cluster_Action(Docker_Action):
 
 	@staticmethod
 	def stop(**param):
-		print 'stop command is not exists'
+		print('stop command is not exists')
 
 	@staticmethod
 	def save(**param):
@@ -134,7 +134,7 @@ class Cluster_Action(Docker_Action):
 			Alias.delete(param['config'], param['name'])
 		else:
 			Container.delete()
-			print 'rm cluster:yes'
+			print('rm cluster:yes')
 
 	@staticmethod
 	def rmb(**param):
@@ -143,7 +143,7 @@ class Cluster_Action(Docker_Action):
 			Alias.delete(param['config'], param['name'])
 		else:
 			Swarm.delete()
-			print 'rm cluster:yes'
+			print('rm cluster:yes')
 
 	@classmethod
 	def reset(self, **param):
@@ -153,7 +153,7 @@ class Cluster_Action(Docker_Action):
 	@classmethod
 	def test(self, **param):
 		param['test'] = True
-		print self.run(**param)
+		print(self.run(**param))
 
 	@classmethod
 	def create(self, **param):
@@ -195,13 +195,13 @@ class Cluster_Action(Docker_Action):
 			command = ' '.join(run)
 			if 'test' in param:
 				return 'docker service create ' + command
-			print 'setuping ' + param['name'] + ', please wait...'
+			print('setuping ' + param['name'] + ', please wait...')
 			method = Core.getMethod(Swarm, param['action'])
 			method(command)
 			Alias.add(param['config'], param['name'], 'docker run ' + command, param['action'], True)
 			Cluster.hook('end', param['config'], param['name'])
 		else:
-			print param['name'] + ' cluster is setuped'
+			print(param['name'] + ' cluster is setuped')
 
 	@staticmethod
 	def setting():
@@ -229,7 +229,7 @@ class Cluster_Action(Docker_Action):
 		url = 'http://' + ip + ':8500/v1/kv/' + key
 		Core.popen('curl -X PUT -d "'+value+'" ' + url, bg=True)
 		if p == True:
-			print True
+			print(True)
 		return True
 
 	@classmethod
@@ -243,19 +243,19 @@ class Cluster_Action(Docker_Action):
 		url = 'http://' + ip + ':8500/v1/kv/' + key
 		value = Core.curl(url)
 		if not value:
-			print False
+			print(False)
 			return False
 		value = json.loads(value)
 		value = base64.b64decode(value[0]['Value'])
 		if p == True:
-			print value
+			print(value)
 		return value
 
 	@classmethod
 	def init(self, **param):
 		(ip, ckey) = self.setting()
 		token = Swarm.init(ip)
-		print 'init cluster ...'
+		print('init cluster ...')
 		if token and '--token' in token:
 			Core.popen('dm pull consul')
 			Core.popen('ds run daemon-master')
@@ -268,14 +268,14 @@ class Cluster_Action(Docker_Action):
 
 			self.put(ckey, token, p = False)
 			#Core.popen('consul kv put ' + ckey + ' ' + token)
-		print 'init cluster success! please remember the ip address:'+ip+''
+		print('init cluster success! please remember the ip address:'+ip+'')
 
 	@classmethod
 	def join(self, **param):
 		(ip, ckey) = self.setting()
 		value = self.get(ckey, ip, False)
 		#config = value.split(':')
-		print value
+		print(value)
 
 		'''
 		Core.popen('dm pull consul')
@@ -305,7 +305,7 @@ class Swarm(object):
 		return command
 	@staticmethod
 	def show(name=''):
-		print Core.shell('swarm.show ' + name)
+		print(Core.shell('swarm.show ' + name))
 	@staticmethod
 	def args():
 		return {
@@ -325,7 +325,7 @@ class Swarm(object):
 		Core.shell('swarm.drop', bg=True)
 	@staticmethod
 	def node():
-		print Core.shell('swarm.node')
+		print(Core.shell('swarm.node'))
 	@staticmethod
 	def stop(name):
 		Core.shell('swarm.stop ' + name)
@@ -341,7 +341,7 @@ class Swarm(object):
 	@classmethod
 	def delete(self, name='', bg=False):
 		if name != '':
-			print 'rm ' + name + ', please wait...'
+			print('rm ' + name + ', please wait...')
 			if self.check(name) == 1:
 				Core.shell('swarm.rm ' + name, False, bg=bg)
 		else:

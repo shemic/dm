@@ -43,7 +43,7 @@ class Dever(object):
 	def create(self, path):
 		name = os.path.basename(path)
 		Dever_Create.boot(path + '/', name)
-		print "create finished!"
+		print("create finished!")
 
 	@staticmethod
 	def cur(up = True):
@@ -257,7 +257,7 @@ class Dever_Action(object):
 	@classmethod
 	def create(self):
 		path = self.pull()
-		print "creating..."
+		print("creating...")
 		for v in Dever.package_list:
 			Dever_Create.index(path + '/', v['name'], v['path'])
 		Dever.create(path)

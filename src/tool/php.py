@@ -36,12 +36,12 @@ class Php_Action(object):
 			so = self.package[Args.name][2]
 			config = self.package[Args.name][3]
 		else:
-			print Args.name+' error'
+			print(Args.name+' error')
 			return
 
 		Core.popen('phpInstall ' + name + ' ' + rely + ' ' + so + ' ' + config, True)
-		print 'install '+Args.name+':yes'
+		print('install '+Args.name+':yes')
 		
 	@classmethod
 	def show(self):
-		print self.package.keys()
+		print(self.package.keys())

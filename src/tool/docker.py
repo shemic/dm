@@ -159,7 +159,7 @@ class Docker(object):
 				if index in param:
 					value = param[index][0]
 				if value == '':
-					print 'please set param value:' + index
+					print('please set param value:' + index)
 					sys.exit()
 				else:
 					result = Core.replace('{$'+key+'}', value, result)
@@ -221,7 +221,7 @@ class Docker_Action(object):
 		Image.build(Docker.storeHost, path, Args.name)
 		Container.delete()
 		Image.delete()
-		print 'docker build '+Args.name+':yes'
+		print('docker build '+Args.name+':yes')
 
 	@classmethod
 	def push(self):
@@ -231,7 +231,7 @@ class Docker_Action(object):
 				#print package[Args.name]
 				Image.push(package[Args.name])
 			else:
-				print 'error ' + Args.name
+				print('error ' + Args.name)
 			sys.exit()
 
 		for key in package:
@@ -245,7 +245,7 @@ class Docker_Action(object):
 			if Args.name in package:
 				Image.pull(package[Args.name])
 			else:
-				print 'error ' + Args.name
+				print('error ' + Args.name)
 			sys.exit()
 
 		for key in package:
@@ -282,12 +282,12 @@ class Docker_Action(object):
 						result[key].append(host)
 		if Args.name and Args.name in result:
 			value = Args.name + ' [' + ",".join(result[Args.name ]) + ']'
-			print value
+			print(value)
 		else:
 			i = 1
 			for key in result:
 				value = key + ' [' + ",".join(result[key]) + ']'
-				print str(i) + ':' + value
+				print(str(i) + ':' + value)
 				i = i + 1
 		return result
 
@@ -298,17 +298,17 @@ class Docker_Action(object):
 	@staticmethod
 	def rmi():
 		Image.delete()
-		print 'rm image:yes'
+		print('rm image:yes')
 
 	@staticmethod
 	def drop():
 		Container.drop()
-		print 'drop container:yes'
+		print('drop container:yes')
 
 	@staticmethod
 	def dropi():
 		Image.drop(Args.name)
-		print 'drop image:yes'
+		print('drop image:yes')
 
 	@staticmethod
 	def show(**param):
@@ -323,7 +323,7 @@ class Docker_Action(object):
 
 	@staticmethod
 	def restart(**param):
-		print 'reloading ' + param['name'] + ', please wait...'
+		print('reloading ' + param['name'] + ', please wait...')
 		Container.restart(param['name'])
 
 	@staticmethod
@@ -361,7 +361,7 @@ class Docker_Action(object):
 			Alias.delete(param['config'], param['name'])
 		else:
 			Container.delete()
-			print 'rm container:yes'
+			print('rm container:yes')
 
 	@staticmethod
 	def rmb(**param):
@@ -370,7 +370,7 @@ class Docker_Action(object):
 			Alias.delete(param['config'], param['name'])
 		else:
 			Container.delete()
-			print 'rm container:yes'
+			print('rm container:yes')
 
 	@classmethod
 	def reset(self, **param):
@@ -380,7 +380,7 @@ class Docker_Action(object):
 	@classmethod
 	def test(self, **param):
 		param['test'] = True
-		print self.run(**param)
+		print(self.run(**param))
 
 	@classmethod
 	def create(self, **param):
@@ -437,7 +437,7 @@ class Docker_Action(object):
 			command = ' '.join(run)
 			if 'test' in param:
 				return 'docker run ' + command
-			print 'setuping ' + param['name'] + ', please wait...'
+			print('setuping ' + param['name'] + ', please wait...')
 			method = Core.getMethod(Container, param['action'])
 			method(command)
 			Alias.add(param['config'], param['name'], 'docker run ' + command, param['action'])
@@ -455,7 +455,7 @@ class Container(object):
 		return command
 	@staticmethod
 	def show(name=''):
-		print Core.shell('container.show ' + name)
+		print(Core.shell('container.show ' + name))
 	@staticmethod
 	def args():
 		return {
@@ -492,7 +492,7 @@ class Container(object):
 	@classmethod
 	def delete(self, name='', bg=False):
 		if name != '':
-			print 'rm ' + name + ', please wait...'
+			print('rm ' + name + ', please wait...')
 			if self.check(name) == 1:
 				Core.shell('container.rm ' + name, False, bg=bg)
 		else:
@@ -543,10 +543,10 @@ class Image(object):
 				Core.shell('image.push ' + store + ' ' + value, bg=True)
 	@classmethod
 	def pull(self, stores):
-		print Core.shell('image.pull ' + stores[0], True)
+		print(Core.shell('image.pull ' + stores[0], True))
 	@staticmethod
 	def show():
-		print Core.shell('image.show')
+		print(Core.shell('image.show'))
 	@staticmethod
 	def drop(name=''):
 		Core.shell('image.drop ' + name, bg=True)
@@ -576,4 +576,4 @@ class Image(object):
 		pull = 'docker pull';
 		command = pull + ' ' + library + key
 		Core.popen(command, True)
-		print 'finished'
+		print('finished')
