@@ -4,7 +4,7 @@ from core import *
 class Main(object):
 	use = 'docker'
 	def __new__(cls, *args, **kwargs):
-		print 'error'
+		print('error')
 		sys.exit()
 
 	def __init__(self):
@@ -35,48 +35,48 @@ class Main_Action(object):
 	@staticmethod
 	def use():
 		if not Args.name:
-			print 'dm name is not exists!'
+			print('dm name is not exists!')
 			sys.exit()
 		Env.use(Args.name)
 
 	@staticmethod
 	def set():
 		if not Args.name:
-			print 'dm name is not exists!'
+			print('dm name is not exists!')
 			sys.exit()
 		Env.store(Args.name)
 
 	@staticmethod
 	def val():
 		if not Args.name:
-			print 'dm name is not exists!'
+			print('dm name is not exists!')
 			sys.exit()
 		if not Args.param:
-			print 'dm param is not exists!'
+			print('dm param is not exists!')
 			sys.exit()
 		Env.val(Args.name, Args.param)
 
 	@staticmethod
 	def up():
-		print 'loading...'
+		print('loading...')
 		Core.shell('git.pull ' + Core.path)
-		print 'dm update success!'
+		print('dm update success!')
 
 	@staticmethod
 	def commit():
-		print Core.shell('git.push ' + Core.path)
+		print(Core.shell('git.push ' + Core.path))
 
 	@staticmethod
 	def path():
-		print Core.path
+		print(Core.path)
 
 	@staticmethod
 	def shell():
-		print Core.shell(Args.name)
+		print(Core.shell(Args.name))
 
 	@staticmethod
 	def master():
-		print Core.path + 'src/shell/dm'
+		print(Core.path + 'src/shell/dm')
 
 	@staticmethod
 	def ip():
@@ -84,6 +84,6 @@ class Main_Action(object):
 			ifname = 'eth0'
 		else:
 			ifname = Args.name
-		print Core.ip(ifname)
+		print(Core.ip(ifname))
 
 #Main.init()
