@@ -1,4 +1,4 @@
-FROM registry.cn-shenzhen.aliyuncs.com/cnk3x/xunlei:latest
+FROM qbittorrentofficial/qbittorrent-nox
 #离线下载
 #https://github.com/cnk3x/xunlei
 
