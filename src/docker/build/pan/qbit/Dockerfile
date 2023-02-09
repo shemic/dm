@@ -1,4 +1,4 @@
-FROM qbittorrentofficial/qbittorrent-nox
+FROM padhihomelab/qbittorrent-nox
 #离线下载
 #https://github.com/cnk3x/xunlei
 
