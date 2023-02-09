@@ -1,5 +1,5 @@
 #FROM jaegerdocker/pan
-FROM afian/filerun
+FROM filerun/filerun
 #FROM afian/filerun:arm32v7
 
 MAINTAINER Rabin "https://github.com/shemic"

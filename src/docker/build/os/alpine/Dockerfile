@@ -1,5 +1,5 @@
 #FROM alpine:3.6
-FROM alpine
+FROM alpine:3.17
 
 MAINTAINER Rabin "https://github.com/shemic"
 
