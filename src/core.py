@@ -10,11 +10,9 @@ import datetime
 import os
 import sys
 import getopt
-import ConfigParser
-import commands
+import configparser
 import re
 import subprocess
-import urlparse
 
 class Args(object):
 	@classmethod
@@ -129,7 +127,7 @@ class Config(object):
 	def runtime(self, key='', name='', value=''):
 		runtime = Core.path + 'data/runtime.conf'
 		if File.exists(runtime):
-			config = ConfigParser.ConfigParser()
+			config = configparser.ConfigParser()
 			config.read(runtime)
 			if key and name:
 				config.set(key, name, value)
@@ -147,7 +145,7 @@ class Config(object):
 	def core(self, path):
 		core = Core.path + path + 'core.conf'
 		if File.exists(core):
-			config = ConfigParser.ConfigParser()
+			config = configparser.ConfigParser()
 			config.read(core)
 			result = {}
 			for item in config.sections():
@@ -166,7 +164,7 @@ class Config(object):
 
 		filename = Core.path + path + 'conf/' + Args.name + '.conf'
 		if File.exists(filename):
-			config = ConfigParser.ConfigParser()
+			config = configparser.ConfigParser()
 			config.read(filename)
 			result = {}
 			result['server'] = []
