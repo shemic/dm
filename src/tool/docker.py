@@ -473,6 +473,7 @@ class Container(object):
 			,'shm' : '--shm-size='
 			,'expose' : '--expose'
 			,'super' : '--privileged='
+			,'gpus' : '--gpus'
 		}
 	@staticmethod
 	def drop():
