@@ -12,7 +12,7 @@ class Main(object):
 
 	@classmethod
 	def init(self, use = 'docker'):
-		Core.path = File.path().replace('/src/', '/')
+		Core.path = File.path().replace('src/', '')
 		Args.init()
 		method = ('use', 'set', 'val', 'up', 'commit', 'path', 'shell', 'master', 'ip')
 		if Args.action in method:

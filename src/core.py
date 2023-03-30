@@ -146,7 +146,7 @@ class Config(object):
 		core = Core.path + path + 'core.conf'
 		if File.exists(core):
 			config = configparser.ConfigParser()
-			config.read(core)
+			config.read(core, encoding='utf-8')
 			result = {}
 			for item in config.sections():
 				result[item] = self.readOption(config, item)
@@ -165,7 +165,7 @@ class Config(object):
 		filename = Core.path + path + 'conf/' + Args.name + '.conf'
 		if File.exists(filename):
 			config = configparser.ConfigParser()
-			config.read(filename)
+			config.read(filename, encoding='utf-8')
 			result = {}
 			result['server'] = []
 			result['config'] = {}
@@ -427,11 +427,23 @@ class Core(object):
 	@classmethod
 	def shell(self, command, sub=False, bg=False):
 		shell = self.path + 'src/shell/' + command.replace('.', '/', 1)
+		print(command)
 		return self.popen(shell, sub, bg)
 	@staticmethod
 	def popen(command, sub=False, bg=False):
 		string = command
-		if bg == True:
+		if Core.platform() == False:
+			if 'chmod' in command or 'ln -' in command:
+				return False
+			if 'shell' in command:
+				temp = command.split(' ')
+				command = temp[0] + '.bat ' + temp[1]
+			if 'grep' in command and '| wc -l' in command:
+				command = command.replace('grep', 'find /C')
+				command = command.replace('| wc -l', '')
+			if 'grep' in command:
+				command = command.replace('grep', 'findstr')
+		elif bg == True:
 			command = command + ' 1>/dev/null 2>&1 &'
 		if sub == False:
 			process = os.popen(command)
@@ -485,3 +497,11 @@ class Core(object):
 		inet = fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', ifname[:15]))  
 		ret = socket.inet_ntoa(inet[20:24])
 		return ret
+
+	@staticmethod
+	def platform():
+		import platform
+		if platform.system().lower() == 'windows' :
+			return False;
+		else :
+			return True;

@@ -501,7 +501,7 @@ class Container(object):
 			
 	@staticmethod
 	def check(name):
-		result = int(Core.popen('docker ps -a | grep '+name+' | wc -l'))
+		result = int(Core.popen('docker ps -a | grep "'+name+'" | wc -l'))
 		if result != 0:
 			return 1
 		else:
@@ -514,11 +514,12 @@ class Container(object):
 			else:
 				name = 'bridge'
 			driver = '--driver=' + name
-			result = int(Core.popen('docker network ls | grep ' + config['network'] + ' | wc -l'))
+			result = int(Core.popen('docker network ls | grep "' + config['network'] + '" | wc -l'))
 			if result == 0:
 				if 'subnet' in config:
 					driver = driver + ' --subnet=' + config['subnet']
-				Core.shell('docker.network ' + driver + ' ' + config['network'], True)
+				#Core.shell('docker.network ' + driver + ' ' + config['network'], True)
+				Core.popen('docker network create ' + driver + ' ' + config['network'])
 	@staticmethod
 	def save(tar, name, backup):
 		if File.exists(tar) == True:
@@ -567,7 +568,7 @@ class Image(object):
 			Core.shell('docker.tag ' + name + ' ' + private, True)
 	@staticmethod
 	def check(name):
-		result = int(Core.popen('docker images | grep '+name+' | wc -l'))
+		result = int(Core.popen('docker images | grep "'+name+'" | wc -l'))
 		if result != 0:
 			return 1
 		else:

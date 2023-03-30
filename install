@@ -20,7 +20,12 @@ fi
 mkdir -p /etc/docker
 tee /etc/docker/daemon.json <<-'EOF'
 {
-  "registry-mirrors": ["https://b2qcb7w2.mirror.aliyuncs.com"]
+  "registry-mirrors": [
+        "https://docker.mirrors.ustc.edu.cn",
+        "https://registry.docker-cn.com",
+        "http://hub-mirror.c.163.com",
+        "https://mirror.ccs.tencentyun.com"
+    ]
   ,"insecure-registries" : ["docker.dever.cc"]
 }
 EOF
