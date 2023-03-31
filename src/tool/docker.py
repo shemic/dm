@@ -297,7 +297,10 @@ class Docker_Action(object):
 
 	@staticmethod
 	def rmi():
-		Image.delete(Args.name)
+		if Args.name:
+			Image.delete(Args.name)
+		else:
+			Image.delete()
 		print('rm image:yes')
 
 	@staticmethod
@@ -550,11 +553,11 @@ class Image(object):
 	def show():
 		print(Core.shell('image.show'))
 	@staticmethod
-	def drop(name=''):
-		Core.shell('image.drop ' + name, bg=True)
+	def drop():
+		Core.shell('image.drop', bg=True)
 	@staticmethod
-	def delete():
-		Core.shell('image.rm', bg=True)
+	def delete(name=''):
+		Core.shell('image.rm ' + name, bg=True)
 	@staticmethod
 	def build(root, path, name):
 		file = Core.path + Docker.path + 'build/' + path + '/'
