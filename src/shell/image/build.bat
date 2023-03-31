@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-set -e
+@echo off
 
-docker build --no-cache -t $1 $2
-docker images $1
+docker build --no-cache -t %1 %2
+docker images %1

@@ -1,5 +1,5 @@
 @echo off
-pip install docker
+rem pip install docker
 set basepath=%~dp0
 setx /M DEVERPATH "%basepath%src/"
 setx /M PATH "%PATH%;%DEVERPATH%"

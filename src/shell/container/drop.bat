@@ -1,3 +1,3 @@
 @echo off
 
-docker ps -a|awk '{print %1}'|xargs docker rm -f 
+for /f "skip=1 tokens=1,* delims= " %%i in ('docker ps -a') do (echo "%%j" | findstr "Exited" > nul && (docker rm -f "%%i") || (echo "no"))

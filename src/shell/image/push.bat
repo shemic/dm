@@ -1,10 +1,9 @@
-#!/usr/bin/env sh
-set -e
+@echo off
 
-if [ -n "$2" ];then
-	docker tag $1 $2
-	docker push $2
-	docker rmi -f $2
-else
-	docker push $1
-fi
+if {%2} == {} (
+	docker push %1
+) else (
+	docker tag %1 %2
+	docker push %2
+	docker rmi -f %2
+)

@@ -297,7 +297,7 @@ class Docker_Action(object):
 
 	@staticmethod
 	def rmi():
-		Image.delete()
+		Image.delete(Args.name)
 		print('rm image:yes')
 
 	@staticmethod
@@ -307,7 +307,7 @@ class Docker_Action(object):
 
 	@staticmethod
 	def dropi():
-		Image.drop(Args.name)
+		Image.drop()
 		print('drop image:yes')
 
 	@staticmethod

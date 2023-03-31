@@ -1,4 +1,3 @@
-#!/usr/bin/env sh
-set -e
+@echo off
 
 docker pull $1

@@ -194,6 +194,8 @@ class Config(object):
 class Alias(object):
 	@classmethod
 	def delete(self, config, name, cluster=False):
+		if Core.platform() == False:
+			return
 		result = self.get(config, name)
 		for key in result:
 			action = self.action(name, key)
@@ -210,6 +212,8 @@ class Alias(object):
 			#Core.popen('rm -rf ' + action[2], bg=True)
 	@classmethod
 	def add(self, config, name, content, type, cluster=False):
+		if Core.platform() == False:
+			return
 		result = self.get(config, name)
 		for key in result:
 			action = self.action(name, key)
@@ -243,6 +247,8 @@ class Alias(object):
 
 	@staticmethod
 	def define(name, cluster=False):
+		if Core.platform() == False:
+			return
 		conf = ['logs', 'inspect', 'restart', 'stop', 'rm', 'rmb', 'run', 'uprun', 'show']
 		result = ''
 		for key in conf:
@@ -257,6 +263,8 @@ class Alias(object):
 		return result
 	@classmethod
 	def get(self, config, name):
+		if Core.platform() == False:
+			return
 		self.path = Core.path + 'data/alias/'
 		result = []
 		default = 'sh->' + name
@@ -271,6 +279,8 @@ class Alias(object):
 		return result
 	@classmethod
 	def action(self, name, key):
+		if Core.platform() == False:
+			return
 		file = key
 		if '->' in key:
 			temp = key.split('->')
@@ -427,7 +437,6 @@ class Core(object):
 	@classmethod
 	def shell(self, command, sub=False, bg=False):
 		shell = self.path + 'src/shell/' + command.replace('.', '/', 1)
-		print(command)
 		return self.popen(shell, sub, bg)
 	@staticmethod
 	def popen(command, sub=False, bg=False):
@@ -435,9 +444,17 @@ class Core(object):
 		if Core.platform() == False:
 			if 'chmod' in command or 'ln -' in command:
 				return False
+			'''
 			if 'shell' in command:
 				temp = command.split(' ')
-				command = temp[0] + '.bat ' + temp[1]
+				n = len(temp)
+				if n == 3:
+					command = temp[0] + '.bat ' + temp[1] + ' ' + temp[2]
+				if n == 2:
+					command = temp[0] + '.bat ' + temp[1]
+				else:
+					command = temp[0] + '.bat '
+			'''
 			if 'grep' in command and '| wc -l' in command:
 				command = command.replace('grep', 'find /C')
 				command = command.replace('| wc -l', '')
@@ -447,7 +464,7 @@ class Core(object):
 			command = command + ' 1>/dev/null 2>&1 &'
 		if sub == False:
 			process = os.popen(command)
-			output = process.read()
+			output = process.buffer.read().decode('utf-8')
 			process.close()
 			return output
 		else:
