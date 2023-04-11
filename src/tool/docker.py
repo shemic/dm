@@ -219,8 +219,8 @@ class Docker_Action(object):
 		if Args.name and Args.name in Docker.core['images']:
 			path = Docker.core['images'][Args.name]
 		Image.build(Docker.storeHost, path, Args.name)
-		Container.delete()
-		Image.delete()
+		Container.drop()
+		Image.drop()
 		print('docker build '+Args.name+':yes')
 
 	@classmethod
@@ -300,7 +300,7 @@ class Docker_Action(object):
 		if Args.name:
 			Image.delete(Args.name)
 		else:
-			Image.delete()
+			Image.drop()
 		print('rm image:yes')
 
 	@staticmethod
@@ -363,7 +363,7 @@ class Docker_Action(object):
 			Container.delete(param['name'])
 			Alias.delete(param['config'], param['name'])
 		else:
-			Container.delete()
+			Container.drop()
 			print('rm container:yes')
 
 	@staticmethod
@@ -372,7 +372,7 @@ class Docker_Action(object):
 			Container.delete(param['name'], bg=True)
 			Alias.delete(param['config'], param['name'])
 		else:
-			Container.delete()
+			Container.drop()
 			print('rm container:yes')
 
 	@classmethod
@@ -557,7 +557,12 @@ class Image(object):
 		Core.shell('image.drop', bg=True)
 	@staticmethod
 	def delete(name=''):
-		Core.shell('image.rm ' + name, bg=True)
+		if name != '':
+			print('rm ' + name + ', please wait...')
+			if self.check(name) == 1:
+				Core.shell('image.rm ' + name, False, bg=bg)
+		else:
+			Core.shell('image.rm', False)
 	@staticmethod
 	def build(root, path, name):
 		file = Core.path + Docker.path + 'build/' + path + '/'
