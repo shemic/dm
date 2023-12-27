@@ -29,13 +29,14 @@ tee /etc/docker/daemon.json <<-'EOF'
   ,"insecure-registries" : ["docker.dever.cc"]
 }
 EOF
-service docker restart
+#service docker restart
 
 ln -sf $basepath/src/dm.py /usr/bin/dm && chmod +x /usr/bin/dm
 ln -sf $basepath/src/ds.py /usr/bin/ds && chmod +x /usr/bin/ds
 ln -sf $basepath/src/dp.py /usr/bin/dp && chmod +x /usr/bin/dp
 ln -sf $basepath/src/dpc.py /usr/bin/dpc && chmod +x /usr/bin/dpc
 ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever
+ln -sf $basepath/src/dever2.py /usr/bin/dever2 && chmod +x /usr/bin/dever2
 ln -sf $basepath/src/dgit.py /usr/bin/dgit && chmod +x /usr/bin/dgit
 
 # python-pip
