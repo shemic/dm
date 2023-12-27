@@ -63,7 +63,7 @@ class Dever2(object):
 	def custom():
 		git = Args.param
 		if not git:
-			git = Env.dever()
+			git = Env.dever2()
 		if not git or 'http' not in git:
 			git = Dever2.git + Dever2.package
 		return git
