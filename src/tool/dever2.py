@@ -9,8 +9,8 @@ from core import *
 import json
 
 class Dever2(object):
-	git = 'http://git.Dever2.cc:3000/'
-	ssh = 'ssh://git@git.Dever2.cc:10022/'
+	git = 'http://git.dever.cc:3000/'
+	ssh = 'ssh://git@git.dever.cc:10022/'
 	lib = Core.path + 'container/share/lib/php/'
 	dev = Core.path + 'container/web/'
 	framework = 'dever2/dev.git'
