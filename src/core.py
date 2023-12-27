@@ -62,6 +62,7 @@ class Env(object):
 	dm_store = 'base.store'
 	dm_cluster = 'base.cluster'
 	dm_dever = 'base.dever'
+	dm_dever2 = 'base.dever2'
 	dm_val = 'val.'
 	data = {}
 
@@ -101,6 +102,12 @@ class Env(object):
 		if value:
 			return self.write(self.dm_dever, value)
 		return self.read(self.dm_dever)
+
+	@classmethod
+	def dever2(self, value=None):
+		if value:
+			return self.write(self.dm_dever2, value)
+		return self.read(self.dm_dever2)
 
 	@classmethod
 	def store(self, value=None):
