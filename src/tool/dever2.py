@@ -2,15 +2,15 @@
 # -*- coding: utf-8 -*-
 """
     dever-manage tools
-    name:dever.py
+    name:Dever2.py
     author:rabin
 """
 from core import *
 import json
 
 class Dever2(object):
-	git = 'http://git.dever.cc:3000/'
-	ssh = 'ssh://git@git.dever.cc:10022/'
+	git = 'http://git.Dever2.cc:3000/'
+	ssh = 'ssh://git@git.Dever2.cc:10022/'
 	lib = Core.path + 'container/share/lib/php/'
 	dev = Core.path + 'container/web/'
 	framework = 'dever2/dev.git'
@@ -65,7 +65,7 @@ class Dever2(object):
 		if not git:
 			git = Env.dever()
 		if not git or 'http' not in git:
-			git = Dever.git + Dever.package
+			git = Dever2.git + Dever2.package
 		return git
 
 class Dever_Create(object):
@@ -163,13 +163,13 @@ class Dever_Create(object):
 class Dever_Action(object):
 	@staticmethod
 	def init():
-		Git.update(Dever.git + Dever.framework, Dever.lib + 'dever2')
+		Git.update(Dever2.git + Dever2.framework, Dever2.lib + 'dever2')
 
 	@classmethod
 	def package(self, name = False):
 		if not name:
 			name = Args.name
-		return self.update(Dever.git + Dever.package + name, name)
+		return self.update(Dever2.git + Dever2.package + name, name)
 
 	@classmethod
 	def store(self):
@@ -177,26 +177,26 @@ class Dever_Action(object):
 
 	@classmethod
 	def get(self):
-		git = Dever.custom()
+		git = Dever2.custom()
 		return self.update(git + Args.name, Args.name)
 
 	@classmethod
 	def update(self, store, name = False):
 		if not name:
 			name = Args.name
-		lib = Dever.lib + 'dever2_package/'
+		lib = Dever2.lib + 'dever2_package/'
 		path = lib + name + '/'
 		Git.update(store, path)
-		Dever.rely(self, path)
+		Dever2.rely(self, path)
 		Dever_Create.package_boot(lib)
-		project = Dever.cur(False) + '/'
+		project = Dever2.cur(False) + '/'
 		if Dever_Create.dm(project, True):
 			Dever_Create.index(project, name, path)
 		return path
 
 	@classmethod
 	def all(self):
-		path = Dever.lib + 'dever2_package/'
+		path = Dever2.lib + 'dever2_package/'
 		files = File.getFiles(path)
 		if files:
 			for i in files:
@@ -205,8 +205,8 @@ class Dever_Action(object):
 
 	@classmethod
 	def pull(self):
-		path = Dever.cur()
-		Dever.rely(self, path + '/')
+		path = Dever2.cur()
+		Dever2.rely(self, path + '/')
 		Git.update('', path + '/')
 		return path
 
@@ -220,13 +220,13 @@ class Dever_Action(object):
 		name = Args.name
 		cur = File.cur() + '/'
 		path = cur + name + '/'
-		git = Dever.custom()
+		git = Dever2.custom()
 		if git == 'package':
-			git = Dever.git + Dever.package
+			git = Dever2.git + Dever2.package
 		tmp = File.tmp() + name + '/'
 		Git.update(git + name, File.tmp() + name)
 
-		package = Dever.lib + 'dever2_package/' + name + '/'
+		package = Dever2.lib + 'dever2_package/' + name + '/'
 		if not File.exists(package):
 			Core.popen('cp -R ' + tmp + ' ' + package + ' && rm -rf ' + tmp + ' && cp -R ' + path + '* ' + package + ' && rm -rf ' + path + '')
 		else:
@@ -236,7 +236,7 @@ class Dever_Action(object):
 
 	@classmethod
 	def push_package(self):
-		path = Dever.lib + 'dever2_package/' + Args.name
+		path = Dever2.lib + 'dever2_package/' + Args.name
 		Git.push(path + '/', False, Args.param)
 
 	@classmethod
@@ -246,18 +246,18 @@ class Dever_Action(object):
 
 	@classmethod
 	def product(self):
-		path = Dever.dev + Args.name
-		Git.update(Dever.git + Dever.product + Args.name, path)
-		Dever.rely(self, path)
+		path = Dever2.dev + Args.name
+		Git.update(Dever2.git + Dever2.product + Args.name, path)
+		Dever2.rely(self, path)
 
 	@staticmethod
 	def demo():
-		Git.update(Dever.git + Dever.demo, Dever.dev + 'demo')
+		Git.update(Dever2.git + Dever2.demo, Dever2.dev + 'demo')
 
 	@classmethod
 	def create(self):
 		path = self.pull()
 		print("creating...")
-		for v in Dever.package_list:
+		for v in Dever2.package_list:
 			Dever_Create.index(path + '/', v['name'], v['path'])
-		Dever.create(path)
+		Dever2.create(path)
