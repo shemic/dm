@@ -13,7 +13,7 @@ class Dever2(object):
 	ssh = 'ssh://git@git.dever.cc:10022/'
 	lib = Core.path + 'container/share/lib/php/'
 	dev = Core.path + 'container/web/'
-	framework = 'dever2/dev.git'
+	framework = 'dever2/framework.git'
 	demo = 'dever2/demo.git'
 	package = 'dever2-package/'
 	product = 'dever2-product/'
@@ -70,17 +70,11 @@ class Dever2(object):
 
 class Dever_Create(object):
 
-	@staticmethod
-	def package_boot(lib):
-		file = lib + 'boot.php'
-		if not File.exists(file):
-			File.write(file, "<?php \r\nif (!defined('DEVER_PROJECT')) {\r\ndefine('DEVER_PROJECT', 'default');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\n}\r\ninclude(dirname(__FILE__) . DIRECTORY_SEPARATOR . '../dever2/boot.php');")
-
 	@classmethod
 	def boot(self, path, name):
 		file = path + 'boot.php'
 		if not File.exists(file):
-			File.write(file, "<?php \r\ndefine('DEVER_PROJECT', '"+name+"');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\nif (defined('DEVER_PACKAGE')) {\r\n	include('dever2_package/'.DEVER_PACKAGE.'/index.php');\r\n} else {\r\n	include('dever2/boot.php');\r\n}")
+			File.write(file, "<?php \r\ndefine('DEVER_PROJECT', '"+name+"');\r\ndefine('DEVER_PROJECT_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);\r\nif (defined('DEVER_PACKAGE')) {\r\n	include('dever2/package/'.DEVER_PACKAGE.'/index.php');\r\n} else {\r\n	include('dever2/boot.php');\r\n}")
 
 		self.dm(path)
 		self.gitignore(path)
@@ -184,11 +178,10 @@ class Dever_Action(object):
 	def update(self, store, name = False):
 		if not name:
 			name = Args.name
-		lib = Dever2.lib + 'dever2_package/'
+		lib = Dever2.lib + 'dever2/package/'
 		path = lib + name + '/'
 		Git.update(store, path)
 		Dever2.rely(self, path)
-		Dever_Create.package_boot(lib)
 		project = Dever2.cur(False) + '/'
 		if Dever_Create.dm(project, True):
 			Dever_Create.index(project, name, path)
@@ -196,7 +189,7 @@ class Dever_Action(object):
 
 	@classmethod
 	def all(self):
-		path = Dever2.lib + 'dever2_package/'
+		path = Dever2.lib + 'dever2/package/'
 		files = File.getFiles(path)
 		if files:
 			for i in files:
@@ -226,7 +219,7 @@ class Dever_Action(object):
 		tmp = File.tmp() + name + '/'
 		Git.update(git + name, File.tmp() + name)
 
-		package = Dever2.lib + 'dever2_package/' + name + '/'
+		package = Dever2.lib + 'dever2/package/' + name + '/'
 		if not File.exists(package):
 			Core.popen('cp -R ' + tmp + ' ' + package + ' && rm -rf ' + tmp + ' && cp -R ' + path + '* ' + package + ' && rm -rf ' + path + '')
 		else:
@@ -236,7 +229,7 @@ class Dever_Action(object):
 
 	@classmethod
 	def push_package(self):
-		path = Dever2.lib + 'dever2_package/' + Args.name
+		path = Dever2.lib + 'dever2/package/' + Args.name
 		Git.push(path + '/', False, Args.param)
 
 	@classmethod
