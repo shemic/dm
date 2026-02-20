@@ -14,7 +14,7 @@ basepath=$(cd `dirname $0`; pwd)
 # docker
 status=`check docker`
 if [ "$status" = 0 ]; then
-	#curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+#	curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 	$basepath/src/shell/docker/setup --mirror Aliyun
 fi
 mkdir -p /etc/docker

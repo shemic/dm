@@ -13,7 +13,9 @@ RUN apk add --update redis git && \
 	apk del git
 
 COPY redis-live.conf /usr/local/redislive/src/redis-live.conf
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+COPY redis.sh /entrypoint/redis.sh
+
+EXPOSE 8888
+EXPOSE 6379
 
 CMD ["redis"]
