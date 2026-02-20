@@ -555,12 +555,12 @@ class Image(object):
 	@staticmethod
 	def drop():
 		Core.shell('image.drop', bg=True)
-	@staticmethod
-	def delete(name=''):
+	@classmethod
+	def delete(self, name=''):
 		if name != '':
 			print('rm ' + name + ', please wait...')
 			if self.check(name) == 1:
-				Core.shell('image.rm ' + name, False, bg=bg)
+				Core.shell('image.rm ' + name, False, bg=True)
 		else:
 			Core.shell('image.rm', False)
 	@staticmethod
