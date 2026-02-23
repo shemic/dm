@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     git \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm i -g opencode-ai
+RUN npm i -g opencode-ai && npm install oh-my-opencode 
 
 WORKDIR /app
 
