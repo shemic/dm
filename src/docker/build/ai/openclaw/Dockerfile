@@ -22,10 +22,16 @@ RUN mkdir -p $NVM_DIR \
     && node -v \
     && npm -v
 RUN npm config set registry https://registry.npmmirror.com
-RUN npm install -g @qingchencloud/openclaw-zh@latest --registry=https://registry.npmmirror.com
+RUN curl -fsSL https://openclaw.ai/install.sh | bash
+#RUN npm install -g @qingchencloud/openclaw-zh@latest
+#RUN npm install -g openclaw-cn@latest
 #RUN openclaw config set auth.openai.baseURL http://ai-am:8045/v1
 #RUN openclaw config set auth.openai.apiKey shemic
 #RUN openclaw config set agents.defaults.model openai/gemini-2.5-flash
+
+#RUN curl -sSL https://raw.githubusercontent.com/lbjlaq/Antigravity-Manager/main/deploy/arch/install.sh | bash
+
 WORKDIR /root
+
 
 EXPOSE 18789

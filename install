@@ -1,61 +1,143 @@
 #!/usr/bin/env sh
-set -e
-check()
-{
-    yes=`which $1 | wc -l`
-    echo $yes
-}
+set -eu
 
-chmod -R +x src/*.py
-chmod -R +x src/shell
-chmod -R 777 container/share/
-basepath=$(cd `dirname $0`; pwd)
+# -----------------------
+# helpers
+# -----------------------
+log() { printf '%s\n' "$*"; }
+warn() { printf 'WARN: %s\n' "$*" >&2; }
+die() { printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 
-# docker
-status=`check docker`
-if [ "$status" = 0 ]; then
-#	curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
-	$basepath/src/shell/docker/setup --mirror Aliyun
+need_root=0
+if [ "$(id -u)" -ne 0 ]; then
+  need_root=1
 fi
-mkdir -p /etc/docker
-tee /etc/docker/daemon.json <<-'EOF'
-{
-  "registry-mirrors": [
-        "https://docker.mirrors.ustc.edu.cn",
-        "https://registry.docker-cn.com",
-        "http://hub-mirror.c.163.com",
-        "https://mirror.ccs.tencentyun.com"
-    ]
-  ,"insecure-registries" : ["docker.dever.cc"]
+
+as_root() {
+  if [ "$need_root" -eq 0 ]; then
+    sh -c "$*"
+  else
+    if command -v sudo >/dev/null 2>&1; then
+      sudo sh -c "$*"
+    else
+      die "需要写 /etc/docker 和 /usr/bin，但当前不是 root 且没有 sudo。请用 root 运行或安装 sudo。"
+    fi
+  fi
 }
-EOF
-#service docker restart
 
-ln -sf $basepath/src/dm.py /usr/bin/dm && chmod +x /usr/bin/dm
-ln -sf $basepath/src/ds.py /usr/bin/ds && chmod +x /usr/bin/ds
-ln -sf $basepath/src/dp.py /usr/bin/dp && chmod +x /usr/bin/dp
-ln -sf $basepath/src/dpc.py /usr/bin/dpc && chmod +x /usr/bin/dpc
-ln -sf $basepath/src/dever.py /usr/bin/dever && chmod +x /usr/bin/dever
-ln -sf $basepath/src/dever2.py /usr/bin/dever2 && chmod +x /usr/bin/dever2
-ln -sf $basepath/src/dgit.py /usr/bin/dgit && chmod +x /usr/bin/dgit
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
 
-# python-pip
-#pipstatus=`check pip`
-#if [ "$pipstatus" = 0 ]; then
-	#wget https://bootstrap.pypa.io/get-pip.py && python get-pip.py && rm -rf get-pip.py
-#fi
-# python-daemon 用不到了
-#pip install python-daemon
-#pip install redis
+fetch() {
+  url="$1"
+  if command_exists curl; then
+    curl -fsSL "$url"
+  elif command_exists wget; then
+    wget -qO- "$url"
+  else
+    die "缺少 curl/wget，无法下载：$url"
+  fi
+}
 
-#yumstatus=`check yum`
-#if [ "$yumstatus" = 0 ]; then
-	#apt install python-gevent
-#else
-	#yum install python-gevent
-#fi
-#dm run server-redis
-#python $basepath/src/daemon.py &
+restart_docker() {
+  if command_exists systemctl; then
+    as_root "systemctl daemon-reload >/dev/null 2>&1 || true"
+    as_root "systemctl enable docker >/dev/null 2>&1 || true"
+    as_root "systemctl restart docker || systemctl restart docker.service || true"
+  elif command_exists service; then
+    as_root "service docker restart || true"
+  else
+    warn "找不到 systemctl/service，无法自动重启 docker（你可能需要手动启动 dockerd）。"
+  fi
+}
 
-docker version
-echo 'install success!'
+# -----------------------
+# base path (robust)
+# -----------------------
+# shellcheck disable=SC2164
+basepath="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+
+# -----------------------
+# perms (safer)
+# -----------------------
+# 1) python 可执行
+if [ -d "$basepath/src" ]; then
+  if ls "$basepath/src"/*.py >/dev/null 2>&1; then
+    chmod +x "$basepath/src"/*.py || true
+  fi
+fi
+
+# 2) shell 目录可执行（仅脚本）
+if [ -d "$basepath/src/shell" ]; then
+  # 给目录下所有文件加可执行，若你只想对 .sh 生效可改成: "$basepath/src/shell"/*.sh
+  chmod -R +x "$basepath/src/shell" || true
+fi
+
+# 3) share 权限：不建议 777，改为“所有人可读写执行(目录需要x)”
+# 若你确实需要 777 再改回去
+if [ -d "$basepath/container/share" ]; then
+  as_root "chmod -R a+rwX '$basepath/container/share' || true"
+fi
+
+# -----------------------
+# docker install & config
+# -----------------------
+if ! command_exists docker; then
+  log "docker not found, installing..."
+  # get.docker.com 脚本对大多数发行版可用；mirror 参数不一定都支持，保留你原来的 Aliyun 用法，但失败也不中断
+  fetch "https://get.docker.com" | as_root "sh -s -- docker --mirror Aliyun || sh -s -- docker || true"
+
+  # 你项目里的 setup（如果存在）
+  if [ -x "$basepath/src/shell/docker/setup" ]; then
+    as_root "'$basepath/src/shell/docker/setup' --mirror Aliyun || true"
+  fi
+fi
+
+# 写 daemon.json（需要 root）
+as_root "mkdir -p /etc/docker"
+as_root "cat > /etc/docker/daemon.json <<'EOF'
+{
+  \"registry-mirrors\": [
+    \"https://docker.mirrors.ustc.edu.cn\",
+    \"https://registry.docker-cn.com\",
+    \"http://hub-mirror.c.163.com\",
+    \"https://mirror.ccs.tencentyun.com\"
+  ],
+  \"insecure-registries\": [\"docker.dever.cc\"]
+}
+EOF"
+
+restart_docker
+
+# -----------------------
+# symlinks to /usr/bin
+# -----------------------
+link_bin() {
+  src="$1"
+  name="$2"
+  if [ ! -f "$src" ]; then
+    warn "skip link: not found $src"
+    return 0
+  fi
+  as_root "ln -sf '$src' '/usr/bin/$name' && chmod +x '/usr/bin/$name'"
+}
+
+link_bin "$basepath/src/dm.py"    "dm"
+link_bin "$basepath/src/ds.py"    "ds"
+link_bin "$basepath/src/dp.py"    "dp"
+link_bin "$basepath/src/dpc.py"   "dpc"
+link_bin "$basepath/src/dever.py" "dever"
+link_bin "$basepath/src/dever2.py" "dever2"
+link_bin "$basepath/src/dgit.py"  "dgit"
+
+# -----------------------
+# verify
+# -----------------------
+if command_exists docker; then
+  docker version || warn "docker 已安装但无法执行 docker version（daemon 可能没启动/权限不足）"
+else
+  die "docker 仍未安装成功。"
+fi
+
+log "install success!"
