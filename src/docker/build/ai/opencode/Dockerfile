@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN npm i -g opencode-ai && npm install oh-my-opencode 
 
-WORKDIR /app
+WORKDIR /data/config
 
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
